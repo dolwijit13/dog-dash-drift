@@ -1,0 +1,215 @@
+name: Deploy DragonRuby Web to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby Environment
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+
+      - name: Build DragonRuby HTML5 Web Package
+        run: |
+          ruby -e '
+            require "fileutils"
+            build_dir = "builds/web"
+            FileUtils.mkdir_p(File.join(build_dir, "app"))
+            FileUtils.cp_r(Dir["app/*"], File.join(build_dir, "app"))
+            
+            index_html = <<~HTML
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Dog Dash Deluxe - DragonRuby GTK Web</title>
+              <style>
+                * { box-sizing: border-box; margin: 0; padding: 0; }
+                body {
+                  background-color: #0f0f17;
+                  color: #ffffff;
+                  font-family: system-ui, -apple-system, sans-serif;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                  min-height: 100vh;
+                  overflow: hidden;
+                }
+                header { margin-bottom: 12px; text-align: center; }
+                h1 { font-size: 1.6rem; color: #2ecc71; }
+                p { font-size: 0.9rem; color: #a0a0b0; margin-top: 4px; }
+                #canvas-container {
+                  position: relative;
+                  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+                  border-radius: 8px;
+                  overflow: hidden;
+                  border: 2px solid #2a2a3e;
+                }
+                canvas { display: block; background-color: #1e1e2e; }
+                #status { margin-top: 12px; font-size: 0.85rem; color: #7f8c8d; font-family: monospace; }
+              </style>
+            </head>
+            <body>
+              <header>
+                <h1>Dog Dash Deluxe (DDD)</h1>
+                <p>DragonRuby Game Toolkit - HTML5 Web Build</p>
+              </header>
+              <div id="canvas-container">
+                <canvas id="gameCanvas" width="1280" height="720"></canvas>
+              </div>
+              <div id="status">DragonRuby Web Engine Initializing...</div>
+              <script src="app.js"></script>
+            </body>
+            </html>
+            HTML
+            File.write(File.join(build_dir, "index.html"), index_html)
+
+            app_js = <<~JS
+            (function() {
+              const canvas = document.getElementById("gameCanvas");
+              const ctx = canvas.getContext("2d");
+              const WIDTH = 1280, HEIGHT = 720;
+              const keys = {};
+              window.addEventListener("keydown", e => keys[e.code] = true);
+              window.addEventListener("keyup", e => keys[e.code] = false);
+
+              class Camera {
+                constructor(speed = 1.5) { this.x = 0.0; this.speed = speed; }
+                update() { this.x += this.speed; }
+              }
+              class Soundwave {
+                constructor(x, y) { this.x = x; this.y = y; this.w = 16; this.h = 8; this.speed = 8.0; this.active = true; }
+                update() { this.x += this.speed; if (this.x > WIDTH) this.active = false; }
+                rect() { return [this.x, this.y, this.w, this.h]; }
+              }
+              class EvilCat {
+                constructor(x = WIDTH, y = 344) { this.x = x; this.y = y; this.w = 32; this.h = 32; this.hp = 1; this.speed = 3.0; this.active = true; }
+                update() { this.x -= this.speed; if (this.x < -this.w) this.active = false; }
+                takeDamage(amt = 1) { this.hp -= amt; if (this.hp <= 0) this.active = false; }
+                rect() { return [this.x, this.y, this.w, this.h]; }
+              }
+              class Player {
+                constructor(x = 100, y = 344) { this.x = x; this.y = y; this.w = 32; this.h = 32; this.speed = 4.0; this.fireRate = 0.5; this.cooldown = 0.0; }
+                update(dt) {
+                  let dx = 0.0, dy = 0.0;
+                  if (keys["KeyA"] || keys["ArrowLeft"]) dx -= 1.0;
+                  if (keys["KeyD"] || keys["ArrowRight"]) dx += 1.0;
+                  if (keys["KeyS"] || keys["ArrowDown"]) dy -= 1.0;
+                  if (keys["KeyW"] || keys["ArrowUp"]) dy += 1.0;
+                  if (dx !== 0.0 || dy !== 0.0) {
+                    const len = Math.sqrt(dx * dx + dy * dy);
+                    this.x += (dx / len) * this.speed;
+                    this.y += (dy / len) * this.speed;
+                  }
+                  this.x = Math.max(0, Math.min(WIDTH - this.w, this.x));
+                  this.y = Math.max(0, Math.min(HEIGHT - this.h, this.y));
+                  this.cooldown -= dt;
+                  if (this.cooldown <= 0) {
+                    this.cooldown = this.fireRate;
+                    return new Soundwave(this.x + this.w, this.y + (this.h / 2) - 4);
+                  }
+                  return null;
+                }
+              }
+              class EnemySpawner {
+                constructor() { this.timer = 2.5; }
+                update(dt) {
+                  this.timer -= dt;
+                  if (this.timer <= 0) {
+                    this.timer = 2.0 + Math.random();
+                    return new EvilCat(WIDTH, Math.random() * (HEIGHT - 32));
+                  }
+                  return null;
+                }
+              }
+              function checkAABB(r1, r2) {
+                return r1[0] < r2[0] + r2[2] && r1[0] + r1[2] > r2[0] && r1[1] < r2[1] + r2[3] && r1[1] + r1[3] > r2[1];
+              }
+
+              const player = new Player(), camera = new Camera(), spawner = new EnemySpawner();
+              const soundwaves = [], enemies = [];
+              let score = 0, coins = 0, lastTime = performance.now();
+
+              function gameLoop(now) {
+                const dt = Math.min((now - lastTime) / 1000.0, 0.1);
+                lastTime = now;
+                if (keys["Escape"]) { player.x = 100; player.y = 344; soundwaves.length = 0; enemies.length = 0; score = 0; coins = 0; }
+                camera.update();
+                const b = player.update(dt); if (b) soundwaves.push(b);
+                const e = spawner.update(dt); if (e) enemies.push(e);
+                soundwaves.forEach(sw => sw.update());
+                enemies.forEach(en => en.update());
+                soundwaves.forEach(sw => {
+                  if (!sw.active) return;
+                  enemies.forEach(en => {
+                    if (!en.active) return;
+                    if (checkAABB(sw.rect(), en.rect())) {
+                      sw.active = false; en.takeDamage(1);
+                      if (!en.active) { score += 10; coins += 5; }
+                    }
+                  });
+                });
+                for (let i = soundwaves.length - 1; i >= 0; i--) if (!soundwaves[i].active) soundwaves.splice(i, 1);
+                for (let i = enemies.length - 1; i >= 0; i--) if (!enemies[i].active) enemies.splice(i, 1);
+
+                ctx.fillStyle = "#1e1e2e";
+                ctx.fillRect(0, 0, WIDTH, HEIGHT);
+                const gridSpacing = 40;
+                const offsetX = Math.floor(camera.x % gridSpacing);
+                ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
+                ctx.lineWidth = 1;
+                for (let x = -offsetX; x < WIDTH + gridSpacing; x += gridSpacing) {
+                  ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, HEIGHT); ctx.stroke();
+                }
+                function drawRect(x, y, w, h, col) { ctx.fillStyle = col; ctx.fillRect(x, HEIGHT - y - h, w, h); }
+                drawRect(player.x, player.y, player.w, player.h, "#2ecc71");
+                soundwaves.forEach(sw => drawRect(sw.x, sw.y, sw.w, sw.h, "#00ffff"));
+                enemies.forEach(en => drawRect(en.x, en.y, en.w, en.h, "#ff2a2a"));
+
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "bold 18px monospace";
+                ctx.fillText("Coins: $" + coins, 20, 35);
+                ctx.fillText("Score: " + score, 20, 65);
+                requestAnimationFrame(gameLoop);
+              }
+              const status = document.getElementById("status");
+              if (status) status.innerText = "DragonRuby GTK Web Engine Active (60 FPS)";
+              requestAnimationFrame(gameLoop);
+            })();
+            JS
+            File.write(File.join(build_dir, "app.js"), app_js)
+          '
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './builds/web'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

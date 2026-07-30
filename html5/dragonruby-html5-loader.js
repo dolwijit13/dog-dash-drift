@@ -129,7 +129,19 @@ function syncDataFiles(dbname, baseurl) {
         }
 
         var remotefname = state.pending_files.pop();
+        while (remotefname && (remotefname.startsWith(".") || remotefname.includes("/."))) {
+            remotefname = state.pending_files.pop();
+        }
+        if (!remotefname) {
+            if ((hash_count(state.xhrs) == 0) && (state.pending_files.length == 0)) {
+                succeeded();
+            }
+            return false;
+        }
+
         var remoteitem = state.remote_manifest[remotefname];
+        if (!remoteitem) return download_another_file();
+
         var xhr = new XMLHttpRequest();
         state.xhrs[remotefname] = xhr;
         xhr.previously_loaded = 0;
@@ -180,7 +192,7 @@ function syncDataFiles(dbname, baseurl) {
         for (var i in state.remote_manifest) {
             var remoteitem = state.remote_manifest[i];
             var remotefname = i;
-            if (remotefname.startsWith(".")) continue;
+            if (remotefname.startsWith(".") || remotefname.includes("/.")) continue;
             if (typeof state.local_manifest[remotefname] !== "undefined") {
             } else {
                 state.total_to_download += remoteitem.filesize;
@@ -208,6 +220,11 @@ function syncDataFiles(dbname, baseurl) {
         for (var i in state.local_manifest) {
             var localitem = state.local_manifest[i];
             var localfname = localitem.filename;
+            if (localfname.startsWith(".") || localfname.includes("/.")) {
+                deleteme.push(localfname);
+                delete state.local_manifest[i];
+                continue;
+            }
             var removeme = false;
             if (typeof state.remote_manifest[localfname] === "undefined") {
                 removeme = true;

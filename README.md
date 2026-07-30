@@ -1,35 +1,48 @@
-# Dog Dash Drift
+# Dog Dash Deluxe (DDD) 🐶🐉
 
-A 2D game built with Ruby and [Gosu](https://www.libgosu.org/).
+A 2D Top-Down Side-Scrolling Action Runner & Auto-Shooter game built with Ruby and [DragonRuby Game Toolkit (DRGTK)](https://dragonruby.org/).
 
-## Requirements
+🌐 **Live Web Demo**: [https://dolwijit13.github.io/dog-dash-drift/](https://dolwijit13.github.io/dog-dash-drift/)
 
-- Ruby 3.x
-- Bundler (`gem install bundler`)
-- Homebrew & SDL2 (macOS): `brew install sdl2`
+---
 
-## Getting Started
+## 🕹️ Controls & Features
 
-### 1. Installation
+- **Controls**: `W / A / S / D` or Arrow Keys to move in 8 directions.
+- **Auto-Attack**: Shiba Inu fires cyan Soundwave projectiles automatically every 0.5 seconds.
+- **Enemies**: Evil Cats spawn from the right; shoot them to earn +10 Score and +5 Coins.
+- **Reset**: Press `ESC` to reset player position.
 
-Install system dependencies and configure Bundler for macOS linking:
+---
 
-```bash
-# Install SDL2
-brew install sdl2
+## 🛠️ Project Structure & Execution
 
-# Configure Bundler to link macOS AppKit and SDL2 libraries
-bundle config set --local force_ruby_platform true
-bundle config set --local build.gosu "--with-cflags='-I/opt/homebrew/include' --with-ldflags='-L/opt/homebrew/lib -lSDL2 -framework AppKit -framework Foundation -framework OpenGL'"
+### 1. File Structure
 
-# Install gem dependencies
-bundle install
+All DragonRuby source code is placed inside the `app/` directory:
+
+```text
+app/
+├── main.rb                  # Entrypoint & 60 FPS tick(args) loop
+├── player.rb                # Player character entity & auto-attack
+├── soundwave.rb             # Soundwave projectile entity
+├── enemy.rb                 # EvilCat enemy entity
+├── enemy_spawner.rb         # Periodic random Y enemy spawner
+├── camera.rb                # Side-scrolling viewport camera
+├── collision_system.rb      # AABB collision & kill reward handler
+└── input_handler.rb         # Keyboard & Mouse input handler
 ```
 
-> **Note:** `.bundle/config` is saved locally in the project so future `bundle install` commands will use these settings automatically.
+### 2. Run Desktop Game (DragonRuby)
 
-### 2. Run the Game
+Run the DragonRuby executable pointing to the repository:
 
 ```bash
-bundle exec ruby main.rb
+./dragonruby .
+```
+
+### 3. Run Unit Tests
+
+```bash
+ruby -Iapp:test test/test_dragonruby_game.rb
 ```

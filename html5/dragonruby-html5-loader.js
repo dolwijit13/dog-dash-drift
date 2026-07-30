@@ -1,4 +1,4 @@
-var GDragonRubyGameId = 'dog-dash-drift';
+var GDragonRubyGameId = 'dog-dash-drift-v3';
 var GDragonRubyGameTitle = 'Dog Dash Drift';
 var GDragonRubyDevTitle = 'inuyama';
 var GDragonRubyGameVersion = '0.1';
@@ -246,23 +246,20 @@ function syncDataFiles(dbname, baseurl) {
             download_new_files();
         } else {
             progress("Cleaning up old files...");
-            var transaction = state.db.transaction(["data", "metadata"], "readwrite");
-            transaction.oncomplete = function(event) {
-                download_new_files();
-            };
-
-            var objstoremetadata = transaction.objectStore("metadata");
-            var objstoredata = transaction.objectStore("data");
-            var dataindex = objstoredata.index("data");
-            for (var i of deleteme) {
-                objstoremetadata.delete(i);
-                dataindex.openCursor(IDBKeyRange.only(i)).onsuccess = function(event) {
-                    var cursor = event.target.result;
-                    if (cursor) {
-                        objstoredata.delete(cursor.value.chunkid);
-                        cursor.continue();
-                    }
+            try {
+                var transaction = state.db.transaction(["metadata"], "readwrite");
+                transaction.oncomplete = function(event) {
+                    download_new_files();
+                };
+                transaction.onerror = function(event) {
+                    download_new_files();
+                };
+                var objstoremetadata = transaction.objectStore("metadata");
+                for (var i of deleteme) {
+                    try { objstoremetadata.delete(i); } catch(e) {}
                 }
+            } catch(e) {
+                download_new_files();
             }
         }
     };

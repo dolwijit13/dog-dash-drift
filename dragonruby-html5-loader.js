@@ -1,4 +1,4 @@
-var GDragonRubyGameId = 'dog-dash-drift-v3';
+var GDragonRubyGameId = 'dog-dash-drift-v4';
 var GDragonRubyGameTitle = 'Dog Dash Drift';
 var GDragonRubyDevTitle = 'inuyama';
 var GDragonRubyGameVersion = '0.1';
@@ -379,14 +379,22 @@ var loadDataFiles = function (dbname, baseurl, onsuccess) {
     var dataindex = objstore.index("data");
 
     for (var i in manifest) {
+      if (i.startsWith(".") || i.includes("/.")) continue;
       syncdata.total_requests++;
       syncdata.num_requests++;
       var req = dataindex.get(i);
       req.filesize = manifest[i].filesize;
       req.onsuccess = function (event) {
+        if (!event.target || !event.target.result) {
+          syncdata.num_requests--;
+          if (syncdata.num_requests <= 0 && !syncdata.failed) {
+            onsuccess();
+          }
+          return;
+        }
         var path = "/" + event.target.result.filename;
         var ui8arr = new Uint8Array(event.target.result.chunk);
-        var len = event.target.filesize;
+        var len = event.target.filesize || ui8arr.length;
         var arr = new Array(len);
         for (var i = 0; i < len; ++i) {
           arr[i] = ui8arr[i];

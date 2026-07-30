@@ -30,7 +30,7 @@ Encapsulates player character parameters, movement calculation, and rendering.
 * **Constants**:
   * `WIDTH = 32`: Rectangle width in pixels.
   * `HEIGHT = 32`: Rectangle height in pixels.
-  * `COLOR = Gosu::Color::GREEN`: Render color.
+  * `primitive_marker = :solid`: Render marker.
 * **Attributes**:
   * `@x`, `@y` (`attr_reader :x, :y`): Current top-left rendering coordinates.
 * **Methods**:
@@ -38,17 +38,9 @@ Encapsulates player character parameters, movement calculation, and rendering.
   * `update(mouse_x, mouse_y)`: Calculates top-left position such that the center of the 32x32 rectangle aligns directly with the mouse pointer:
     $$\text{draw\_x} = \text{mouse\_x} - \frac{\text{WIDTH}}{2}$$
     $$\text{draw\_y} = \text{mouse\_y} - \frac{\text{HEIGHT}}{2}$$
-  * `draw`: Renders rectangle via `Gosu.draw_rect(@x, @y, WIDTH, HEIGHT, COLOR)`.
 
-### 2. `GameWindow` (`main.rb`)
-Inherits from `Gosu::Window` (800x600 resolution at 60 FPS).
-
-* **Methods**:
-  * `initialize`: Sets window size, title (`Dog Dash Drift`), and instantiates `Player.new`.
-  * `update`: Invokes `@player.update(mouse_x, mouse_y)` each frame.
-  * `draw`: Clears background with Catppuccin Macchiato Base (`0xff_1e1e2e`) and calls `@player.draw`.
-  * `needs_cursor?`: Returns `true` to ensure system mouse pointer remains visible.
-  * `button_down(id)`: Listens for `Gosu.KB_ESCAPE` to execute `close`.
+### 2. `tick args` (`app/main.rb`)
+DragonRuby GTK main loop (1280x720 resolution at 60 FPS).
 
 ---
 
@@ -57,18 +49,15 @@ Inherits from `Gosu::Window` (800x600 resolution at 60 FPS).
 ```mermaid
 sequenceDiagram
     autonumber
-    participant Engine as Gosu Engine (60 FPS)
-    participant Window as GameWindow
+    participant Engine as DragonRuby GTK Engine (60 FPS)
+    participant Window as tick(args)
     participant Player as Player Entity
 
-    Engine->>Window: update()
-    Window->>Engine: mouse_x, mouse_y
+    Engine->>Window: tick(args)
+    Window->>Engine: args.inputs.mouse.x, args.inputs.mouse.y
     Window->>Player: update(mouse_x, mouse_y)
     Player-->>Player: Calculate center alignment (x, y)
-    Engine->>Window: draw()
-    Window->>Engine: Gosu.draw_rect(Background #1e1e2e)
-    Window->>Player: draw()
-    Player->>Engine: Gosu.draw_rect(x, y, 32, 32, GREEN)
+    Window->>Engine: args.outputs.primitives << player
 ```
 
 ---

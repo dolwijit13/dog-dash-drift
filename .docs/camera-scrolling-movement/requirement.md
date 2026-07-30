@@ -22,7 +22,7 @@
 
 ## Technical Checklist (Atomic)
 - [ ] **1. Input Handler Setup (`lib/input_handler.rb` / `Player`)**
-  - [ ] ตรวจจับปุ่ม `Gosu::KB_W`, `Gosu::KB_S`, `Gosu::KB_A`, `Gosu::KB_D` และ Arrow Keys
+  - [ ] ตรวจจับปุ่ม `inputs.keyboard.left`, `right`, `up`, `down` และ WASD Keys
   - [ ]คำนวณเวกเตอร์ทิศทาง `(dx, dy)` และทำ Normalization เมื่อเคลื่อนที่ทแยง
 - [ ] **2. Player Movement Logic (`lib/player.rb`)**
   - [ ] เพิ่มคุณสมบัติ `speed` (เช่น 4.0 px/frame)

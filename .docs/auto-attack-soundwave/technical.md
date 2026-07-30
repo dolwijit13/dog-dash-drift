@@ -32,7 +32,7 @@ dog-dash-drift/
 ## Component Details
 
 ### 1. `Soundwave` (`lib/soundwave.rb`)
-- **Constants**: `WIDTH = 16`, `HEIGHT = 8`, `SPEED = 8.0`, `COLOR = Gosu::Color::CYAN`.
+- **Constants**: `WIDTH = 16`, `HEIGHT = 8`, `SPEED = 8.0`, `primitive_marker = :solid`.
 - **Attributes**: `@x`, `@y`, `@speed`, `@active`.
 - **`update`**: Moves projectile horizontally to the right: `@x += @speed` (8 px/frame).
 - **`out_of_bounds?(boundary_width)`**: Returns `true` when `@x > boundary_width` (800 px).

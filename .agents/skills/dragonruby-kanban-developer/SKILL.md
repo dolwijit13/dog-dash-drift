@@ -1,11 +1,11 @@
 ---
-name: gosu-kanban-developer
-description: Standard workflow for Ruby & Gosu developers to pull Ready to Dev issues from Kanban Board, update status to In Progress, create feature/ddd-[issue] branch, code to ACs, write Unit Tests, create technical docs, open PR linked to Issue, and update Kanban status to PR.
+name: dragonruby-kanban-developer
+description: Standard workflow for Ruby & DragonRuby developers to pull Ready to Dev issues from Kanban Board, update status to In Progress, create feature/ddd-[issue] branch, code to ACs, write Unit Tests, create technical docs, open PR linked to Issue, and update Kanban status to PR.
 ---
 
-# Gosu & Ruby Kanban Feature Development Workflow
+# DragonRuby & Ruby Kanban Feature Development Workflow
 
-This skill outlines the step-by-step procedure for a Ruby / Gosu Developer responsible for picking issues from a Kanban board and taking them through implementation, unit testing, documentation, pull request creation, and board column updates.
+This skill outlines the step-by-step procedure for a Ruby / DragonRuby Developer responsible for picking issues from a Kanban board and taking them through implementation, unit testing, documentation, pull request creation, and board column updates.
 
 ## Workflow Overview
 
@@ -22,21 +22,20 @@ This skill outlines the step-by-step procedure for a Ruby / Gosu Developer respo
 - Create the branch locally (`git checkout -b feature/ddd-[issue_number]`) and push to remote.
 
 ### 3. Implement Feature Code
-- Write modular Ruby code adhering to Gosu game engine conventions:
-  - Decouple entity/game logic into `lib/[component].rb` (e.g., `lib/player.rb`).
-  - Keep `main.rb` (`GameWindow`) focused on window management, main game loop (`update`, `draw`), and input events.
+- Write modular Ruby code adhering to DragonRuby GTK conventions:
+  - Decouple entity/game logic into `app/[component].rb` (e.g., `app/player.rb`).
+  - Keep `app/main.rb` focused on main game loop (`tick args`), rendering, and input events.
 - Perform syntax validation:
   ```bash
-  ruby -c main.rb && ruby -c lib/[component].rb
+  ruby -c app/main.rb && ruby -c app/[component].rb
   ```
 
 ### 4. Write Unit Tests (MANDATORY)
 - **MUST write unit tests for every feature or component change** under `test/test_[component].rb`.
 - Cover initialization, state updates, edge cases, and calculations.
-- Handle headless GUI testing gracefully by rescuing `LoadError` or mocking Gosu rendering methods if necessary.
 - Run unit tests and ensure zero failures/errors:
   ```bash
-  ruby -Ilib:test test/test_[component].rb
+  ruby test/test_dragonruby_game.rb
   ```
 
 ### 5. Create Technical Documentation

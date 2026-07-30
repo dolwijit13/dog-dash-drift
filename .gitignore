@@ -12,6 +12,7 @@ mygame-html5/
 .dragonruby/
 logs/
 errors/
+builds/
 
 # OS & Editor files
 .DS_Store

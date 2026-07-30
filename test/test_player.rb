@@ -1,44 +1,53 @@
 # frozen_string_literal: true
 
 require 'minitest/autorun'
-
-# Mock Gosu module for headless unit testing environment if needed
-unless defined?(Gosu)
-  module Gosu
-    class Color
-      GREEN = 0xff_00ff00
-    end
-
-    def self.draw_rect(_x, _y, _width, _height, _color)
-      true
-    end
-  end
-end
-
 require_relative '../lib/player'
+require_relative '../lib/input_handler'
 
 class TestPlayer < Minitest::Test
   def setup
-    @player = Player.new(100, 100)
+    @player = Player.new(100, 100, 4.0)
   end
 
   def test_initialization
-    assert_equal 100, @player.x
-    assert_equal 100, @player.y
+    assert_equal 100.0, @player.x
+    assert_equal 100.0, @player.y
+    assert_equal 4.0, @player.speed
     assert_equal 32, Player::WIDTH
     assert_equal 32, Player::HEIGHT
   end
 
-  def test_mouse_tracking_center_alignment
-    mouse_x = 400.0
-    mouse_y = 300.0
+  def test_move_by_cardinal_directions
+    @player.move_by(1.0, 0.0)
+    assert_equal 104.0, @player.x
+    assert_equal 100.0, @player.y
 
-    @player.update(mouse_x, mouse_y)
+    @player.move_by(0.0, 1.0)
+    assert_equal 104.0, @player.x
+    assert_equal 104.0, @player.y
+  end
 
-    expected_x = mouse_x - (Player::WIDTH / 2.0)
-    expected_y = mouse_y - (Player::HEIGHT / 2.0)
+  def test_diagonal_normalization
+    dx, dy = InputHandler.normalize(1.0, 1.0)
+    expected_norm = 1.0 / Math.sqrt(2.0)
 
-    assert_equal expected_x, @player.x
-    assert_equal expected_y, @player.y
+    assert_in_delta expected_norm, dx, 0.0001
+    assert_in_delta expected_norm, dy, 0.0001
+  end
+
+  def test_boundary_clamping
+    @player.x = -50.0
+    @player.y = -50.0
+    @player.clamp_position(800, 600)
+
+    assert_equal 0.0, @player.x
+    assert_equal 0.0, @player.y
+
+    @player.x = 900.0
+    @player.y = 700.0
+    @player.clamp_position(800, 600)
+
+    assert_equal 800 - Player::WIDTH, @player.x
+    assert_equal 600 - Player::HEIGHT, @player.y
   end
 end

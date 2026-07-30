@@ -14,6 +14,10 @@ logs/
 errors/
 builds/
 
+# Always commit html5 build package
+!html5/
+!html5/**
+
 # OS & Editor files
 .DS_Store
 *.swp

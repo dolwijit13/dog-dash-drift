@@ -1,0 +1,5 @@
+devid=dolwijit13
+devtitle=Dolwijit
+gameid=dog-dash-drift
+gametitle=Dog Dash Deluxe
+version=1.0.0

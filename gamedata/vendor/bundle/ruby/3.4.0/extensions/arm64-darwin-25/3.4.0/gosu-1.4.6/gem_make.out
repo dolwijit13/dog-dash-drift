@@ -1,0 +1,581 @@
+current directory: /Users/bumpdolwijit/Desktop/bump/dog-dash-drift/vendor/bundle/ruby/3.4.0/gems/gosu-1.4.6/ext/gosu
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/bin/ruby extconf.rb --with-cflags\=-I/opt/homebrew/include --with-ldflags\=-L/opt/homebrew/lib\ -lSDL2\ -framework\ AppKit\ -framework\ Foundation\ -framework\ OpenGL
+The Gosu gem requires some libraries to be installed system-wide.
+See the following site for a list:
+https://github.com/gosu/gosu/wiki/Getting-Started-on-OS-X
+Usage: /opt/homebrew/bin/sdl2-config [--prefix[=DIR]] [--exec-prefix[=DIR]] [--version] [--cflags] [--libs]
+creating Makefile
+
+current directory: /Users/bumpdolwijit/Desktop/bump/dog-dash-drift/vendor/bundle/ruby/3.4.0/gems/gosu-1.4.6/ext/gosu
+make -j3 DESTDIR\= sitearchdir\=./.gem.20260730-9987-rx3soe sitelibdir\=./.gem.20260730-9987-rx3soe clean
+
+current directory: /Users/bumpdolwijit/Desktop/bump/dog-dash-drift/vendor/bundle/ruby/3.4.0/gems/gosu-1.4.6/ext/gosu
+make -j3 DESTDIR\= sitearchdir\=./.gem.20260730-9987-rx3soe sitelibdir\=./.gem.20260730-9987-rx3soe
+compiling ../../src/SDL_sound.c
+compiling ../../src/SDL_sound_aiff.c
+compiling ../../src/SDL_sound_au.c
+compiling ../../src/SDL_sound_coreaudio.c
+compiling ../../src/SDL_sound_flac.c
+compiling ../../src/SDL_sound_modplug.c
+compiling ../../src/SDL_sound_mp3.c
+compiling ../../src/SDL_sound_raw.c
+compiling ../../src/SDL_sound_shn.c
+compiling ../../src/SDL_sound_voc.c
+compiling ../../src/SDL_sound_vorbis.c
+compiling ../../src/SDL_sound_wav.c
+compiling ../../src/fastmix.c
+compiling ../../src/load_669.c
+compiling ../../src/load_amf.c
+compiling ../../src/load_ams.c
+compiling ../../src/load_dbm.c
+compiling ../../src/load_dmf.c
+compiling ../../src/load_dsm.c
+compiling ../../src/load_far.c
+compiling ../../src/load_gdm.c
+compiling ../../src/load_it.c
+compiling ../../src/load_mdl.c
+compiling ../../src/load_med.c
+compiling ../../src/load_mod.c
+compiling ../../src/load_mt2.c
+compiling ../../src/load_mtm.c
+compiling ../../src/load_okt.c
+compiling ../../src/load_psm.c
+compiling ../../src/load_ptm.c
+compiling ../../src/load_s3m.c
+compiling ../../src/load_stm.c
+compiling ../../src/load_ult.c
+compiling ../../src/load_umx.c
+compiling ../../src/load_xm.c
+compiling ../../src/mmcmp.c
+compiling ../../src/modplug.c
+compiling ../../src/mojoal.c
+compiling ../../src/snd_dsp.c
+compiling ../../src/snd_flt.c
+compiling ../../src/snd_fx.c
+compiling ../../src/sndfile.c
+compiling ../../src/sndmix.c
+compiling ../../src/utf8proc.c
+compiling ../../src/RubyGosu.cxx
+compiling ../../src/Audio.cpp
+../../src/RubyGosu.cxx:1158:3: warning: 'sprintf' is deprecated: This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead. [-Wdeprecated-declarations]
+ 1158 |   sprintf( buf, "%d of type ", argn-1 );
+      |   ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here
+  278 | __deprecated_msg("This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.")
+      | ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'
+  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))
+      |                                                       ^
+../../src/RubyGosu.cxx:1272:3: warning: 'rb_define_virtual_variable' is deprecated: Use of ANYARGS in this function is deprecated [-Wdeprecated-declarations]
+ 1272 |   rb_define_virtual_variable("SWIG_TRACKINGS_COUNT",
+      |   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/backward/cxxanyargs.hpp:64:1: note: 'rb_define_virtual_variable' has been explicitly marked deprecated here
+   64 | RUBY_CXX_DEPRECATED("Use of ANYARGS in this function is deprecated")
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/backward/2/attributes.h:79:35: note: expanded from macro 'RUBY_CXX_DEPRECATED'
+   79 | #define RUBY_CXX_DEPRECATED(mseg) RBIMPL_ATTR_DEPRECATED((mseg))
+      |                                   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/attr/deprecated.h:36:53: note: expanded from macro 'RBIMPL_ATTR_DEPRECATED'
+   36 | # define RBIMPL_ATTR_DEPRECATED(msg) __attribute__((__deprecated__ msg))
+      |                                                     ^
+../../src/RubyGosu.cxx:1329:3: warning: 'rb_st_foreach' is deprecated: Use of ANYARGS in this function is deprecated [-Wdeprecated-declarations]
+ 1329 |   st_foreach(swig_ruby_trackings,
+      |   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/st.h:144:20: note: expanded from macro 'st_foreach'
+  144 | #define st_foreach rb_st_foreach
+      |                    ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/backward/cxxanyargs.hpp:421:1: note: 'rb_st_foreach' has been explicitly marked deprecated here
+  421 | RUBY_CXX_DEPRECATED("Use of ANYARGS in this function is deprecated")
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/backward/2/attributes.h:79:35: note: expanded from macro 'RUBY_CXX_DEPRECATED'
+   79 | #define RUBY_CXX_DEPRECATED(mseg) RBIMPL_ATTR_DEPRECATED((mseg))
+      |                                   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/attr/deprecated.h:36:53: note: expanded from macro 'RBIMPL_ATTR_DEPRECATED'
+   36 | # define RBIMPL_ATTR_DEPRECATED(msg) __attribute__((__deprecated__ msg))
+      |                                                     ^
+../../src/RubyGosu.cxx:1529:3: warning: 'sprintf' is deprecated: This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead. [-Wdeprecated-declarations]
+ 1529 |   sprintf(klass_name, "TYPE%s", type->name);
+      |   ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here
+  278 | __deprecated_msg("This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.")
+      | ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'
+  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))
+      |                                                       ^
+../../src/RubyGosu.cxx:1575:11: warning: 'rb_data_object_wrap_warning' is deprecated: by TypedData [-Wdeprecated-declarations]
+ 1575 |     obj = Data_Wrap_Struct(sklass->klass, VOIDFUNC(sklass->mark), 
+      |           ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:199:5: note: expanded from macro 'Data_Wrap_Struct'
+  199 |     rb_data_object_wrap(                          \
+      |     ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:363:31: note: expanded from macro 'rb_data_object_wrap'
+  363 | #define rb_data_object_wrap   RUBY_MACRO_SELECT(rb_data_object_wrap_2, RUBY_UNTYPED_DATA_WARNING)
+      |                               ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:50:35: note: expanded from macro 'RUBY_MACRO_SELECT'
+   50 | #define RUBY_MACRO_SELECT(x, y)   RBIMPL_MACRO_SELECT(x, y)
+      |                                   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:49:35: note: expanded from macro 'RBIMPL_MACRO_SELECT'
+   49 | #define RBIMPL_MACRO_SELECT(x, y) x ## y
+      |                                   ^
+<scratch space>:128:1: note: expanded from here
+  128 | rb_data_object_wrap_1
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:361:31: note: expanded from macro 'rb_data_object_wrap_1'
+  361 | #define rb_data_object_wrap_1 rb_data_object_wrap_warning
+      |                               ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:277:1: note: 'rb_data_object_wrap_warning' has been explicitly marked deprecated here
+  277 | RBIMPL_ATTRSET_UNTYPED_DATA_FUNC()
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:47:5: note: expanded from macro 'RBIMPL_ATTRSET_UNTYPED_DATA_FUNC'
+   47 |     RBIMPL_ATTR_DEPRECATED(("by TypedData"))
+      |     ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/attr/deprecated.h:36:53: note: expanded from macro 'RBIMPL_ATTR_DEPRECATED'
+   36 | # define RBIMPL_ATTR_DEPRECATED(msg) __attribute__((__deprecated__ msg))
+      |                                                     ^
+../../src/RubyGosu.cxx:1586:5: warning: 'sprintf' is deprecated: This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead. [-Wdeprecated-declarations]
+ 1586 |     sprintf(klass_name, "TYPE%s", type->name);
+      |     ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here
+  278 | __deprecated_msg("This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.")
+      | ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'
+  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))
+      |                                                       ^
+../../src/RubyGosu.cxx:1589:11: warning: 'rb_data_object_wrap_warning' is deprecated: by TypedData [-Wdeprecated-declarations]
+ 1589 |     obj = Data_Wrap_Struct(klass, 0, 0, ptr);
+      |           ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:199:5: note: expanded from macro 'Data_Wrap_Struct'
+  199 |     rb_data_object_wrap(                          \
+      |     ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:363:31: note: expanded from macro 'rb_data_object_wrap'
+  363 | #define rb_data_object_wrap   RUBY_MACRO_SELECT(rb_data_object_wrap_2, RUBY_UNTYPED_DATA_WARNING)
+      |                               ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:50:35: note: expanded from macro 'RUBY_MACRO_SELECT'
+   50 | #define RUBY_MACRO_SELECT(x, y)   RBIMPL_MACRO_SELECT(x, y)
+      |                                   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:49:35: note: expanded from macro 'RBIMPL_MACRO_SELECT'
+   49 | #define RBIMPL_MACRO_SELECT(x, y) x ## y
+      |                                   ^
+<scratch space>:149:1: note: expanded from here
+  149 | rb_data_object_wrap_1
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:361:31: note: expanded from macro 'rb_data_object_wrap_1'
+  361 | #define rb_data_object_wrap_1 rb_data_object_wrap_warning
+      |                               ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:277:1: note: 'rb_data_object_wrap_warning' has been explicitly marked deprecated here
+  277 | RBIMPL_ATTRSET_UNTYPED_DATA_FUNC()
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:47:5: note: expanded from macro 'RBIMPL_ATTRSET_UNTYPED_DATA_FUNC'
+   47 |     RBIMPL_ATTR_DEPRECATED(("by TypedData"))
+      |     ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/attr/deprecated.h:36:53: note: expanded from macro 'RBIMPL_ATTR_DEPRECATED'
+   36 | # define RBIMPL_ATTR_DEPRECATED(msg) __attribute__((__deprecated__ msg))
+      |                                                     ^
+../../src/RubyGosu.cxx:1602:9: warning: 'rb_data_object_wrap_warning' is deprecated: by TypedData [-Wdeprecated-declarations]
+ 1602 |   obj = Data_Wrap_Struct(klass, VOIDFUNC(sklass->mark), VOIDFUNC(sklass->destroy), 0);
+      |         ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:199:5: note: expanded from macro 'Data_Wrap_Struct'
+  199 |     rb_data_object_wrap(                          \
+      |     ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:363:31: note: expanded from macro 'rb_data_object_wrap'
+  363 | #define rb_data_object_wrap   RUBY_MACRO_SELECT(rb_data_object_wrap_2, RUBY_UNTYPED_DATA_WARNING)
+      |                               ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:50:35: note: expanded from macro 'RUBY_MACRO_SELECT'
+   50 | #define RUBY_MACRO_SELECT(x, y)   RBIMPL_MACRO_SELECT(x, y)
+      |                                   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:49:35: note: expanded from macro 'RBIMPL_MACRO_SELECT'
+   49 | #define RBIMPL_MACRO_SELECT(x, y) x ## y
+      |                                   ^
+<scratch space>:170:1: note: expanded from here
+  170 | rb_data_object_wrap_1
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:361:31: note: expanded from macro 'rb_data_object_wrap_1'
+  361 | #define rb_data_object_wrap_1 rb_data_object_wrap_warning
+      |                               ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:277:1: note: 'rb_data_object_wrap_warning' has been explicitly marked deprecated here
+  277 | RBIMPL_ATTRSET_UNTYPED_DATA_FUNC()
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:47:5: note: expanded from macro 'RBIMPL_ATTRSET_UNTYPED_DATA_FUNC'
+   47 |     RBIMPL_ATTR_DEPRECATED(("by TypedData"))
+      |     ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/attr/deprecated.h:36:53: note: expanded from macro 'RBIMPL_ATTR_DEPRECATED'
+   36 | # define RBIMPL_ATTR_DEPRECATED(msg) __attribute__((__deprecated__ msg))
+      |                                                     ^
+../../src/RubyGosu.cxx:1650:5: warning: 'rb_data_object_get_warning' is deprecated: by TypedData [-Wdeprecated-declarations]
+ 1650 |     Data_Get_Struct(obj, void, vptr);
+      |     ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:275:34: note: expanded from macro 'Data_Get_Struct'
+  275 |     ((sval) = RBIMPL_CAST((type*)rb_data_object_get(obj)))
+      |                                  ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:367:31: note: expanded from macro 'rb_data_object_get'
+  367 | #define rb_data_object_get    RUBY_MACRO_SELECT(rb_data_object_get_2, RUBY_UNTYPED_DATA_WARNING)
+      |                               ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:50:35: note: expanded from macro 'RUBY_MACRO_SELECT'
+   50 | #define RUBY_MACRO_SELECT(x, y)   RBIMPL_MACRO_SELECT(x, y)
+      |                                   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:49:35: note: expanded from macro 'RBIMPL_MACRO_SELECT'
+   49 | #define RBIMPL_MACRO_SELECT(x, y) x ## y
+      |                                   ^
+<scratch space>:54:1: note: expanded from here
+   54 | rb_data_object_get_1
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:365:31: note: expanded from macro 'rb_data_object_get_1'
+  365 | #define rb_data_object_get_1  rb_data_object_get_warning
+      |                               ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:314:1: note: 'rb_data_object_get_warning' has been explicitly marked deprecated here
+  314 | RBIMPL_ATTRSET_UNTYPED_DATA_FUNC()
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:47:5: note: expanded from macro 'RBIMPL_ATTRSET_UNTYPED_DATA_FUNC'
+   47 |     RBIMPL_ATTR_DEPRECATED(("by TypedData"))
+      |     ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/attr/deprecated.h:36:53: note: expanded from macro 'RBIMPL_ATTR_DEPRECATED'
+   36 | # define RBIMPL_ATTR_DEPRECATED(msg) __attribute__((__deprecated__ msg))
+      |                                                     ^
+../../src/RubyGosu.cxx:1786:5: warning: 'rb_data_object_get_warning' is deprecated: by TypedData [-Wdeprecated-declarations]
+ 1786 |     Data_Get_Struct(pointer, swig_module_info, ret);
+      |     ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:275:34: note: expanded from macro 'Data_Get_Struct'
+  275 |     ((sval) = RBIMPL_CAST((type*)rb_data_object_get(obj)))
+      |                                  ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:367:31: note: expanded from macro 'rb_data_object_get'
+  367 | #define rb_data_object_get    RUBY_MACRO_SELECT(rb_data_object_get_2, RUBY_UNTYPED_DATA_WARNING)
+      |                               ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:50:35: note: expanded from macro 'RUBY_MACRO_SELECT'
+   50 | #define RUBY_MACRO_SELECT(x, y)   RBIMPL_MACRO_SELECT(x, y)
+      |                                   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:49:35: note: expanded from macro 'RBIMPL_MACRO_SELECT'
+   49 | #define RBIMPL_MACRO_SELECT(x, y) x ## y
+      |                                   ^
+<scratch space>:145:1: note: expanded from here
+  145 | rb_data_object_get_1
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:365:31: note: expanded from macro 'rb_data_object_get_1'
+  365 | #define rb_data_object_get_1  rb_data_object_get_warning
+      |                               ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:314:1: note: 'rb_data_object_get_warning' has been explicitly marked deprecated here
+  314 | RBIMPL_ATTRSET_UNTYPED_DATA_FUNC()
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:47:5: note: expanded from macro 'RBIMPL_ATTRSET_UNTYPED_DATA_FUNC'
+   47 |     RBIMPL_ATTR_DEPRECATED(("by TypedData"))
+      |     ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/attr/deprecated.h:36:53: note: expanded from macro 'RBIMPL_ATTR_DEPRECATED'
+   36 | # define RBIMPL_ATTR_DEPRECATED(msg) __attribute__((__deprecated__ msg))
+      |                                                     ^
+../../src/RubyGosu.cxx:1801:36: warning: 'rb_data_object_wrap_warning' is deprecated: by TypedData [-Wdeprecated-declarations]
+ 1801 |   swig_runtime_data_type_pointer = Data_Wrap_Struct(cl, 0, 0, pointer);
+      |                                    ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:199:5: note: expanded from macro 'Data_Wrap_Struct'
+  199 |     rb_data_object_wrap(                          \
+      |     ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:363:31: note: expanded from macro 'rb_data_object_wrap'
+  363 | #define rb_data_object_wrap   RUBY_MACRO_SELECT(rb_data_object_wrap_2, RUBY_UNTYPED_DATA_WARNING)
+      |                               ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:50:35: note: expanded from macro 'RUBY_MACRO_SELECT'
+   50 | #define RUBY_MACRO_SELECT(x, y)   RBIMPL_MACRO_SELECT(x, y)
+      |                                   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:49:35: note: expanded from macro 'RBIMPL_MACRO_SELECT'
+   49 | #define RBIMPL_MACRO_SELECT(x, y) x ## y
+      |                                   ^
+<scratch space>:156:1: note: expanded from here
+  156 | rb_data_object_wrap_1
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:361:31: note: expanded from macro 'rb_data_object_wrap_1'
+  361 | #define rb_data_object_wrap_1 rb_data_object_wrap_warning
+      |                               ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:277:1: note: 'rb_data_object_wrap_warning' has been explicitly marked deprecated here
+  277 | RBIMPL_ATTRSET_UNTYPED_DATA_FUNC()
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:47:5: note: expanded from macro 'RBIMPL_ATTRSET_UNTYPED_DATA_FUNC'
+   47 |     RBIMPL_ATTR_DEPRECATED(("by TypedData"))
+      |     ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/attr/deprecated.h:36:53: note: expanded from macro 'RBIMPL_ATTR_DEPRECATED'
+   36 | # define RBIMPL_ATTR_DEPRECATED(msg) __attribute__((__deprecated__ msg))
+      |                                                     ^
+compiling ../../src/AudioFileAudioToolbox.cpp
+compiling ../../src/AudioFileSDLSound.cpp
+compiling ../../src/AudioImpl.cpp
+../../src/RubyGosu.cxx:2603:9: warning: 'rb_rescue' is deprecated: Use of ANYARGS in this function is deprecated [-Wdeprecated-declarations]
+ 2603 |     if (rb_rescue(VALUEFUNC(SWIG_AUX_NUM2DBL), (VALUE)a, VALUEFUNC(SWIG_ruby_failed), 0) != Qnil) {
+      |         ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/backward/cxxanyargs.hpp:246:1: note: 'rb_rescue' has been explicitly marked deprecated here
+  246 | RUBY_CXX_DEPRECATED("Use of ANYARGS in this function is deprecated")
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/backward/2/attributes.h:79:35: note: expanded from macro 'RUBY_CXX_DEPRECATED'
+   79 | #define RUBY_CXX_DEPRECATED(mseg) RBIMPL_ATTR_DEPRECATED((mseg))
+      |                                   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/attr/deprecated.h:36:53: note: expanded from macro 'RBIMPL_ATTR_DEPRECATED'
+   36 | # define RBIMPL_ATTR_DEPRECATED(msg) __attribute__((__deprecated__ msg))
+      |                                                     ^
+../../src/RubyGosu.cxx:2653:9: warning: 'rb_rescue' is deprecated: Use of ANYARGS in this function is deprecated [-Wdeprecated-declarations]
+ 2653 |     if (rb_rescue(VALUEFUNC(SWIG_AUX_NUM2ULONG), (VALUE)a, VALUEFUNC(SWIG_ruby_failed), 0) != Qnil) {
+      |         ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/backward/cxxanyargs.hpp:246:1: note: 'rb_rescue' has been explicitly marked deprecated here
+  246 | RUBY_CXX_DEPRECATED("Use of ANYARGS in this function is deprecated")
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/backward/2/attributes.h:79:35: note: expanded from macro 'RUBY_CXX_DEPRECATED'
+   79 | #define RUBY_CXX_DEPRECATED(mseg) RBIMPL_ATTR_DEPRECATED((mseg))
+      |                                   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/attr/deprecated.h:36:53: note: expanded from macro 'RBIMPL_ATTR_DEPRECATED'
+   36 | # define RBIMPL_ATTR_DEPRECATED(msg) __attribute__((__deprecated__ msg))
+      |                                                     ^
+../../src/RubyGosu.cxx:2839:9: warning: 'rb_rescue' is deprecated: Use of ANYARGS in this function is deprecated [-Wdeprecated-declarations]
+ 2839 |     if (rb_rescue(VALUEFUNC(SWIG_AUX_NUM2LONG), (VALUE)a, VALUEFUNC(SWIG_ruby_failed), 0) != Qnil) {
+      |         ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/backward/cxxanyargs.hpp:246:1: note: 'rb_rescue' has been explicitly marked deprecated here
+  246 | RUBY_CXX_DEPRECATED("Use of ANYARGS in this function is deprecated")
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/backward/2/attributes.h:79:35: note: expanded from macro 'RUBY_CXX_DEPRECATED'
+   79 | #define RUBY_CXX_DEPRECATED(mseg) RBIMPL_ATTR_DEPRECATED((mseg))
+      |                                   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/attr/deprecated.h:36:53: note: expanded from macro 'RBIMPL_ATTR_DEPRECATED'
+   36 | # define RBIMPL_ATTR_DEPRECATED(msg) __attribute__((__deprecated__ msg))
+      |                                                     ^
+compiling ../../src/Bitmap.cpp
+../../src/RubyGosu.cxx:1589:11: warning: call to 'rb_data_object_wrap_warning(unsigned long, void*, void (*)(void*), void (*)(void*))' declared with 'warning' attribute: untyped Data is unsafe; use TypedData instead [-Wattribute-warning]
+ 1589 |     obj = Data_Wrap_Struct(klass, 0, 0, ptr);
+      |           ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:199:5: note: expanded from macro 'Data_Wrap_Struct'
+  199 |     rb_data_object_wrap(                          \
+      |     ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:363:31: note: expanded from macro 'rb_data_object_wrap'
+  363 | #define rb_data_object_wrap   RUBY_MACRO_SELECT(rb_data_object_wrap_2, RUBY_UNTYPED_DATA_WARNING)
+      |                               ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:50:35: note: expanded from macro 'RUBY_MACRO_SELECT'
+   50 | #define RUBY_MACRO_SELECT(x, y)   RBIMPL_MACRO_SELECT(x, y)
+      |                                   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:49:35: note: expanded from macro 'RBIMPL_MACRO_SELECT'
+   49 | #define RBIMPL_MACRO_SELECT(x, y) x ## y
+      |                                   ^
+<scratch space>:149:1: note: expanded from here
+  149 | rb_data_object_wrap_1
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:361:31: note: expanded from macro 'rb_data_object_wrap_1'
+  361 | #define rb_data_object_wrap_1 rb_data_object_wrap_warning
+      |                               ^
+../../src/RubyGosu.cxx:1575:11: warning: call to 'rb_data_object_wrap_warning(unsigned long, void*, void (*)(void*), void (*)(void*))' declared with 'warning' attribute: untyped Data is unsafe; use TypedData instead [-Wattribute-warning]
+ 1575 |     obj = Data_Wrap_Struct(sklass->klass, VOIDFUNC(sklass->mark), 
+      |           ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:199:5: note: expanded from macro 'Data_Wrap_Struct'
+  199 |     rb_data_object_wrap(                          \
+      |     ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:363:31: note: expanded from macro 'rb_data_object_wrap'
+  363 | #define rb_data_object_wrap   RUBY_MACRO_SELECT(rb_data_object_wrap_2, RUBY_UNTYPED_DATA_WARNING)
+      |                               ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:50:35: note: expanded from macro 'RUBY_MACRO_SELECT'
+   50 | #define RUBY_MACRO_SELECT(x, y)   RBIMPL_MACRO_SELECT(x, y)
+      |                                   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:49:35: note: expanded from macro 'RBIMPL_MACRO_SELECT'
+   49 | #define RBIMPL_MACRO_SELECT(x, y) x ## y
+      |                                   ^
+<scratch space>:128:1: note: expanded from here
+  128 | rb_data_object_wrap_1
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:361:31: note: expanded from macro 'rb_data_object_wrap_1'
+  361 | #define rb_data_object_wrap_1 rb_data_object_wrap_warning
+      |                               ^
+../../src/RubyGosu.cxx:1650:5: warning: call to 'rb_data_object_get_warning(unsigned long)' declared with 'warning' attribute: untyped Data is unsafe; use TypedData instead [-Wattribute-warning]
+ 1650 |     Data_Get_Struct(obj, void, vptr);
+      |     ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:275:34: note: expanded from macro 'Data_Get_Struct'
+  275 |     ((sval) = RBIMPL_CAST((type*)rb_data_object_get(obj)))
+      |                                  ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:367:31: note: expanded from macro 'rb_data_object_get'
+  367 | #define rb_data_object_get    RUBY_MACRO_SELECT(rb_data_object_get_2, RUBY_UNTYPED_DATA_WARNING)
+      |                               ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:50:35: note: expanded from macro 'RUBY_MACRO_SELECT'
+   50 | #define RUBY_MACRO_SELECT(x, y)   RBIMPL_MACRO_SELECT(x, y)
+      |                                   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:49:35: note: expanded from macro 'RBIMPL_MACRO_SELECT'
+   49 | #define RBIMPL_MACRO_SELECT(x, y) x ## y
+      |                                   ^
+<scratch space>:54:1: note: expanded from here
+   54 | rb_data_object_get_1
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:365:31: note: expanded from macro 'rb_data_object_get_1'
+  365 | #define rb_data_object_get_1  rb_data_object_get_warning
+      |                               ^
+../../src/RubyGosu.cxx:1786:5: warning: call to 'rb_data_object_get_warning(unsigned long)' declared with 'warning' attribute: untyped Data is unsafe; use TypedData instead [-Wattribute-warning]
+ 1786 |     Data_Get_Struct(pointer, swig_module_info, ret);
+      |     ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:275:34: note: expanded from macro 'Data_Get_Struct'
+  275 |     ((sval) = RBIMPL_CAST((type*)rb_data_object_get(obj)))
+      |                                  ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:367:31: note: expanded from macro 'rb_data_object_get'
+  367 | #define rb_data_object_get    RUBY_MACRO_SELECT(rb_data_object_get_2, RUBY_UNTYPED_DATA_WARNING)
+      |                               ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:50:35: note: expanded from macro 'RUBY_MACRO_SELECT'
+   50 | #define RUBY_MACRO_SELECT(x, y)   RBIMPL_MACRO_SELECT(x, y)
+      |                                   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:49:35: note: expanded from macro 'RBIMPL_MACRO_SELECT'
+   49 | #define RBIMPL_MACRO_SELECT(x, y) x ## y
+      |                                   ^
+<scratch space>:145:1: note: expanded from here
+  145 | rb_data_object_get_1
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:365:31: note: expanded from macro 'rb_data_object_get_1'
+  365 | #define rb_data_object_get_1  rb_data_object_get_warning
+      |                               ^
+../../src/RubyGosu.cxx:1801:36: warning: call to 'rb_data_object_wrap_warning(unsigned long, void*, void (*)(void*), void (*)(void*))' declared with 'warning' attribute: untyped Data is unsafe; use TypedData instead [-Wattribute-warning]
+ 1801 |   swig_runtime_data_type_pointer = Data_Wrap_Struct(cl, 0, 0, pointer);
+      |                                    ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:199:5: note: expanded from macro 'Data_Wrap_Struct'
+  199 |     rb_data_object_wrap(                          \
+      |     ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:363:31: note: expanded from macro 'rb_data_object_wrap'
+  363 | #define rb_data_object_wrap   RUBY_MACRO_SELECT(rb_data_object_wrap_2, RUBY_UNTYPED_DATA_WARNING)
+      |                               ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:50:35: note: expanded from macro 'RUBY_MACRO_SELECT'
+   50 | #define RUBY_MACRO_SELECT(x, y)   RBIMPL_MACRO_SELECT(x, y)
+      |                                   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:49:35: note: expanded from macro 'RBIMPL_MACRO_SELECT'
+   49 | #define RBIMPL_MACRO_SELECT(x, y) x ## y
+      |                                   ^
+<scratch space>:156:1: note: expanded from here
+  156 | rb_data_object_wrap_1
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:361:31: note: expanded from macro 'rb_data_object_wrap_1'
+  361 | #define rb_data_object_wrap_1 rb_data_object_wrap_warning
+      |                               ^
+../../src/RubyGosu.cxx:1602:9: warning: call to 'rb_data_object_wrap_warning(unsigned long, void*, void (*)(void*), void (*)(void*))' declared with 'warning' attribute: untyped Data is unsafe; use TypedData instead [-Wattribute-warning]
+ 1602 |   obj = Data_Wrap_Struct(klass, VOIDFUNC(sklass->mark), VOIDFUNC(sklass->destroy), 0);
+      |         ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:199:5: note: expanded from macro 'Data_Wrap_Struct'
+  199 |     rb_data_object_wrap(                          \
+      |     ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:363:31: note: expanded from macro 'rb_data_object_wrap'
+  363 | #define rb_data_object_wrap   RUBY_MACRO_SELECT(rb_data_object_wrap_2, RUBY_UNTYPED_DATA_WARNING)
+      |                               ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:50:35: note: expanded from macro 'RUBY_MACRO_SELECT'
+   50 | #define RUBY_MACRO_SELECT(x, y)   RBIMPL_MACRO_SELECT(x, y)
+      |                                   ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:49:35: note: expanded from macro 'RBIMPL_MACRO_SELECT'
+   49 | #define RBIMPL_MACRO_SELECT(x, y) x ## y
+      |                                   ^
+<scratch space>:170:1: note: expanded from here
+  170 | rb_data_object_wrap_1
+      | ^
+/Users/bumpdolwijit/.rbenv/versions/3.4.9/include/ruby-3.4.0/ruby/internal/core/rdata.h:361:31: note: expanded from macro 'rb_data_object_wrap_1'
+  361 | #define rb_data_object_wrap_1 rb_data_object_wrap_warning
+      |                               ^
+20 warnings generated.
+compiling ../../src/BitmapIO.cpp
+compiling ../../src/BlockAllocator.cpp
+compiling ../../src/Channel.cpp
+In file included from ../../src/BitmapIO.cpp:96:
+../../dependencies/stb/stb_image_write.h:776:13: warning: 'sprintf' is deprecated: This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead. [-Wdeprecated-declarations]
+  776 |       len = sprintf(buffer, "EXPOSURE=          1.0000000000000\n\n-Y %d +X %d\n", y, x);
+      |             ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here
+  278 | __deprecated_msg("This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.")
+      | ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'
+  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))
+      |                                                       ^
+compiling ../../src/Color.cpp
+1 warning generated.
+compiling ../../src/DirectoriesApple.cpp
+compiling ../../src/DirectoriesUnix.cpp
+compiling ../../src/DirectoriesWin.cpp
+compiling ../../src/FileUnix.cpp
+compiling ../../src/FileWin.cpp
+compiling ../../src/Font.cpp
+compiling ../../src/GosuGLView.cpp
+compiling ../../src/GosuViewController.cpp
+compiling ../../src/Graphics.cpp
+compiling ../../src/IO.cpp
+compiling ../../src/Image.cpp
+compiling ../../src/Input.cpp
+../../src/Graphics.cpp:316:18: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  316 |     return Image(move(result));
+      |                  ^
+      |                  std::
+compiling ../../src/InputUIKit.cpp
+compiling ../../src/Inspection.cpp
+1 warning generated.
+compiling ../../src/LargeImageData.cpp
+compiling ../../src/Macro.cpp
+compiling ../../src/MarkupParser.cpp
+../../src/LargeImageData.cpp:174:16: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  174 |         return move(sub_tiles[0]);
+      |                ^
+      |                std::
+../../src/LargeImageData.cpp:183:16: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  183 |         return move(result);
+      |                ^
+      |                std::
+2 warnings generated.
+compiling ../../src/Math.cpp
+compiling ../../src/OffScreenTarget.cpp
+compiling ../../src/Resolution.cpp
+../../src/MarkupParser.cpp:165:39: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  165 |         substrings.back().text.append(move(fstr.text));
+      |                                       ^
+      |                                       std::
+../../src/MarkupParser.cpp:168:33: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  168 |         substrings.emplace_back(move(fstr));
+      |                                 ^
+      |                                 std::
+../../src/MarkupParser.cpp:175:18: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  175 |         consumer(move(substrings));
+      |                  ^
+      |                  std::
+../../src/MarkupParser.cpp:182:12: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  182 | : consumer(move(consumer))
+      |            ^
+      |            std::
+4 warnings generated.
+compiling ../../src/TexChunk.cpp
+../../src/OffScreenTarget.cpp:98:18: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+   98 |     return Image(move(tex_chunk));
+      |                  ^
+      |                  std::
+1 warning generated.
+compiling ../../src/Text.cpp
+../../src/TexChunk.cpp:20:13: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+   20 | : m_texture{move(texture)},
+      |             ^
+      |             std::
+1 warning generated.
+compiling ../../src/TextBuilder.cpp
+../../src/Text.cpp:55:56: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+   55 |                                 text_builder.feed_word(move(word));
+      |                                                        ^
+      |                                                        std::
+compiling ../../src/TextInput.cpp
+1 warning generated.
+compiling ../../src/Texture.cpp
+../../src/TextBuilder.cpp:29:19: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+   29 |     this->parts = move(parts);
+      |                   ^
+      |                   std::
+1 warning generated.
+compiling ../../src/TimingApple.cpp
+compiling ../../src/TimingUnix.cpp
+compiling ../../src/TimingWin.cpp
+compiling ../../src/Transform.cpp
+compiling ../../src/TrueTypeFont.cpp
+compiling ../../src/TrueTypeFontApple.cpp
+../../src/TrueTypeFont.cpp:26:16: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+   26 |     : fallback{move(fallback)}
+      |                ^
+      |                std::
+../../src/TrueTypeFont.cpp:261:37: warning: unqualified call to 'std::move' [-Wunqualified-std-cast-call]
+  261 |         font_ptr = &font_with_stack(move(ttf_stack));
+      |                                     ^
+      |                                     std::
+compiling ../../src/TrueTypeFontUnix.cpp
+compiling ../../src/TrueTypeFontWin.cpp
+compiling ../../src/Utility.cpp
+2 warnings generated.
+compiling ../../src/Version.cpp
+compiling ../../src/WinUtility.cpp
+compiling ../../src/Window.cpp
+compiling ../../src/WindowUIKit.cpp
+linking shared-object gosu.bundle
+
+current directory: /Users/bumpdolwijit/Desktop/bump/dog-dash-drift/vendor/bundle/ruby/3.4.0/gems/gosu-1.4.6/ext/gosu
+make -j3 DESTDIR\= sitearchdir\=./.gem.20260730-9987-rx3soe sitelibdir\=./.gem.20260730-9987-rx3soe install
+/usr/bin/install -c -m 0755 gosu.bundle ./.gem.20260730-9987-rx3soe
+
+current directory: /Users/bumpdolwijit/Desktop/bump/dog-dash-drift/vendor/bundle/ruby/3.4.0/gems/gosu-1.4.6/ext/gosu
+make DESTDIR\= sitearchdir\=./.gem.20260730-9987-rx3soe sitelibdir\=./.gem.20260730-9987-rx3soe clean

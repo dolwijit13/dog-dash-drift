@@ -1,4 +1,4 @@
 window.DragonRuby = window.DragonRuby || {};
-(function() {
+(function () {
   console.log("Initializing official DragonRuby HTML5 WebAssembly Loader...");
 })();

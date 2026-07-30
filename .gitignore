@@ -3,6 +3,16 @@
 /vendor/bundle/
 *.gem
 
+# DragonRuby Binaries & Default Assets
+dragonruby
+dragonruby-publish
+font.ttf
+*.zip
+mygame-html5/
+.dragonruby/
+logs/
+errors/
+
 # OS & Editor files
 .DS_Store
 *.swp

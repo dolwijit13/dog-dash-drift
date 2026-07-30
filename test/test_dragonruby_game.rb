@@ -6,6 +6,7 @@ require_relative '../app/camera'
 require_relative '../app/soundwave'
 require_relative '../app/enemy'
 require_relative '../app/enemy_spawner'
+require_relative '../app/collectible'
 require_relative '../app/collision_system'
 require_relative '../app/main'
 
@@ -46,7 +47,7 @@ class MockGrid
 end
 
 class MockState
-  attr_accessor :player, :camera, :soundwaves, :enemies, :spawner, :score, :coins
+  attr_accessor :player, :camera, :soundwaves, :enemies, :collectibles, :spawner, :score, :coins
 end
 
 class MockArgs
@@ -103,6 +104,33 @@ class TestDragonRubyGame < Minitest::Test
     assert_equal 1, results[:kills]
     assert_equal 10, results[:score]
     assert_equal 5, results[:coins]
+  end
+
+  def test_collectible_bone_snack_creation_and_scrolling
+    bone = BoneSnack.new(200, 300)
+    assert bone.active?
+    assert_equal 20, bone.w
+    assert_equal 20, bone.h
+
+    bone.update(1.5)
+    assert_equal 198.5, bone.x
+
+    prim = bone.primitive
+    assert_equal 241, prim[:r]
+    assert_equal 196, prim[:g]
+    assert_equal 15, prim[:b]
+  end
+
+  def test_player_collectible_pickup_reward
+    player = Player.new(100, 300)
+    bone = BoneSnack.new(105, 305)
+
+    results = CollisionSystem.handle_player_collectible_collisions(player, [bone])
+
+    refute bone.active?
+    assert_equal 1, results[:picked_up]
+    assert_equal 10, results[:coins]
+    assert_equal 20, results[:score]
   end
 
   def test_tick_render_output

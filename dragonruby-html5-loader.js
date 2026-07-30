@@ -180,6 +180,7 @@ function syncDataFiles(dbname, baseurl) {
         for (var i in state.remote_manifest) {
             var remoteitem = state.remote_manifest[i];
             var remotefname = i;
+            if (remotefname.startsWith(".")) continue;
             if (typeof state.local_manifest[remotefname] !== "undefined") {
             } else {
                 state.total_to_download += remoteitem.filesize;

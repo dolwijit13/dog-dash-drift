@@ -10,7 +10,7 @@
 - **Engine**: **DragonRuby Game Toolkit (GTK)** *(Migrated from Gosu for native WebAssembly/HTML5 Export)*
 - **Genre**: Top-Down Side-Scrolling Action / Runner (2D Beat 'em up / Autoshooter hybrid)
 - **Tone & Theme**: Cute, Whimsical, Pastel Candy Land, Playful, Pixel Art
-- **Live Demo / Deployment**: [GitHub Pages Live Demo](https://dolwijit13.github.io/dog-dash-drift/) *(ดู [Deployment Requirement](file:///Users/bumpdolwijit/Desktop/bump/dog-dash-drift/.docs/github-pages-deployment/requirement.md))*
+- **Live Demo / Deployment**: [GitHub Pages Live Demo](https://dolwijit13.github.io/dog-dash-drift/) *(ดู [DragonRuby Deployment Requirement](file:///Users/bumpdolwijit/Desktop/bump/dog-dash-drift/.docs/dragonruby-github-pages-deployment/requirement.md))*
 
 ---
 
@@ -45,31 +45,31 @@
   - ระบบนับคะแนน (Score) และเงินสะสม (Coins/Bones) พร้อมหน้าจอ HUD แสดงผลบริเวณมุมซ้ายบน
 
 ### 5. Deployment & CI/CD Pipeline
-- **GitHub Pages Deployment**: [Deployment Requirement](file:///Users/bumpdolwijit/Desktop/bump/dog-dash-drift/.docs/github-pages-deployment/requirement.md)
-  - ระบบ Build อัตโนมัติด้วย GitHub Actions เพื่อแปลงเกมเป็น Web (WASM/Canvas) ผ่าน DragonRuby GTK Web Exporter และ Deploy ขึ้น GitHub Pages
+- **DragonRuby GitHub Pages Deployment**: [DragonRuby Deployment Requirement](file:///Users/bumpdolwijit/Desktop/bump/dog-dash-drift/.docs/dragonruby-github-pages-deployment/requirement.md)
+  - ระบบ Build อัตโนมัติด้วย GitHub Actions เพื่อแปลงเกม DragonRuby GTK เป็น Web (WASM/Canvas) และ Deploy ขึ้น GitHub Pages
 
 ---
 
 ## 📁 Directory Structure Overview
 ```text
 .docs/
-├── main.md                              # เอกสารสรุปภาพรวมโปรเจกต์ (ไฟล์นี้)
-├── dragonruby-migration/                # Feature/Arch: การย้ายเอนจินมาใช้ DragonRuby GTK
+├── main.md                                   # เอกสารสรุปภาพรวมโปรเจกต์ (ไฟล์นี้)
+├── dragonruby-migration/                     # Feature/Arch: การย้ายเอนจินมาใช้ DragonRuby GTK
 │   └── requirement.md
-├── player-mouse-movement/               # Spike: การควบคุมเมาส์เบื้องต้น
+├── dragonruby-github-pages-deployment/       # Feature: ระบบ Deploy DragonRuby Web บน GitHub Pages
 │   └── requirement.md
-├── camera-scrolling-movement/           # Feature: การเดิน 8 ทิศทางและกล้อง Side-Scrolling
+├── player-mouse-movement/                    # Spike: การควบคุมเมาส์เบื้องต้น
 │   └── requirement.md
-├── auto-attack-soundwave/               # Feature: ระบบยิงคลื่นเสียงอัตโนมัติ
+├── camera-scrolling-movement/                # Feature: การเดิน 8 ทิศทางและกล้อง Side-Scrolling
 │   └── requirement.md
-├── enemy-evil-cat/                      # Feature: แมวปีศาจและการตรวจจับการชน
+├── auto-attack-soundwave/                    # Feature: ระบบยิงคลื่นเสียงอัตโนมัติ
 │   └── requirement.md
-├── collectibles-bone-snack/             # Feature: ไอเทมกระดูก/ขนมหวาน
+├── enemy-evil-cat/                           # Feature: แมวปีศาจและการตรวจจับการชน
 │   └── requirement.md
-├── obstacles-broccoli/                  # Feature: สิ่งกีดขวางบร็อกโคลี
+├── collectibles-bone-snack/                  # Feature: ไอเทมกระดูก/ขนมหวาน
 │   └── requirement.md
-├── economy-hud-system/                  # Feature: ระบบการเงินและหน้าจอ UI HUD
+├── obstacles-broccoli/                       # Feature: สิ่งกีดขวางบร็อกโคลี
 │   └── requirement.md
-└── github-pages-deployment/             # Feature: ระบบ Web Build & CI/CD Deployment
+└── economy-hud-system/                       # Feature: ระบบการเงินและหน้าจอ UI HUD
     └── requirement.md
 ```

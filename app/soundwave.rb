@@ -1,0 +1,40 @@
+# frozen_string_literal: true
+
+class Soundwave
+  WIDTH = 16
+  HEIGHT = 8
+  SPEED = 8.0
+
+  attr_accessor :x, :y, :speed, :active
+
+  def initialize(x, y, speed = SPEED)
+    @x = x.to_f
+    @y = y.to_f
+    @speed = speed.to_f
+    @active = true
+  end
+
+  def update
+    @x += @speed
+  end
+
+  def out_of_bounds?(boundary_width = 1280)
+    @x > boundary_width
+  end
+
+  def active?
+    @active && !out_of_bounds?
+  end
+
+  def deactivate!
+    @active = false
+  end
+
+  def primitive
+    { x: @x, y: @y, w: WIDTH, h: HEIGHT, r: 0, g: 255, b: 255 }
+  end
+
+  def rect
+    [ @x, @y, WIDTH, HEIGHT ]
+  end
+end

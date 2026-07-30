@@ -3,6 +3,13 @@
 /vendor/bundle/
 *.gem
 
+# DragonRuby Binaries & Builds
+dragonruby
+dragonruby-publish
+*.zip
+mygame-html5/
+.dragonruby/
+
 # OS & Editor files
 .DS_Store
 *.swp

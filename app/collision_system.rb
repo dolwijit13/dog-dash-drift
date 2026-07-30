@@ -64,4 +64,22 @@ class CollisionSystem
 
     results
   end
+
+  def self.handle_player_obstacle_collisions(player, obstacles)
+    results = { hits: 0, coins_lost: 0 }
+    return results unless player && obstacles
+
+    obstacles.each do |obstacle|
+      next unless obstacle.active?
+
+      if check_intersect(player.rect, obstacle.rect)
+        obstacle.active = false
+        results[:hits] += 1
+        results[:coins_lost] += 5
+        player.apply_slowdown(1.0) if player.respond_to?(:apply_slowdown)
+      end
+    end
+
+    results
+  end
 end

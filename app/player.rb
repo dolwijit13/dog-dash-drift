@@ -8,17 +8,30 @@ class Player
   HEIGHT = 32
   FIRE_RATE = 0.5
 
-  attr_accessor :x, :y, :speed, :cooldown, :fire_rate
+  attr_accessor :x, :y, :speed, :base_speed, :cooldown, :fire_rate, :slowdown_timer
 
   def initialize(x = 100, y = 344, speed = 4.0, fire_rate = FIRE_RATE)
     @x = x.to_f
     @y = y.to_f
+    @base_speed = speed.to_f
     @speed = speed.to_f
     @fire_rate = fire_rate.to_f
     @cooldown = 0.0
+    @slowdown_timer = 0.0
+  end
+
+  def apply_slowdown(duration_sec = 1.0)
+    @slowdown_timer = duration_sec.to_f
   end
 
   def update(inputs = nil, boundary_width = 1280, boundary_height = 720, delta_time = 1.0 / 60.0)
+    if @slowdown_timer > 0
+      @slowdown_timer -= delta_time
+      @speed = @base_speed * 0.5
+    else
+      @speed = @base_speed
+    end
+
     if inputs
       dx, dy = InputHandler.directional_vector(inputs)
       @x += dx * @speed

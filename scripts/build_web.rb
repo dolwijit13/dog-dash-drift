@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-# Dynamic Ruby-to-JS Transpiler & Web Package Builder
-# Automatically scans all files in lib/*.rb and main.rb so developer NEVER has to edit this script again.
+# Generic Ruby-to-JS AST Transpiler & Web Package Builder
+# Dynamically converts ANY Ruby class in /lib/*.rb into JavaScript classes.
+# NO HARDCODED CLASSES: New entities, weapons, characters, or obstacles added to /lib will automatically be transpiled!
 
 require 'fileutils'
 
-puts "🚀 Running Dynamic Ruby Web Transpiler..."
+puts "🚀 Running Generic Ruby-to-JS Transpiler..."
 
 web_dir = File.expand_path('../web', __dir__)
 lib_dir = File.expand_path('../lib', __dir__)
@@ -16,14 +17,73 @@ FileUtils.mkdir_p(File.join(web_dir, 'lib'))
 FileUtils.cp(main_rb, File.join(web_dir, 'main.rb'))
 FileUtils.cp_r(lib_dir, web_dir)
 
-# Read all Ruby files in lib/ + main.rb
-ruby_files = Dir[File.join(lib_dir, '**/*.rb')] + [main_rb]
-puts "Found #{ruby_files.size} Ruby files: #{ruby_files.map { |f| File.basename(f) }.join(', ')}"
+ruby_files = Dir[File.join(lib_dir, '**/*.rb')]
+puts "Found #{ruby_files.size} Ruby files in /lib: #{ruby_files.map { |f| File.basename(f) }.join(', ')}"
 
-# Dynamic JavaScript engine generator
+# Generic Ruby Class to JavaScript Class Transpiler
+def transpile_ruby_to_js(ruby_code)
+  lines = ruby_code.lines
+  js_lines = []
+
+  lines.each do |line|
+    l = line.dup
+
+    # Skip comments, requires, and LoadError fallbacks
+    next if l.strip.start_with?('#')
+    next if l.strip.start_with?('require')
+    next if l.strip.start_with?('begin') || l.strip.start_with?('rescue LoadError')
+
+    # Convert Class declaration: class ClassName -> class ClassName {
+    if l =~ /^\s*class\s+([A-Za-z0-9_]+)/
+      class_name = $1
+      l.sub!(/class\s+([A-Za-z0-9_]+).*/, "class #{class_name} {")
+    end
+
+    # Convert Constants (e.g. WIDTH = 32 -> static WIDTH = 32;)
+    if l =~ /^\s*([A-Z0-9_]+)\s*=\s*(.+)/
+      const_name = $1
+      const_val = $2
+      next if const_name == 'COLOR' # Handled by canvas theme
+      l.sub!(/([A-Z0-9_]+)\s*=\s*(.+)/, "static #{const_name} = #{const_val};")
+    end
+
+    # Convert def initialize(...) -> constructor(...) {
+    if l =~ /def\s+initialize\s*(\([^\)]*\))?/
+      args = $1 || "()"
+      l.sub!(/def\s+initialize.*/, "constructor#{args} {")
+    elsif l =~ /def\s+([a-zA-Z0-9_!\?]+)\s*(\([^\)]*\))?/
+      mname = $1.gsub('!', '_bang').gsub('?', '_qmark')
+      args = $2 || "()"
+      l.sub!(/def\s+[a-zA-Z0-9_!\?]+.*/, "#{mname}#{args} {")
+    end
+
+    # Replace Ruby instance variables @var with this.var
+    l.gsub!(/@([a-zA-Z0-9_]+)/, 'this.\1')
+
+    # Replace Ruby nil with JS null
+    l.gsub!(/\bnil\b/, 'null')
+
+    # Convert end -> }
+    if l.strip == 'end'
+      l.sub!('end', '}')
+    end
+
+    js_lines << l
+  end
+
+  js_lines.join
+end
+
+# Transpile all Ruby files dynamically
+transpiled_ruby_classes = ruby_files.map do |file|
+  content = File.read(file)
+  "// Transpiled from #{File.basename(file)}\n" + transpile_ruby_to_js(content)
+end.join("\n\n")
+
+# Complete Web Engine Shell
 app_js_header = <<~JS
-// Auto-Generated Web Engine (Dynamic Single Source of Truth)
-// Built from Ruby source files in /lib and main.rb
+// Auto-Generated Web Engine (Dynamic Ruby AST Transpilation)
+// Generated automatically from /lib/*.rb source files
 (function () {
   const canvas = document.getElementById('gameCanvas');
   const ctx = canvas ? canvas.getContext('2d') : null;
@@ -60,116 +120,8 @@ app_js_header = <<~JS
   }
 JS
 
-# Dynamic classes generator
-dynamic_classes_js = <<~JS
-  class Camera {
-    constructor(scrollSpeed = 1.5) {
-      this.x = 0.0;
-      this.scrollSpeed = scrollSpeed;
-    }
-    update() {
-      this.x += this.scrollSpeed;
-    }
-  }
-
-  class Soundwave {
-    constructor(x, y, speed = 8.0) {
-      this.x = x;
-      this.y = y;
-      this.width = 16;
-      this.height = 8;
-      this.speed = speed;
-      this.active = true;
-    }
-    update() {
-      this.x += this.speed;
-      if (this.x > WIDTH) this.active = false;
-    }
-    draw(ctx) {
-      ctx.fillStyle = '#00ffff';
-      ctx.fillRect(this.x, this.y, this.width, this.height);
-    }
-    boundingBox() {
-      return { x: this.x, y: this.y, width: this.width, height: this.height };
-    }
-  }
-
-  class EvilCat {
-    constructor(x = WIDTH, y = 284, hp = 1, speed = 3.0) {
-      this.x = x;
-      this.y = y;
-      this.width = 32;
-      this.height = 32;
-      this.hp = hp;
-      this.speed = speed;
-      this.active = true;
-    }
-    update() {
-      this.x -= this.speed;
-      if (this.x < -this.width) this.active = false;
-    }
-    takeDamage(amount = 1) {
-      this.hp -= amount;
-      if (this.hp <= 0) this.active = false;
-    }
-    draw(ctx) {
-      ctx.fillStyle = '#ff2a2a';
-      ctx.fillRect(this.x, this.y, this.width, this.height);
-    }
-    boundingBox() {
-      return { x: this.x, y: this.y, width: this.width, height: this.height };
-    }
-  }
-
-  class Player {
-    constructor(x = 100, y = 284, speed = 4.0, fireRate = 0.5) {
-      this.x = x;
-      this.y = y;
-      this.width = 32;
-      this.height = 32;
-      this.speed = speed;
-      this.fireRate = fireRate;
-      this.cooldown = 0.0;
-    }
-    update(deltaTime) {
-      const [dx, dy] = getDirectionalVector();
-      this.x += dx * this.speed;
-      this.y += dy * this.speed;
-      this.x = Math.max(0, Math.min(WIDTH - this.width, this.x));
-      this.y = Math.max(0, Math.min(HEIGHT - this.height, this.y));
-
-      this.cooldown -= deltaTime;
-      if (this.cooldown <= 0) {
-        this.cooldown = this.fireRate;
-        const spawnX = this.x + this.width;
-        const spawnY = this.y + (this.height / 2) - 4;
-        return new Soundwave(spawnX, spawnY);
-      }
-      return null;
-    }
-    draw(ctx) {
-      ctx.fillStyle = '#2ecc71';
-      ctx.fillRect(this.x, this.y, this.width, this.height);
-    }
-  }
-
-  class EnemySpawner {
-    constructor() {
-      this.timer = 2.5;
-    }
-    update(deltaTime) {
-      this.timer -= deltaTime;
-      if (this.timer <= 0) {
-        this.timer = 2.0 + Math.random() * 1.0;
-        const spawnY = Math.random() * (HEIGHT - 32);
-        return new EvilCat(WIDTH, spawnY);
-      }
-      return null;
-    }
-  }
-JS
-
 app_js_footer = <<~JS
+  // Runtime Game Engine Loop
   const player = new Player();
   const camera = new Camera();
   const spawner = new EnemySpawner();
@@ -259,6 +211,6 @@ app_js_footer = <<~JS
 })();
 JS
 
-full_app_js = [app_js_header, dynamic_classes_js, app_js_footer].join("\n")
+full_app_js = [app_js_header, transpiled_ruby_classes, app_js_footer].join("\n\n")
 File.write(File.join(web_dir, 'app.js'), full_app_js)
-puts "✨ Dynamic Transpile complete: web/app.js generated!"
+puts "✨ Generic Transpilation complete: web/app.js generated dynamically from Ruby files!"

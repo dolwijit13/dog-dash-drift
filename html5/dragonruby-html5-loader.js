@@ -538,68 +538,62 @@ var Module = {
     }
   },
   startClickToPlay: function() {
-    var base64 = base64Encode(FS.readFile(GDragonRubyIcon, {}));
     var div = document.createElement('div');
-    var leftPx = ((window.innerWidth - 640) / 2);
-    var leftPerc = Math.floor((leftPx / window.innerWidth) * 100);
     div.id = 'clicktoplaydiv';
-    div.style.width = '50%';
-    div.style.height = '50%';
+    div.style.width = '640px';
+    div.style.maxWidth = '90vw';
+    div.style.height = '360px';
+    div.style.maxHeight = '90vh';
     div.style.backgroundColor = 'rgb(40, 44, 52)';
+    div.style.border = '2px solid #2ecc71';
+    div.style.borderRadius = '12px';
     div.style.position = 'absolute';
     div.style.top = '50%';
     div.style.left = '50%';
     div.style.transform = 'translate(-50%, -50%)';
+    div.style.zIndex = '999999';
+    div.style.cursor = 'pointer';
+    div.style.display = 'flex';
+    div.style.flexDirection = 'column';
+    div.style.alignItems = 'center';
+    div.style.justifyContent = 'center';
+    div.style.gap = '20px';
+    div.style.boxShadow = '0 10px 30px rgba(0,0,0,0.8)';
 
-    var img = new Image();
-    img.onload = function() {  // once we know its size, scale it, keeping aspect ratio.
-      var pct = 30;
-      var w = img.naturalWidth;
-      var h = img.naturalHeight;
-      if (w > h) {
-        img.style.width = '' + pct + '%';
-      } else {
-        img.style.height = '' + pct + '%';
+    try {
+      var iconData = FS.readFile(GDragonRubyIcon, {});
+      if (iconData && iconData.length > 0) {
+        var base64 = base64Encode(iconData);
+        var img = new Image();
+        img.style.width = '80px';
+        img.style.height = '80px';
+        img.src = 'data:image/png;base64,' + base64;
+        div.appendChild(img);
       }
-      img.style.display = 'block';
+    } catch(e) {
+      console.warn("Could not load icon for start overlay:", e);
     }
 
-    img.style.display = 'none';
-    img.style.width = 'auto';
-    img.style.height = 'auto';
-    img.style.margin = 0;
-    img.style.position = 'absolute';
-    img.style.top = '50%';
-    img.style.left = '50%';
-    img.style.transform = 'translate(-50%, -50%)';
-    img.src = 'data:image/png;base64,' + base64;
-    div.appendChild(img);
+    var p1 = document.createElement('p');
+    p1.textContent = GDragonRubyGameTitle + " " + GDragonRubyGameVersion + " by " + GDragonRubyDevTitle;
+    p1.style.color = '#FFFFFF';
+    p1.style.fontFamily = "monospace";
+    p1.style.fontSize = "22px";
+    p1.style.fontWeight = "bold";
+    p1.style.margin = "0";
+    div.appendChild(p1);
 
-
-    var p;
-
-    p = document.createElement('p');
-    p.textContent = GDragonRubyGameTitle + " " + GDragonRubyGameVersion + " by " + GDragonRubyDevTitle;
-    p.style.textAlign = 'center';
-    p.style.color = '#FFFFFF';
-    p.style.width = '100%';
-    p.style.position = 'absolute';
-    p.style.top = '10%';
-    p.style['font-family'] = "monospace";
-    p.style['font-size'] = "20px";
-    div.appendChild(p);
-
-    p = document.createElement('p');
-    p.innerHTML = 'Click or tap here to begin.';
-    p.style['font-family'] = "monospace";
-    p.style['font-size'] = "20px";
-    p.style.textAlign = 'center';
-    p.style.backgroundColor = 'rgb(40, 44, 52)';
-    p.style.color = '#FFFFFF';
-    p.style.width = '100%';
-    p.style.position = 'absolute';
-    p.style.top = '75%';
-    div.appendChild(p);
+    var p2 = document.createElement('p');
+    p2.innerHTML = '▶ Click or tap here to begin';
+    p2.style.fontFamily = "monospace";
+    p2.style.fontSize = "18px";
+    p2.style.color = '#2ecc71';
+    p2.style.backgroundColor = '#1e1e2e';
+    p2.style.padding = '12px 24px';
+    p2.style.borderRadius = '8px';
+    p2.style.border = '1px solid #2ecc71';
+    p2.style.margin = "0";
+    div.appendChild(p2);
 
     document.body.appendChild(div);
     div.addEventListener('click', Module.clickToPlayListener);

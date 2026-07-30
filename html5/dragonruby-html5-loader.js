@@ -212,13 +212,11 @@ function syncDataFiles(dbname, baseurl) {
         for (var i in state.remote_manifest) {
             var remoteitem = state.remote_manifest[i];
             var remotefname = i;
+            if (remotefname.startsWith(".")) continue;
             if (typeof state.local_manifest[remotefname] !== "undefined") {
                 debug("remote filename '" + remotefname + "' already downloaded.");
             } else {
                 debug("remote filename '" + remotefname + "' needs downloading.");
-                // !!! FIXME: use the Fetch API, plus streaming, as an option.
-                // !!! FIXME:  It can use less memory, since it doesn't need
-                // !!! FIXME:  to keep the whole file in memory.
                 state.total_to_download += remoteitem.filesize;
                 state.total_files++;
                 state.pending_files.push(remotefname)

@@ -10,27 +10,28 @@ class TestWebBuild < Minitest::Test
     content = File.read(index_path)
     assert_includes content, 'gameCanvas'
     assert_includes content, 'Dog Dash Deluxe'
-    assert_includes content, 'game.js'
+    assert_includes content, 'ruby.wasm'
+    assert_includes content, 'web_gosu_bridge.js'
   end
 
-  def test_web_game_js_exists
-    game_js_path = File.expand_path('../web/game.js', __dir__)
-    assert File.exist?(game_js_path), 'web/game.js should exist'
+  def test_web_gosu_bridge_js_exists
+    bridge_js_path = File.expand_path('../web/web_gosu_bridge.js', __dir__)
+    assert File.exist?(bridge_js_path), 'web/web_gosu_bridge.js should exist'
 
-    content = File.read(game_js_path)
-    assert_includes content, 'class Player'
-    assert_includes content, 'class Soundwave'
-    assert_includes content, 'class EvilCat'
-    assert_includes content, 'checkAABB'
+    content = File.read(bridge_js_path)
+    assert_includes content, 'WebGosu'
+    assert_includes content, 'drawRect'
+    assert_includes content, 'drawLine'
   end
 
-  def test_github_pages_workflow_exists
+  def test_github_pages_workflow_bundling_ruby_source
     workflow_path = File.expand_path('../.github/workflows/deploy.yml', __dir__)
     assert File.exist?(workflow_path), '.github/workflows/deploy.yml should exist'
 
     content = File.read(workflow_path)
     assert_includes content, 'Deploy to GitHub Pages'
+    assert_includes content, 'cp main.rb web/'
+    assert_includes content, 'cp -r lib web/'
     assert_includes content, 'actions/deploy-pages@v4'
-    assert_includes content, 'path: \'./web\''
   end
 end

@@ -50,7 +50,7 @@ def tick(args)
   args.state.obstacle_timer -= 1.0 / 60.0
   if args.state.obstacle_timer <= 0
     args.state.obstacle_timer = 3.0 + rand * 2.0
-    spawn_y = rand(0..(grid_h - Broccoli::HEIGHT.to_i)).to_f
+    spawn_y = rand * (grid_h - Broccoli::HEIGHT)
     args.state.obstacles << Broccoli.new(grid_w, spawn_y)
   end
 
@@ -101,6 +101,7 @@ def tick(args)
   args.state.enemies.each { |e| args.outputs.sprites << e.primitive }
 
   # Render HUD
-  args.outputs.labels << { x: 20, y: grid_h - 20, text: "Coins: $#{args.state.coins}", size_enum: 2, r: 255, g: 255, b: 255 }
-  args.outputs.labels << { x: 20, y: grid_h - 50, text: "Score: #{args.state.score}", size_enum: 2, r: 255, g: 255, b: 255 }
+  hud_y_top = grid_h - 20
+  args.outputs.labels << { x: 30, y: hud_y_top, text: "Bones: $#{args.state.coins}", size_enum: 2, r: 241, g: 196, b: 15 }
+  args.outputs.labels << { x: 30, y: hud_y_top - 30, text: "Score: #{args.state.score}", size_enum: 2, r: 255, g: 255, b: 255 }
 end

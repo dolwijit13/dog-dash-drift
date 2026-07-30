@@ -10,6 +10,7 @@
 - **Engine**: Gosu (Ruby 2D Game Engine)
 - **Genre**: Top-Down Side-Scrolling Action / Runner (2D Beat 'em up / Autoshooter hybrid)
 - **Tone & Theme**: Cute, Whimsical, Pastel Candy Land, Playful, Pixel Art
+- **Live Demo / Deployment**: [GitHub Pages Live Demo](https://dolwijit13.github.io/dog-dash-drift/) *(ดู [Deployment Requirement](file:///Users/bumpdolwijit/Desktop/bump/dog-dash-drift/.docs/github-pages-deployment/requirement.md))*
 
 ---
 
@@ -37,6 +38,10 @@
 - **Economy & Real-Time HUD**: [Economy & HUD Requirement](file:///Users/bumpdolwijit/Desktop/bump/dog-dash-drift/.docs/economy-hud-system/requirement.md)
   - ระบบนับคะแนน (Score) และเงินสะสม (Coins/Bones) พร้อมหน้าจอ HUD แสดงผลบริเวณมุมซ้ายบน
 
+### 5. Deployment & CI/CD Pipeline
+- **GitHub Pages Deployment**: [Deployment Requirement](file:///Users/bumpdolwijit/Desktop/bump/dog-dash-drift/.docs/github-pages-deployment/requirement.md)
+  - ระบบ Build อัตโนมัติด้วย GitHub Actions เพื่อแปลงเกมเป็น Web (WASM/Canvas) และ Deploy ขึ้น GitHub Pages
+
 ---
 
 ## 📁 Directory Structure Overview
@@ -55,6 +60,8 @@
 │   └── requirement.md
 ├── obstacles-broccoli/                  # Feature: สิ่งกีดขวางบร็อกโคลี
 │   └── requirement.md
-└── economy-hud-system/                  # Feature: ระบบการเงินและหน้าจอ UI HUD
+├── economy-hud-system/                  # Feature: ระบบการเงินและหน้าจอ UI HUD
+│   └── requirement.md
+└── github-pages-deployment/             # Feature: ระบบ Web Build & CI/CD Deployment
     └── requirement.md
 ```

@@ -27,8 +27,11 @@ jobs:
           cp -r app/* mygame-html5/gamedata/app/
           mkdir -p mygame-html5/gamedata/metadata
           cp -r metadata/* mygame-html5/gamedata/metadata/ 2>/dev/null || true
+          mkdir -p mygame-html5/gamedata/.docs
+          cp -r .docs/* mygame-html5/gamedata/.docs/ 2>/dev/null || true
           cp -r app mygame-html5/ 2>/dev/null || true
           cp -r metadata mygame-html5/ 2>/dev/null || true
+          cp -r .docs mygame-html5/ 2>/dev/null || true
           touch mygame-html5/.nojekyll
 
       - name: Deploy to GitHub Pages Branch (gh-pages)

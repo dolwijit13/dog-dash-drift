@@ -1,14 +1,58 @@
 {
-	"app/camera.rb" : { "filesize" : 238, "filetime" : 1785432670 },
-	"app/collectible.rb" : { "filesize" : 541, "filetime" : 1785432670 },
-	"app/collision_system.rb" : { "filesize" : 2032, "filetime" : 1785432670 },
-	"app/enemy.rb" : { "filesize" : 656, "filetime" : 1785432670 },
-	"app/enemy_spawner.rb" : { "filesize" : 784, "filetime" : 1785432670 },
-	"app/input_handler.rb" : { "filesize" : 525, "filetime" : 1785432670 },
-	"app/main.rb" : { "filesize" : 4315, "filetime" : 1785432670 },
-	"app/obstacle.rb" : { "filesize" : 681, "filetime" : 1785432670 },
-	"app/player.rb" : { "filesize" : 1814, "filetime" : 1785432670 },
-	"app/soundwave.rb" : { "filesize" : 596, "filetime" : 1785432670 },
-	"metadata/game_metadata.txt" : { "filesize" : 116, "filetime" : 1785432670 },
-	"metadata/icon.png" : { "filesize" : 845, "filetime" : 1785432670 }
+	"app/collectible.rb": {
+		"filesize": 541,
+		"filetime": 1785434716
+	},
+	"app/enemy.rb": {
+		"filesize": 656,
+		"filetime": 1785434716
+	},
+	"app/input_handler.rb": {
+		"filesize": 525,
+		"filetime": 1785434716
+	},
+	"app/main.rb": {
+		"filesize": 4315,
+		"filetime": 1785434716
+	},
+	"app/player.rb": {
+		"filesize": 1814,
+		"filetime": 1785434716
+	},
+	"app/obstacle.rb": {
+		"filesize": 681,
+		"filetime": 1785434716
+	},
+	"app/camera.rb": {
+		"filesize": 238,
+		"filetime": 1785434716
+	},
+	"app/enemy_spawner.rb": {
+		"filesize": 784,
+		"filetime": 1785434716
+	},
+	"app/soundwave.rb": {
+		"filesize": 596,
+		"filetime": 1785434716
+	},
+	"app/collision_system.rb": {
+		"filesize": 2032,
+		"filetime": 1785434716
+	},
+	"font.ttf": {
+		"filesize": 3438444,
+		"filetime": 1785434717
+	},
+	"README.md": {
+		"filesize": 1551,
+		"filetime": 1785434716
+	},
+	"metadata/game_metadata.txt": {
+		"filesize": 116,
+		"filetime": 1785434716
+	},
+	"metadata/icon.png": {
+		"filesize": 845,
+		"filetime": 1785434716
+	}
 }

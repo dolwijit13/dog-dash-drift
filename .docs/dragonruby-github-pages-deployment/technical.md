@@ -1,9 +1,9 @@
 # Technical Specification: Deploy DragonRuby Web Build to GitHub Pages
 
 ## Architectural Overview
-The `dragonruby-github-pages-deployment` pipeline automates the packaging and deployment of **Dog Dash Deluxe (DDD)** to **GitHub Pages** (`https://dolwijit13.github.io/dog-dash-drift/`).
+The `dragonruby-github-pages-deployment` pipeline automates the publication of **Dog Dash Deluxe (DDD)** to **GitHub Pages** (`https://dolwijit13.github.io/dog-dash-drift/`).
 
-Every commit merged or pushed to `main` triggers a GitHub Actions workflow (`.github/workflows/deploy.yml`), which builds the static WebAssembly HTML5 package under `builds/web` and publishes the application with Zero-Downtime.
+Every commit merged or pushed to `main` triggers a GitHub Actions workflow (`.github/workflows/deploy.yml`), which exports DragonRuby's native WebAssembly HTML5 package (`mygame-html5`) and publishes the application with Zero-Downtime.
 
 ---
 
@@ -27,9 +27,10 @@ dog-dash-drift/
 │   └── game_metadata.txt        # DragonRuby Game Metadata
 ├── test/
 │   └── test_dragonruby_game.rb  # Game loop unit tests
-└── builds/web/                  # [Git Ignored] Generated static web package
+└── mygame-html5/                # [Git Ignored] Native DragonRuby HTML5 WebAssembly Export
     ├── index.html
-    └── app.js
+    ├── dragonruby.js
+    └── dragonruby.wasm
 ```
 
 ---
@@ -44,10 +45,9 @@ dog-dash-drift/
 - **Permissions**: `pages: write`, `id-token: write`.
 - **Steps**:
   1. `actions/checkout@v4`: Clones repository.
-  2. `ruby/setup-ruby@v1`: Configures Ruby 3.3 runtime environment.
-  3. Builds static Web HTML5 package into `./builds/web`.
-  4. `actions/upload-pages-artifact@v3`: Packages `./builds/web`.
-  5. `actions/deploy-pages@v4`: Deploys artifact to GitHub Pages.
+  2. Exports native DragonRuby WebAssembly HTML5 package (`./mygame-html5`).
+  3. `actions/upload-pages-artifact@v3`: Packages `./mygame-html5`.
+  4. `actions/deploy-pages@v4`: Deploys artifact to GitHub Pages.
 
 ---
 
@@ -63,7 +63,7 @@ sequenceDiagram
 
     Dev->>Git: git push origin main
     Git->>CI: Trigger deploy.yml workflow
-    CI->>Pages: Publish ./builds/web via actions/deploy-pages@v4
+    CI->>Pages: Publish ./mygame-html5 via actions/deploy-pages@v4
     Pages-->>Dev: Live URL: https://dolwijit13.github.io/dog-dash-drift/
 ```
 

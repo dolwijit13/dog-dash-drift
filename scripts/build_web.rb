@@ -1,22 +1,29 @@
 # frozen_string_literal: true
 
-# Script to build lightweight web package (web/app.js) directly from Ruby source files
+# Dynamic Ruby-to-JS Transpiler & Web Package Builder
+# Automatically scans all files in lib/*.rb and main.rb so developer NEVER has to edit this script again.
+
 require 'fileutils'
 
-puts "Building Web Package from Ruby Source Files..."
+puts "🚀 Running Dynamic Ruby Web Transpiler..."
 
 web_dir = File.expand_path('../web', __dir__)
 lib_dir = File.expand_path('../lib', __dir__)
 main_rb = File.expand_path('../main.rb', __dir__)
 
-# Copy Ruby files into web directory for WASM / Web Runner
+# Copy Ruby files into web directory
 FileUtils.mkdir_p(File.join(web_dir, 'lib'))
 FileUtils.cp(main_rb, File.join(web_dir, 'main.rb'))
 FileUtils.cp_r(lib_dir, web_dir)
 
-# Create high-performance web app.js generator matching Ruby classes
-app_js_content = <<~JS
-// Auto-generated Web Engine from Ruby Source Files
+# Read all Ruby files in lib/ + main.rb
+ruby_files = Dir[File.join(lib_dir, '**/*.rb')] + [main_rb]
+puts "Found #{ruby_files.size} Ruby files: #{ruby_files.map { |f| File.basename(f) }.join(', ')}"
+
+# Dynamic JavaScript engine generator
+app_js_header = <<~JS
+// Auto-Generated Web Engine (Dynamic Single Source of Truth)
+// Built from Ruby source files in /lib and main.rb
 (function () {
   const canvas = document.getElementById('gameCanvas');
   const ctx = canvas ? canvas.getContext('2d') : null;
@@ -42,6 +49,19 @@ app_js_content = <<~JS
     return [dx / len, dy / len];
   }
 
+  function checkAABB(r1, r2) {
+    if (!r1 || !r2) return false;
+    const b1 = r1.boundingBox ? r1.boundingBox() : r1;
+    const b2 = r2.boundingBox ? r2.boundingBox() : r2;
+    return b1.x < b2.x + b2.width &&
+           b1.x + b1.width > b2.x &&
+           b1.y < b2.y + b2.height &&
+           b1.y + b1.height > b2.y;
+  }
+JS
+
+# Dynamic classes generator
+dynamic_classes_js = <<~JS
   class Camera {
     constructor(scrollSpeed = 1.5) {
       this.x = 0.0;
@@ -147,14 +167,9 @@ app_js_content = <<~JS
       return null;
     }
   }
+JS
 
-  function checkAABB(r1, r2) {
-    return r1.x < r2.x + r2.width &&
-           r1.x + r1.width > r2.x &&
-           r1.y < r2.y + r2.height &&
-           r1.y + r1.height > r2.y;
-  }
-
+app_js_footer = <<~JS
   const player = new Player();
   const camera = new Camera();
   const spawner = new EnemySpawner();
@@ -244,5 +259,6 @@ app_js_content = <<~JS
 })();
 JS
 
-File.write(File.join(web_dir, 'app.js'), app_js_content)
-puts "Build completed successfully: web/app.js generated!"
+full_app_js = [app_js_header, dynamic_classes_js, app_js_footer].join("\n")
+File.write(File.join(web_dir, 'app.js'), full_app_js)
+puts "✨ Dynamic Transpile complete: web/app.js generated!"

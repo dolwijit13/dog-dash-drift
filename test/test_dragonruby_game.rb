@@ -160,5 +160,15 @@ class TestDragonRubyGame < Minitest::Test
     refute_empty @args.outputs.sprites
     refute_empty @args.outputs.lines
     refute_empty @args.outputs.labels
+
+    bones_label = @args.outputs.labels.find { |l| l[:text].start_with?("Bones:") }
+    score_label = @args.outputs.labels.find { |l| l[:text].start_with?("Score:") }
+
+    refute_nil bones_label
+    refute_nil score_label
+    assert_equal 30, bones_label[:x]
+    assert_equal 700, bones_label[:y]
+    assert_equal "Bones: $0", bones_label[:text]
+    assert_equal "Score: 0", score_label[:text]
   end
 end

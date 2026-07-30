@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dog Dash Deluxe (DDD) - HTML5 Web Runner</title>
+  <!-- ruby.wasm Engine -->
+  <title>Dog Dash Deluxe (DDD) - Ruby.wasm Web Runner</title>
   <style>
     * {
       box-sizing: border-box;
@@ -70,13 +71,20 @@
       border-radius: 12px;
       border: 1px solid rgba(249, 226, 175, 0.2);
     }
+    #status {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #89b4fa;
+    }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@ruby/3.3-wasm-wbg@latest/dist/browser.script.iife.js"></script>
 </head>
 <body>
   <header>
     <h1>🐶 Dog Dash Deluxe (DDD)</h1>
-    <p class="subtitle">2D Top-Down Side-Scrolling Runner & Auto-Shooter</p>
+    <p class="subtitle">Ruby.wasm Engine (Single Source of Truth - Direct Ruby Execution)</p>
     <div class="controls-hint">Controls: W/A/S/D or Arrow Keys to move | Auto-Attacks Soundwave every 0.5s | ESC to reset</div>
+    <div id="status">Loading Ruby WebAssembly Engine...</div>
   </header>
 
   <div class="canvas-container">
@@ -84,11 +92,12 @@
   </div>
 
   <footer>
-    <span>GitHub Pages Automated Deployment</span>
+    <span>GitHub Pages Automated Deployment (Ruby.wasm)</span>
     <span>•</span>
     <a href="https://github.com/dolwijit13/dog-dash-drift" target="_blank" rel="noopener">Source Code</a>
   </footer>
 
-  <script src="game.js"></script>
+  <script src="web_gosu_bridge.js"></script>
+  <script type="text/ruby" src="main.rb"></script>
 </body>
 </html>

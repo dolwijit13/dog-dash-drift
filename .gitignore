@@ -3,9 +3,10 @@
 /vendor/bundle/
 *.gem
 
-# DragonRuby Binaries & Builds
+# DragonRuby Binaries & Default Assets
 dragonruby
 dragonruby-publish
+font.ttf
 *.zip
 mygame-html5/
 .dragonruby/

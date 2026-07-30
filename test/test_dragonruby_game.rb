@@ -7,6 +7,7 @@ require_relative '../app/soundwave'
 require_relative '../app/enemy'
 require_relative '../app/enemy_spawner'
 require_relative '../app/collectible'
+require_relative '../app/obstacle'
 require_relative '../app/collision_system'
 require_relative '../app/main'
 
@@ -28,12 +29,13 @@ class MockInputs
 end
 
 class MockOutputs
-  attr_reader :solids, :lines, :labels
+  attr_reader :solids, :lines, :labels, :sprites
 
   def initialize
     @solids = []
     @lines = []
     @labels = []
+    @sprites = []
   end
 end
 
@@ -47,7 +49,7 @@ class MockGrid
 end
 
 class MockState
-  attr_accessor :player, :camera, :soundwaves, :enemies, :collectibles, :spawner, :score, :coins
+  attr_accessor :player, :camera, :soundwaves, :enemies, :collectibles, :obstacles, :obstacle_timer, :spawner, :score, :coins
 end
 
 class MockArgs
@@ -133,11 +135,40 @@ class TestDragonRubyGame < Minitest::Test
     assert_equal 20, results[:score]
   end
 
+  def test_broccoli_obstacle_creation_and_penalty
+    player = Player.new(100, 300)
+    broccoli = Broccoli.new(105, 305)
+
+    assert_equal 28.0, broccoli.w
+    assert_equal 28.0, broccoli.h
+    prim = broccoli.primitive
+    assert_equal 34, prim[:r]
+    assert_equal 139, prim[:g]
+    assert_equal 34, prim[:b]
+
+    results = CollisionSystem.handle_player_obstacle_collisions(player, [broccoli])
+
+    refute broccoli.active?
+    assert_equal 1, results[:hits]
+    assert_equal 5, results[:coins_lost]
+    assert player.slowdown_timer > 0
+  end
+
   def test_tick_render_output
     tick(@args)
 
-    refute_empty @args.outputs.solids
+    refute_empty @args.outputs.sprites
     refute_empty @args.outputs.lines
     refute_empty @args.outputs.labels
+
+    bones_label = @args.outputs.labels.find { |l| l[:text].start_with?("Bones:") }
+    score_label = @args.outputs.labels.find { |l| l[:text].start_with?("Score:") }
+
+    refute_nil bones_label
+    refute_nil score_label
+    assert_equal 30, bones_label[:x]
+    assert_equal 700, bones_label[:y]
+    assert_equal "Bones: $0", bones_label[:text]
+    assert_equal "Score: 0", score_label[:text]
   end
 end

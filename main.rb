@@ -4,19 +4,27 @@ require 'gosu'
 require_relative 'lib/player'
 require_relative 'lib/camera'
 require_relative 'lib/input_handler'
+require_relative 'lib/soundwave'
 
 class GameWindow < Gosu::Window
+  attr_reader :soundwaves
+
   def initialize
     super 800, 600
     self.caption = "Dog Dash Drift"
 
     @player = Player.new(100, 284)
     @camera = Camera.new(1.5)
+    @soundwaves = []
   end
 
   def update
     @camera.update
-    @player.update(self, width, height)
+    new_projectile = @player.update(self, width, height)
+    @soundwaves << new_projectile if new_projectile
+
+    @soundwaves.each(&:update)
+    @soundwaves.reject! { |sw| sw.out_of_bounds?(width) || !sw.active? }
   end
 
   def draw
@@ -33,6 +41,7 @@ class GameWindow < Gosu::Window
     end
 
     @player.draw
+    @soundwaves.each(&:draw)
   end
 
   def needs_cursor?

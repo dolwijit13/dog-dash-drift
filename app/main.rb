@@ -63,7 +63,7 @@ def tick(args)
   args.state.collectibles.reject! { |c| c.out_of_bounds? || !c.active? }
 
   # Render Background & Grid Lines
-  args.outputs.solids << { x: 0, y: 0, w: grid_w, h: grid_h, r: 30, g: 30, b: 46 }
+  args.outputs.sprites << { x: 0, y: 0, w: grid_w, h: grid_h, r: 30, g: 30, b: 46, primitive_marker: :solid }
 
   grid_spacing = 40
   offset_x = (args.state.camera.x % grid_spacing).to_i
@@ -74,10 +74,10 @@ def tick(args)
   end
 
   # Render Player, Projectiles, Collectibles, and Enemies
-  args.outputs.solids << args.state.player.primitive
-  args.state.soundwaves.each { |sw| args.outputs.solids << sw.primitive }
-  args.state.collectibles.each { |c| args.outputs.solids << c.primitive }
-  args.state.enemies.each { |e| args.outputs.solids << e.primitive }
+  args.outputs.sprites << args.state.player.primitive
+  args.state.soundwaves.each { |sw| args.outputs.sprites << sw.primitive }
+  args.state.collectibles.each { |c| args.outputs.sprites << c.primitive }
+  args.state.enemies.each { |e| args.outputs.sprites << e.primitive }
 
   # Render HUD
   args.outputs.labels << { x: 20, y: grid_h - 20, text: "Coins: $#{args.state.coins}", size_enum: 2, r: 255, g: 255, b: 255 }

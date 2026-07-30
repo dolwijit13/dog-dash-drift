@@ -61,7 +61,7 @@ class Player
   end
 
   def primitive
-    { x: @x, y: @y, w: WIDTH, h: HEIGHT, r: 46, g: 204, b: 113 }
+    { x: @x, y: @y, w: WIDTH, h: HEIGHT, r: 46, g: 204, b: 113, primitive_marker: :solid }
   end
 
   def rect

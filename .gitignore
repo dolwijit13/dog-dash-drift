@@ -1,0 +1,11 @@
+# Ruby & Bundler
+/.bundle/
+/vendor/bundle/
+*.gem
+
+# OS & Editor files
+.DS_Store
+*.swp
+*~
+.idea/
+.vscode/

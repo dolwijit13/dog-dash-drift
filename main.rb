@@ -1,27 +1,29 @@
 # frozen_string_literal: true
 
 require 'gosu'
+require_relative 'lib/player'
 
 class GameWindow < Gosu::Window
   def initialize
     super 800, 600
     self.caption = "Dog Dash Drift"
 
-    @font = Gosu::Font.new(32)
-    @sub_font = Gosu::Font.new(20)
+    @player = Player.new
   end
 
   def update
-    # Game state logic updates will go here
+    @player.update(mouse_x, mouse_y)
   end
 
   def draw
     # Background color
     Gosu.draw_rect(0, 0, width, height, Gosu::Color.argb(0xff_1e1e2e))
 
-    # Text rendering
-    @font.draw_text("Welcome to Dog Dash Drift!", 210, 260, 1, 1.0, 1.0, Gosu::Color::WHITE)
-    @sub_font.draw_text("Press ESC to exit", 330, 310, 1, 1.0, 1.0, Gosu::Color.argb(0xff_a6adc8))
+    @player.draw
+  end
+
+  def needs_cursor?
+    true
   end
 
   def button_down(id)

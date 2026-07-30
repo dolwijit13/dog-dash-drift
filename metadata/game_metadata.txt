@@ -3,3 +3,4 @@ devtitle=Dolwijit
 gameid=dog-dash-drift
 gametitle=Dog Dash Deluxe
 version=1.0.0
+icon=metadata/icon.png

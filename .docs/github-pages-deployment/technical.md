@@ -1,9 +1,9 @@
-# Technical Specification: Web Build & GitHub Pages Deployment Pipeline
+# Technical Specification: GitHub Pages Deployment Pipeline
 
 ## Architectural Overview
-The `github-pages-deployment` feature provides an automated CI/CD pipeline and web engine runner for **Dog Dash Deluxe (DDD)**.
+The `github-pages-deployment` pipeline automates the publication of **Dog Dash Deluxe (DDD)** to **GitHub Pages** (`https://dolwijit13.github.io/dog-dash-drift/`).
 
-It compiles static web artifacts (`web/index.html`, `web/game.js`) mirroring Gosu 2D game mechanics into an HTML5 Canvas Interoperability Layer and deploys them to GitHub Pages (`https://dolwijit13.github.io/dog-dash-drift/`) via GitHub Actions.
+Every commit merged or pushed to `main` triggers the GitHub Actions workflow (`.github/workflows/deploy.yml`), which deploys DragonRuby's native WebAssembly HTML5 export directory (`./mygame-html5`) directly to GitHub Pages with Zero-Downtime.
 
 ---
 
@@ -13,77 +13,66 @@ It compiles static web artifacts (`web/index.html`, `web/game.js`) mirroring Gos
 dog-dash-drift/
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml              # Automated GitHub Pages CI/CD workflow
-├── web/
-│   ├── index.html                  # Responsive Web Runner container & canvas
-│   └── game.js                     # Gosu 2D HTML5 Canvas engine adapter
+│       └── deploy.yml           # GitHub Actions CI/CD Deployment Workflow
+├── app/                         # DragonRuby Source Files
+│   ├── main.rb
+│   ├── player.rb
+│   ├── soundwave.rb
+│   ├── enemy.rb
+│   ├── enemy_spawner.rb
+│   ├── camera.rb
+│   ├── collision_system.rb
+│   └── input_handler.rb
 ├── test/
-│   └── test_web_build.rb           # Unit tests for Web build & CI configuration
-├── .docs/
-│   └── github-pages-deployment/
-│       ├── requirement.md          # Feature requirements & ACs
-│       └── technical.md            # Technical specification (this file)
-└── README.md                       # Project overview with live demo badge
+│   └── test_dragonruby_game.rb  # Game loop unit tests
+└── mygame-html5/                # Native DragonRuby HTML5 WebAssembly Export
+    ├── index.html
+    ├── dragonruby.js
+    └── dragonruby.wasm
 ```
 
 ---
 
 ## Component Details
 
-### 1. `Web Engine Adapter` (`web/index.html` & `web/game.js`)
-- **HTML Container**: Renders a centered, styled `#gameCanvas` (`800x600` px) with keyboard and mouse control hints.
-- **Engine Adapter**:
-  - `Player`: Handles W/A/S/D and Arrow Keys, 8-direction movement, diagonal vector normalization, boundary clamping, and 0.5s auto-attack firing rate.
-  - `Camera`: Handles side-scrolling offset (`1.5` px/frame) and grid line rendering.
-  - `Soundwave`: Projectile entity moving rightward (`8.0` px/frame) with canvas cleanup (`x > 800`).
-  - `EvilCat`: Red 32x32 enemy entity moving leftward (`3.0` px/frame) spawned randomly every 2-3 seconds.
-  - `CollisionSystem`: Computes AABB bounding box intersections, awarding +10 Score & +5 Coins on enemy kills.
-
-### 2. `GitHub Actions CI/CD Pipeline` (`.github/workflows/deploy.yml`)
-- **Trigger**: Pushes to `main` branch or manual `workflow_dispatch`.
+### 1. `Deployment Workflow` (`.github/workflows/deploy.yml`)
+- **Trigger**: `on: push: branches: ["main"]` and `workflow_dispatch`.
 - **Permissions**: `pages: write`, `id-token: write`.
-- **Workflow Steps**:
-  1. `actions/checkout@v4`: Checks out source files.
-  2. `actions/configure-pages@v5`: Prepares GitHub Pages environment.
-  3. `actions/upload-pages-artifact@v3`: Packages `./web` static assets.
-  4. `actions/deploy-pages@v4`: Deploys to `https://dolwijit13.github.io/dog-dash-drift/`.
+- **Steps**:
+  1. `actions/checkout@v4`: Clones repository.
+  2. `actions/configure-pages@v5`: Configures GitHub Pages metadata.
+  3. `actions/upload-pages-artifact@v3`: Packages DragonRuby native `./mygame-html5` build directory.
+  4. `actions/deploy-pages@v4`: Deploys artifact to GitHub Pages.
 
 ---
 
-## Data Flow & Deployment Diagram
+## Data Flow Diagram
 
 ```mermaid
 sequenceDiagram
     autonumber
-    participant Developer as Developer / Agent
-    participant Repo as GitHub main Branch
-    participant Actions as GitHub Actions Runner
-    participant GHPages as GitHub Pages CDN
-    participant User as Web Browser User
+    participant Dev as Developer
+    participant Git as GitHub (main branch)
+    participant CI as GitHub Actions Pipeline
+    participant Pages as GitHub Pages (Live Web)
 
-    Developer->>Repo: git push origin main / Merge PR
-    Repo->>Actions: Trigger on push (deploy.yml)
-    Actions->>Actions: Upload ./web static artifact
-    Actions->>GHPages: Deploy static assets
-    GHPages-->>User: Serve https://dolwijit13.github.io/dog-dash-drift/
-    User->>User: Play Dog Dash Deluxe at 60 FPS in Browser
+    Dev->>Git: git push origin main
+    Git->>CI: Trigger deploy.yml workflow
+    CI->>Pages: Publish ./mygame-html5 via actions/deploy-pages@v4
+    Pages-->>Dev: Live URL: https://dolwijit13.github.io/dog-dash-drift/
 ```
 
 ---
 
 ## Verification & Testing Plan
 
-### Automated Unit Tests
+### Automated Unit Testing
 Executed via:
 ```bash
-ruby -Ilib:test test/test_web_build.rb
+ruby -Iapp:test test/test_dragonruby_game.rb
 ```
-- `TestWebBuild`: Verifies existence and content integrity of `index.html`, `game.js`, and `.github/workflows/deploy.yml`.
 
-### Real Manual Testing Plan
-1. **GitHub Actions Execution**:
-   - Check [Actions tab on GitHub](https://github.com/dolwijit13/dog-dash-drift/actions).
-   - Confirm `Deploy to GitHub Pages` workflow completes with a green checkmark.
-2. **Web Browser Verification**:
-   - Navigate to `https://dolwijit13.github.io/dog-dash-drift/`.
-   - Verify that the canvas renders cleanly at 60 FPS and that keyboard controls (W/A/S/D) and auto-attacks operate smoothly without errors.
+### Live Deployment Verification
+1. Merge PR #13 to `main`.
+2. Observe GitHub Actions tab: green checkmark on `Deploy to GitHub Pages`.
+3. Open `https://dolwijit13.github.io/dog-dash-drift/` in Web Browser to verify 60 FPS gameplay.

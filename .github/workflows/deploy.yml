@@ -19,8 +19,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Package DragonRuby Web HTML5 App
+      - name: Package DragonRuby Native WebAssembly HTML5 App
         run: |
+          mkdir -p mygame-html5
+          cp -r html5/* mygame-html5/
           mkdir -p mygame-html5/app
           cp -r app/* mygame-html5/app/
           cp -r metadata mygame-html5/ 2>/dev/null || true

@@ -56,7 +56,8 @@ def tick(args)
 
   grid_spacing = 40
   offset_x = (args.state.camera.x % grid_spacing).to_i
-  ((grid_w / grid_spacing) + 2).times do |i|
+  num_lines = (grid_w.to_i / grid_spacing.to_i) + 2
+  num_lines.times do |i|
     x_pos = (i * grid_spacing) - offset_x
     args.outputs.lines << { x: x_pos, y: 0, x2: x_pos, y2: grid_h, r: 255, g: 255, b: 255, a: 30 }
   end

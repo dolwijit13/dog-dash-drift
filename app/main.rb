@@ -50,7 +50,7 @@ def tick(args)
   args.state.obstacle_timer -= 1.0 / 60.0
   if args.state.obstacle_timer <= 0
     args.state.obstacle_timer = 3.0 + rand * 2.0
-    spawn_y = rand(0..(grid_h - Broccoli::HEIGHT.to_i)).to_f
+    spawn_y = rand * (grid_h - Broccoli::HEIGHT)
     args.state.obstacles << Broccoli.new(grid_w, spawn_y)
   end
 

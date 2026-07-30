@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
-require 'gosu'
+begin
+  require 'gosu'
+rescue LoadError
+  # Fallback for headless unit testing environments
+end
 
 class Player
   WIDTH = 32
   HEIGHT = 32
-  COLOR = Gosu::Color::GREEN
+  COLOR = defined?(Gosu) && defined?(Gosu::Color) ? Gosu::Color::GREEN : 0xff_00ff00
 
   attr_reader :x, :y
 
@@ -20,6 +24,6 @@ class Player
   end
 
   def draw
-    Gosu.draw_rect(@x, @y, WIDTH, HEIGHT, COLOR)
+    Gosu.draw_rect(@x, @y, WIDTH, HEIGHT, COLOR) if defined?(Gosu) && Gosu.respond_to?(:draw_rect)
   end
 end

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'collectible'
+
 class CollisionSystem
   def self.check_intersect(rect1, rect2)
     return false unless rect1 && rect2
@@ -14,7 +16,7 @@ class CollisionSystem
   end
 
   def self.handle_soundwave_enemy_collisions(soundwaves, enemies)
-    results = { kills: 0, score: 0, coins: 0 }
+    results = { kills: 0, score: 0, coins: 0, dropped_collectibles: [] }
 
     soundwaves.each do |sw|
       next unless sw.active?
@@ -30,10 +32,33 @@ class CollisionSystem
             results[:kills] += 1
             results[:score] += 10
             results[:coins] += 5
+
+            # 30% drop chance for BoneSnack collectible
+            if rand < 0.3
+              results[:dropped_collectibles] << BoneSnack.new(enemy.x, enemy.y)
+            end
           end
 
           break
         end
+      end
+    end
+
+    results
+  end
+
+  def self.handle_player_collectible_collisions(player, collectibles)
+    results = { score: 0, coins: 0, picked_up: 0 }
+    return results unless player && collectibles
+
+    collectibles.each do |item|
+      next unless item.active?
+
+      if check_intersect(player.rect, item.rect)
+        item.active = false
+        results[:picked_up] += 1
+        results[:coins] += 10
+        results[:score] += 20
       end
     end
 

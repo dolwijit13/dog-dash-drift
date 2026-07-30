@@ -2,5 +2,5 @@ devid=dolwijit13
 devtitle=inuyama
 gameid=dog-dash-drift
 gametitle=Dog Dash Drift
-version=0.4
+version=0.5
 icon=metadata/icon.png

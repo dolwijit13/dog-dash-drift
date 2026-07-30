@@ -1,7 +1,7 @@
 var GDragonRubyGameId = 'dog-dash-drift';
 var GDragonRubyGameTitle = 'Dog Dash Drift';
 var GDragonRubyDevTitle = 'inuyama';
-var GDragonRubyGameVersion = '0.4';
+var GDragonRubyGameVersion = '0.5';
 var GDragonRubyIcon = '/metadata/icon.png';
 var GDragonRubyWriteDir = '/dolwijit13-dog-dash-drift';
 var GDragonRubyOrientation = 'landscape';

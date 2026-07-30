@@ -30,7 +30,7 @@ dog-dash-drift/
 ## Component Details
 
 ### 1. `InputHandler` (`lib/input_handler.rb`)
-- **`self.directional_vector(window)`**: Inspects `Gosu::KB_W`, `S`, `A`, `D` and `Gosu::KB_UP`, `DOWN`, `LEFT`, `RIGHT`. Returns normalized `[dx, dy]`.
+- **`self.directional_vector(inputs)`**: Inspects `inputs.keyboard.left`, `right`, `up`, `down` or `wasd`. Returns normalized `[dx, dy]`.
 - **`self.normalize(dx, dy)`**: Normalizes diagonal movement so diagonal speed matches cardinal speed:
   $$\text{length} = \sqrt{dx^2 + dy^2}$$
   $$\text{norm\_dx} = \frac{dx}{\text{length}}, \quad \text{norm\_dy} = \frac{dy}{\text{length}}$$

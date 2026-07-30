@@ -22,13 +22,13 @@
 
 ## Technical Checklist (Atomic)
 - [ ] **1. Project Directory & Class Setup**
-  - [ ] จัดโครงสร้างไฟล์ภายใต้ `lib/player.rb` และ `lib/game_window.rb` (หรือตามโครงสร้างโปรเจกต์)
-  - [ ] Require `gosu` และ load dependencies อย่างถูกต้อง
-- [ ] **2. Player Class Implementation (`Player` module/class)**
-  - [ ] กำหนดขนาดสี่เหลี่ยม `WIDTH = 32`, `HEIGHT = 32` และสี `COLOR = Gosu::Color::GREEN` (หรือ `#00FF00`)
-  - [ ] รับพิกัด `(x, y)` ในเมธอด `update` โดยอ่านจาก `window.mouse_x` และ `window.mouse_y`
+  - [ ] จัดโครงสร้างไฟล์ภายใต้ `app/player.rb` และ `app/main.rb`
+  - [ ] ใช้ DragonRuby GTK standard structure (`def tick args`)
+- [ ] **2. Player Class Implementation (`Player` class)**
+  - [ ] กำหนดขนาดสี่เหลี่ยม `WIDTH = 32`, `HEIGHT = 32` และ `primitive_marker = :solid`
+  - [ ] รับพิกัด `(x, y)` ในเมธอด `update` โดยอ่านจาก `args.inputs.mouse.x` และ `args.inputs.mouse.y`
   - [ ] คำนวณจุดศูนย์กลางของสี่เหลี่ยมให้อยู่ตรงกับตำแหน่งเมาส์: `draw_x = mouse_x - (WIDTH / 2)`, `draw_y = mouse_y - (HEIGHT / 2)`
-  - [ ] เขียนเมธอด `draw` เพื่อวาดสี่เหลี่ยมด้วย `Gosu.draw_rect`
+  - [ ] เติมลงใน `args.outputs.solids` หรือ `args.outputs.primitives`
 - [ ] **3. Game Window Integration (`main.rb` / `GameWindow`)**
   - [ ] Instantiate `Player` ในเมธอด `initialize` ของ `GameWindow`
   - [ ] แสดงผล Cursor เมาส์ด้วย `self.needs_cursor? = true`

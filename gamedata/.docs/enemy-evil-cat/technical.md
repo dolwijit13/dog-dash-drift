@@ -38,7 +38,7 @@ dog-dash-drift/
 ## Component Details
 
 ### 1. `EvilCat` (`lib/enemy.rb`)
-- **Constants**: `WIDTH = 32`, `HEIGHT = 32`, `SPEED = 3.0`, `COLOR = Gosu::Color::RED`.
+- **Constants**: `WIDTH = 32`, `HEIGHT = 32`, `SPEED = 3.0`, `primitive_marker = :solid`.
 - **Attributes**: `@x`, `@y`, `@hp` (default `1`), `@speed`, `@active`.
 - **`update`**: Moves leftward: `@x -= @speed` (3 px/frame).
 - **`out_of_bounds?`**: Returns `true` when `@x < -WIDTH`.

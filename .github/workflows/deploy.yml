@@ -23,8 +23,10 @@ jobs:
         run: |
           mkdir -p mygame-html5
           cp -r html5/* mygame-html5/
-          mkdir -p mygame-html5/app
-          cp -r app/* mygame-html5/app/
+          mkdir -p mygame-html5/gamedata/app
+          cp -r app/* mygame-html5/gamedata/app/
+          cp -r metadata mygame-html5/gamedata/ 2>/dev/null || true
+          cp -r app mygame-html5/ 2>/dev/null || true
           cp -r metadata mygame-html5/ 2>/dev/null || true
           touch mygame-html5/.nojekyll
 

@@ -1,16 +1,31 @@
-# Dog Dash Drift
+# Dog Dash Deluxe (DDD) 🐶
 
-A 2D game built with Ruby and [Gosu](https://www.libgosu.org/).
+[![Deploy to GitHub Pages](https://github.com/dolwijit13/dog-dash-drift/actions/workflows/deploy.yml/badge.svg)](https://github.com/dolwijit13/dog-dash-drift/actions/workflows/deploy.yml)
 
-## Requirements
+A 2D Top-Down Side-Scrolling Action Runner & Auto-Shooter game built with Ruby, [Gosu Engine](https://www.libgosu.org/), and HTML5 Canvas Web Runner.
+
+🌐 **Play Live Web Demo**: [https://dolwijit13.github.io/dog-dash-drift/](https://dolwijit13.github.io/dog-dash-drift/)
+
+---
+
+## 🕹️ Controls & Features
+
+- **Controls**: `W / A / S / D` or Arrow Keys to move in 8 directions.
+- **Auto-Attack**: Shiba Inu fires cyan Soundwave projectiles automatically every 0.5 seconds.
+- **Enemies**: Evil Cats spawn from the right; shoot them to earn +10 Score and +5 Coins.
+- **Reset**: Press `ESC` to reset player position.
+
+---
+
+## 🛠️ Desktop Requirements & Setup
+
+### 1. Requirements
 
 - Ruby 3.x
 - Bundler (`gem install bundler`)
 - Homebrew & SDL2 (macOS): `brew install sdl2`
 
-## Getting Started
-
-### 1. Installation
+### 2. Installation
 
 Install system dependencies and configure Bundler for macOS linking:
 
@@ -26,10 +41,14 @@ bundle config set --local build.gosu "--with-cflags='-I/opt/homebrew/include' --
 bundle install
 ```
 
-> **Note:** `.bundle/config` is saved locally in the project so future `bundle install` commands will use these settings automatically.
-
-### 2. Run the Game
+### 3. Run Native Desktop Game
 
 ```bash
 bundle exec ruby main.rb
+```
+
+### 4. Run Unit Tests
+
+```bash
+ruby -Ilib:test test/test_web_build.rb
 ```

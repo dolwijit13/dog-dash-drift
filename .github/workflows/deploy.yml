@@ -24,18 +24,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Bundle Ruby Source Code into Web Package
-        run: |
-          cp main.rb web/
-          cp -r lib web/
-
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './web'
+          path: './mygame-html5'
 
       - name: Deploy to GitHub Pages
         id: deployment

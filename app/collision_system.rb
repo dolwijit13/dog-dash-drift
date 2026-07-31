@@ -58,9 +58,10 @@ class CollisionSystem
       next unless enemy.active?
 
       if check_intersect(player.rect, enemy.rect)
-        if player.respond_to?(:take_damage) && player.take_damage(15)
+        dmg = enemy.respond_to?(:touch_damage) ? enemy.touch_damage : 15
+        if player.respond_to?(:take_damage) && player.take_damage(dmg)
           results[:hits] += 1
-          results[:damage_taken] += 15
+          results[:damage_taken] += dmg
         end
       end
     end

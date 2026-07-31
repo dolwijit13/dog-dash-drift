@@ -20,7 +20,7 @@ class TestStageProgression < Minitest::Test
     stage1 = @manager.current_stage
     assert_equal 1, stage1.id
     assert_equal 'Candy Meadow', stage1.name
-    assert_equal 1000.0, stage1.target_distance
+    assert_equal 6000.0, stage1.target_distance
     assert_equal [:evil_cat], stage1.allowed_enemies
   end
 

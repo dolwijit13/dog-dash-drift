@@ -17,7 +17,7 @@ class EvilCat
     @active = true
   end
 
-  def update
+  def update(delta_time = 1.0 / 60.0, target_y = nil)
     @x -= @speed
   end
 
@@ -129,7 +129,7 @@ class SniperCat
     @score_reward = SCORE_REWARD
   end
 
-  def update(delta_time = 1.0 / 60.0)
+  def update(delta_time = 1.0 / 60.0, target_y = nil)
     if @state == :moving
       @x -= @speed
       if @x <= @stop_x

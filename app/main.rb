@@ -132,7 +132,7 @@ def tick(args)
     args.state.soundwaves.each(&:update)
     args.state.enemies.each do |e|
       proj = e.update(1.0 / 60.0)
-      args.state.enemy_projectiles << proj if proj
+      args.state.enemy_projectiles << proj if proj && proj.respond_to?(:update)
     end
     args.state.enemy_projectiles.each(&:update)
     args.state.collectibles.each(&:update)

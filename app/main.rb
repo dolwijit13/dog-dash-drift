@@ -10,20 +10,27 @@ require_relative 'collectible'
 require_relative 'obstacle'
 require_relative 'collision_system'
 require_relative 'shop_ui'
+require_relative 'stage'
+require_relative 'stage_clear_ui'
+require_relative 'stage_select_ui'
 
 def tick(args)
   # Initialize Game State
   args.state.game_state ||= :playing
+  args.state.previous_state ||= :playing
+  args.state.stage_manager ||= StageManager.new
   args.state.player ||= Player.new(100, 344)
   args.state.camera ||= Camera.new(1.5)
   args.state.soundwaves ||= []
   args.state.enemies ||= []
+  args.state.enemy_projectiles ||= []
   args.state.collectibles ||= []
   args.state.obstacles ||= []
-  args.state.spawner ||= EnemySpawner.new(2.0, 3.0)
+  args.state.spawner ||= EnemySpawner.new(2.0, 3.0, args.state.stage_manager.current_stage.allowed_enemies)
   args.state.obstacle_timer ||= 3.5
   args.state.score ||= 0
   args.state.coins ||= 0
+  args.state.distance_covered ||= 0.0
 
   grid_w = (args.grid && args.grid.w) ? args.grid.w : 1280
   grid_h = (args.grid && args.grid.h) ? args.grid.h : 720
@@ -59,36 +66,45 @@ def tick(args)
   end
 
   # Toggle Shop State
-  if (key_toggle_shop || clicked_shop_btn) && args.state.game_state != :game_over
-    args.state.game_state = (args.state.game_state == :shop) ? :playing : :shop
+  if (key_toggle_shop || clicked_shop_btn) && args.state.game_state != :game_over && args.state.game_state != :stage_clear
+    if args.state.game_state == :shop
+      args.state.game_state = args.state.previous_state || :playing
+    else
+      args.state.previous_state = args.state.game_state
+      args.state.game_state = :shop
+    end
     return if clicked_shop_btn
+  end
+
+  # Render & Handle Stage Select (Hub) Screen
+  if args.state.game_state == :stage_select
+    StageSelectUI.render(args, args.state.stage_manager, args.state.coins, grid_w, grid_h)
+    if StageSelectUI.handle_inputs(args, args.state.stage_manager)
+      args.state.player = Player.new(100, 344)
+      args.state.soundwaves = []
+      args.state.enemies = []
+      args.state.enemy_projectiles = []
+      args.state.collectibles = []
+      args.state.obstacles = []
+      args.state.distance_covered = 0.0
+      args.state.spawner = EnemySpawner.new(2.0, 3.0, args.state.stage_manager.current_stage.allowed_enemies)
+      args.state.game_state = :playing
+    end
+    return
   end
 
   # Restart Handler (Game Over or ESC key when not in Shop)
   key_restart = kb && (kb.escape || (kb.respond_to?(:r) && kb.r))
 
   if key_restart && args.state.game_state == :game_over
-    args.state.player = Player.new(100, 344)
-    args.state.soundwaves = []
-    args.state.enemies = []
-    args.state.collectibles = []
-    args.state.obstacles = []
-    args.state.score = 0
-    args.state.coins = 0
-    args.state.game_state = :playing
+    args.state.game_state = :stage_select
     return
   elsif kb && kb.escape && args.state.game_state == :shop
-    args.state.game_state = :playing
+    args.state.game_state = args.state.previous_state || :playing
     return
   elsif kb && kb.escape
-    args.state.player = Player.new(100, 344)
-    args.state.soundwaves = []
-    args.state.enemies = []
-    args.state.collectibles = []
-    args.state.obstacles = []
-    args.state.score = 0
-    args.state.coins = 0
-    args.state.game_state = :playing
+    args.state.game_state = :stage_select
+    return
   end
 
   # Render & Handle Game Over Screen

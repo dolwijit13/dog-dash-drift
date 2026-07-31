@@ -37,11 +37,26 @@ def tick(args)
   shop_btn_w = 170
   shop_btn_h = 35
 
+  # HUD Test Add Coins Button Rect
+  coin_btn_x = grid_w - 200
+  coin_btn_y = grid_h - 85
+  coin_btn_w = 170
+  coin_btn_h = 32
+
   clicked_shop_btn = mouse_click &&
                      mouse_click.x >= shop_btn_x && mouse_click.x <= (shop_btn_x + shop_btn_w) &&
                      mouse_click.y >= shop_btn_y && mouse_click.y <= (shop_btn_y + shop_btn_h)
 
+  clicked_coin_btn = mouse_click &&
+                     mouse_click.x >= coin_btn_x && mouse_click.x <= (coin_btn_x + coin_btn_w) &&
+                     mouse_click.y >= coin_btn_y && mouse_click.y <= (coin_btn_y + coin_btn_h)
+
   key_toggle_shop = kb && ((kb.respond_to?(:tab) && kb.tab) || (kb.respond_to?(:p) && kb.p))
+  key_add_coins = kb && ((kb.respond_to?(:c) && kb.c) || (kb.respond_to?(:m) && kb.m))
+
+  if (clicked_coin_btn || key_add_coins) && args.state.game_state != :game_over
+    args.state.coins += 500
+  end
 
   # Toggle Shop State
   if (key_toggle_shop || clicked_shop_btn) && args.state.game_state != :game_over
@@ -192,6 +207,10 @@ def tick(args)
   # HUD Shop Button
   args.outputs.sprites << { x: shop_btn_x, y: shop_btn_y, w: shop_btn_w, h: shop_btn_h, r: 155, g: 89, b: 182, path: :pixel }
   args.outputs.labels << { x: shop_btn_x + (shop_btn_w / 2), y: shop_btn_y + 24, text: "SHOP (TAB/P)", size_enum: 1, alignment_enum: 1, r: 255, g: 255, b: 255 }
+
+  # HUD Test Add Coins Button
+  args.outputs.sprites << { x: coin_btn_x, y: coin_btn_y, w: coin_btn_w, h: coin_btn_h, r: 46, g: 204, b: 113, path: :pixel }
+  args.outputs.labels << { x: coin_btn_x + (coin_btn_w / 2), y: coin_btn_y + 22, text: "+$500 BONES (C)", size_enum: 0, alignment_enum: 1, r: 255, g: 255, b: 255 }
 
   # Render Shop Overlay if state is :shop
   if args.state.game_state == :shop

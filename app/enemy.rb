@@ -17,7 +17,7 @@ class EvilCat
     @active = true
   end
 
-  def update
+  def update(delta_time = 1.0 / 60.0, target_y = nil)
     @x -= @speed
   end
 

@@ -48,6 +48,24 @@ class CollisionSystem
     results
   end
 
+  def self.handle_player_enemy_collisions(player, enemies)
+    results = { hits: 0, damage_taken: 0 }
+    return results unless player && enemies
+
+    enemies.each do |enemy|
+      next unless enemy.active?
+
+      if check_intersect(player.rect, enemy.rect)
+        if player.respond_to?(:take_damage) && player.take_damage(15)
+          results[:hits] += 1
+          results[:damage_taken] += 15
+        end
+      end
+    end
+
+    results
+  end
+
   def self.handle_player_collectible_collisions(player, collectibles)
     results = { score: 0, coins: 0, picked_up: 0 }
     return results unless player && collectibles
@@ -67,7 +85,7 @@ class CollisionSystem
   end
 
   def self.handle_player_obstacle_collisions(player, obstacles)
-    results = { hits: 0, coins_lost: 0 }
+    results = { hits: 0, coins_lost: 0, damage_taken: 0 }
     return results unless player && obstacles
 
     obstacles.each do |obstacle|
@@ -78,6 +96,9 @@ class CollisionSystem
         results[:hits] += 1
         results[:coins_lost] += 5
         player.apply_slowdown(1.0) if player.respond_to?(:apply_slowdown)
+        if player.respond_to?(:take_damage) && player.take_damage(10)
+          results[:damage_taken] += 10
+        end
       end
     end
 

@@ -65,7 +65,7 @@
   - อาวุธกระดูกร่อนกลับทะลุมอนสเตอร์ ยิง 1-3 ชิ้น ทำความเสียหายขาไปและขากลับ
 - **Weapon: Kibble Mortar (Levels 1-5 Detailed Design)**: [Kibble Mortar Requirement](file://.docs/weapon-kibble-mortar/requirement.md)
   - อาวุธระเบิดอาหารเม็ด AoE ย้อยโค้ง แตกตัวเป็น Cluster Kibbles และ Burning Zone
-- **Stage Select & Hub Shop UI Interface**: [Stage Select & Shop UI Requirement](file://.docs/stage-select-shop-ui/requirement.md)
+- **Stage Select & Hub Shop UI Interface**: [Stage Select & Shop UI Requirement](file://.docs/stage-select-shop-ui/requirement.md) | [Technical Doc](file://.docs/stage-select-shop-ui/technical.md)
   - ปรับเมนูหลัก Hub/Stage Select ย้ายระบบร้านค้ามาอยู่นอกเกมก่อนเริ่มเล่นด่าน
 
 ### 7. Deployment & CI/CD Pipeline
@@ -124,5 +124,6 @@
 ├── weapon-kibble-mortar/                     # Phase 3: อาวุธ Kibble Mortar L1-L5 (AoE)
 │   └── requirement.md
 └── stage-select-shop-ui/                     # Phase 3: หน้าจอ Stage Select & Hub Shop
-    └── requirement.md
+    ├── requirement.md
+    └── technical.md
 ```

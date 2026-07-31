@@ -34,6 +34,17 @@ class Player
     @cooldown = 0.0
   end
 
+  def reset_for_stage!
+    @x = 100.0
+    @y = 344.0
+    @hp = @max_hp
+    @slowdown_timer = 0.0
+    @invulnerable_timer = 0.0
+    @speed = @base_speed
+    @cooldown = 0.0
+    @weapon_cooldowns = {}
+  end
+
   def soundwave_weapon
     @weapons.find { |w| w.is_a?(SoundwaveWeapon) } || @weapon
   end

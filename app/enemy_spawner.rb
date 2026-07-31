@@ -5,7 +5,7 @@ require_relative 'enemy'
 class EnemySpawner
   attr_accessor :spawn_timer, :min_interval, :max_interval, :allowed_types
 
-  def initialize(min_interval = 2.0, max_interval = 3.0, allowed_types = [:evil_cat, :ninja_cat])
+  def initialize(min_interval = 2.0, max_interval = 3.0, allowed_types = [:evil_cat, :sniper_cat])
     @min_interval = min_interval.to_f
     @max_interval = max_interval.to_f
     @allowed_types = allowed_types
@@ -30,9 +30,9 @@ class EnemySpawner
 
     case type
     when :sniper_cat
-      defined?(SniperCat) ? SniperCat.new(boundary_width, spawn_y) : EvilCat.new(boundary_width, spawn_y)
+      Object.const_defined?(:SniperCat) ? SniperCat.new(boundary_width, spawn_y) : EvilCat.new(boundary_width, spawn_y)
     when :ninja_cat
-      defined?(NinjaCat) ? NinjaCat.new(boundary_width, spawn_y) : EvilCat.new(boundary_width, spawn_y)
+      Object.const_defined?(:NinjaCat) ? NinjaCat.new(boundary_width, spawn_y) : EvilCat.new(boundary_width, spawn_y)
     else
       EvilCat.new(boundary_width, spawn_y)
     end

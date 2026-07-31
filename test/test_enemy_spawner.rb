@@ -23,7 +23,7 @@ class TestEnemySpawner < Minitest::Test
 
     enemy = @spawner.update(0.05, 800, 600)
     refute_nil enemy
-    assert (enemy.is_a?(EvilCat) || enemy.is_a?(NinjaCat))
+    assert (enemy.is_a?(EvilCat) || enemy.is_a?(SniperCat) || enemy.is_a?(NinjaCat))
     assert_equal 800.0, enemy.x
     assert enemy.y >= 0.0
     assert enemy.y <= (600 - EvilCat::HEIGHT)

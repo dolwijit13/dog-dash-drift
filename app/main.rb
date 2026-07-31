@@ -98,7 +98,12 @@ def tick(args)
   args.state.soundwaves.each { |sw| args.outputs.sprites << sw.primitive }
   args.state.collectibles.each { |c| args.outputs.sprites << c.primitive }
   args.state.obstacles.each { |o| args.outputs.sprites << o.primitive }
-  args.state.enemies.each { |e| args.outputs.sprites << e.primitive }
+  args.state.enemies.each do |e|
+    args.outputs.sprites << e.primitive
+    if e.respond_to?(:hp_bar_primitives)
+      e.hp_bar_primitives.each { |bar_prim| args.outputs.solids << bar_prim }
+    end
+  end
 
   # Render HUD
   hud_y_top = grid_h - 20

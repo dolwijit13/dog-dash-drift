@@ -20,6 +20,11 @@ class Player
     @slowdown_timer = 0.0
   end
 
+  def move_by(dx, dy)
+    @x += dx * @speed
+    @y += dy * @speed
+  end
+
   def apply_slowdown(duration_sec = 1.0)
     @slowdown_timer = duration_sec.to_f
   end

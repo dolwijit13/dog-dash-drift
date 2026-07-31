@@ -96,8 +96,8 @@ class TestDragonRubyGame < Minitest::Test
   end
 
   def test_enemy_spawning_and_collision
-    enemy = EvilCat.new(500, 300)
-    soundwave = Soundwave.new(490, 300)
+    enemy = EvilCat.new(500, 300, 10)
+    soundwave = Soundwave.new(490, 300, 8.0, 10)
 
     results = CollisionSystem.handle_soundwave_enemy_collisions([soundwave], [enemy])
 

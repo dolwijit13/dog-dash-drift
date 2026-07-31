@@ -45,7 +45,7 @@
   - ระบบนับคะแนน (Score) และเงินสะสม (Coins/Bones) พร้อมหน้าจอ HUD แสดงผลบริเวณมุมซ้ายบน
 
 ### 5. Progression, Upgrades & Combat Mechanics (Phase 2)
-- **Monster Health Pool & Scaled Damage**: [Enemy HP System Requirement](file://.docs/enemy-hp-system/requirement.md)
+- **Monster Health Pool & Scaled Damage**: [Enemy HP System Requirement](file://.docs/enemy-hp-system/requirement.md) | [Technical Doc](file://.docs/enemy-hp-system/technical.md)
   - ระบบ HP ของ Evil Cat และการลดทอนตามพลังโจมตีของ Soundwave
 - **Player Stat Upgrade & Health System**: [Player Stats Upgrade Requirement](file://.docs/player-stats-upgrade/requirement.md)
   - พัฒนาสถานะตัวละคร (Max HP, Speed, Base Damage) และระบบ Game Over
@@ -84,7 +84,8 @@
 ├── economy-hud-system/                       # Feature: ระบบการเงินและหน้าจอ UI HUD
 │   └── requirement.md
 ├── enemy-hp-system/                          # Phase 2: ระบบ HP มอนสเตอร์ Evil Cat
-│   └── requirement.md
+│   ├── requirement.md
+│   └── technical.md
 ├── player-stats-upgrade/                     # Phase 2: ระบบอัปเกรดสถานะตัวละคร & HP/Game Over
 │   └── requirement.md
 ├── soundwave-weapon-upgrade/                 # Phase 2: ระบบอัปเกรดเลเวลอาวุธ Soundwave

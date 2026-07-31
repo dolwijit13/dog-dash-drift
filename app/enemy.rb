@@ -4,13 +4,15 @@ class EvilCat
   WIDTH = 32
   HEIGHT = 32
   SPEED = 3.0
+  DEFAULT_HP = 25
 
-  attr_accessor :x, :y, :hp, :speed, :active
+  attr_accessor :x, :y, :hp, :max_hp, :speed, :active
 
-  def initialize(x = 1280, y = 344, hp = 1, speed = SPEED)
+  def initialize(x = 1280, y = 344, hp = DEFAULT_HP, speed = SPEED)
     @x = x.to_f
     @y = y.to_f
     @hp = hp
+    @max_hp = hp
     @speed = speed.to_f
     @active = true
   end
@@ -29,6 +31,7 @@ class EvilCat
 
   def take_damage(amount = 1)
     @hp -= amount
+    @hp = 0 if @hp < 0
     @active = false if @hp <= 0
   end
 
@@ -38,5 +41,22 @@ class EvilCat
 
   def primitive
     { x: @x, y: @y, w: WIDTH, h: HEIGHT, r: 255, g: 42, b: 42 }
+  end
+
+  def hp_bar_primitives
+    return [] unless active? && @hp < @max_hp
+
+    bar_w = WIDTH
+    bar_h = 4
+    bar_x = @x
+    bar_y = @y + HEIGHT + 4
+
+    ratio = (@hp.to_f / @max_hp.to_f).clamp(0.0, 1.0)
+    current_w = (bar_w * ratio).to_i
+
+    [
+      { x: bar_x, y: bar_y, w: bar_w, h: bar_h, r: 180, g: 40, b: 40, primitive_marker: :solid },
+      { x: bar_x, y: bar_y, w: current_w, h: bar_h, r: 40, g: 220, b: 40, primitive_marker: :solid }
+    ]
   end
 end

@@ -57,7 +57,7 @@
 ### 6. Stage Progression, Granular Enemies & Detailed Arsenal (Phase 3)
 - **Stage Selection & Progression System**: [Stage Progression Requirement](file://.docs/stage-progression-system/requirement.md)
   - ระบบเลือกเล่นด่าน 1-3, การนับระยะทางผ่านด่าน, และการปลดล็อกด่านถัดไป
-- **Enemy Type: Sniper Cat (Ranged Attacker)**: [Sniper Cat Requirement](file://.docs/enemy-sniper-cat/requirement.md)
+- **Enemy Type: Sniper Cat (Ranged Attacker)**: [Sniper Cat Requirement](file://.docs/enemy-sniper-cat/requirement.md) | [Technical Doc](file://.docs/enemy-sniper-cat/technical.md)
   - มอนสเตอร์แมวสไนเปอร์หยุดยืนยิงกระสุนระยะไกล (30 HP / +15 Coins)
 - **Enemy Type: Ninja Cat (Homing Tracker)**: [Ninja Cat Requirement](file://.docs/enemy-ninja-cat/requirement.md)
   - มอนสเตอร์แมวนินจาวิ่งเร็วและพุ่งติดตามแนว Y ของผู้เล่น (45 HP / +25 Coins)
@@ -112,7 +112,8 @@
 ├── stage-progression-system/                 # Phase 3: ระบบด่าน Stage 1-3 & Stage Clear
 │   └── requirement.md
 ├── enemy-sniper-cat/                         # Phase 3: มอนสเตอร์ Sniper Cat (ยิงระยะไกล)
-│   └── requirement.md
+│   ├── requirement.md
+│   └── technical.md
 ├── enemy-ninja-cat/                          # Phase 3: มอนสเตอร์ Ninja Cat (พุ่งตาม Y)
 │   └── requirement.md
 ├── weapon-bone-boomerang/                    # Phase 3: อาวุธ Bone Boomerang L1-L5

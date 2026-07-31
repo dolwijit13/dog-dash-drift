@@ -18,6 +18,7 @@ def tick(args)
   args.state.camera ||= Camera.new(1.5)
   args.state.soundwaves ||= []
   args.state.enemies ||= []
+  args.state.enemy_projectiles ||= []
   args.state.collectibles ||= []
   args.state.obstacles ||= []
   args.state.spawner ||= EnemySpawner.new(2.0, 3.0)
@@ -71,6 +72,7 @@ def tick(args)
     args.state.player = Player.new(100, 344)
     args.state.soundwaves = []
     args.state.enemies = []
+    args.state.enemy_projectiles = []
     args.state.collectibles = []
     args.state.obstacles = []
     args.state.score = 0
@@ -84,6 +86,7 @@ def tick(args)
     args.state.player = Player.new(100, 344)
     args.state.soundwaves = []
     args.state.enemies = []
+    args.state.enemy_projectiles = []
     args.state.collectibles = []
     args.state.obstacles = []
     args.state.score = 0
@@ -127,7 +130,11 @@ def tick(args)
     end
 
     args.state.soundwaves.each(&:update)
-    args.state.enemies.each(&:update)
+    args.state.enemies.each do |e|
+      proj = e.update(1.0 / 60.0)
+      args.state.enemy_projectiles << proj if proj
+    end
+    args.state.enemy_projectiles.each(&:update)
     args.state.collectibles.each(&:update)
     args.state.obstacles.each(&:update)
 
@@ -139,6 +146,9 @@ def tick(args)
 
     # Collision Detection (Player vs Enemy Damage)
     CollisionSystem.handle_player_enemy_collisions(args.state.player, args.state.enemies)
+
+    # Collision Detection (Player vs Enemy Projectiles Damage)
+    CollisionSystem.handle_player_enemy_projectile_collisions(args.state.player, args.state.enemy_projectiles)
 
     # Collision Detection (Player vs Collectible)
     pickup_results = CollisionSystem.handle_player_collectible_collisions(args.state.player, args.state.collectibles)
@@ -159,6 +169,7 @@ def tick(args)
     # Cleanup Inactive Entities
     args.state.soundwaves.reject! { |sw| sw.out_of_bounds?(grid_w) || !sw.active? }
     args.state.enemies.reject! { |e| e.out_of_bounds? || !e.active? }
+    args.state.enemy_projectiles.reject! { |p| p.out_of_bounds? || !p.active? }
     args.state.collectibles.reject! { |c| c.out_of_bounds? || !c.active? }
     args.state.obstacles.reject! { |o| o.out_of_bounds? || !o.active? }
   end
@@ -177,6 +188,7 @@ def tick(args)
   # Render Player, Projectiles, Collectibles, Obstacles, and Enemies
   args.outputs.sprites << args.state.player.primitive
   args.state.soundwaves.each { |sw| args.outputs.sprites << sw.primitive }
+  args.state.enemy_projectiles.each { |p| args.outputs.sprites << p.primitive }
   args.state.collectibles.each { |c| args.outputs.sprites << c.primitive }
   args.state.obstacles.each { |o| args.outputs.sprites << o.primitive }
   args.state.enemies.each do |e|

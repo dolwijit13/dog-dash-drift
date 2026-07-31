@@ -33,7 +33,7 @@ class Soundwave
   end
 
   def primitive
-    { x: @x, y: @y, w: WIDTH, h: HEIGHT, r: 0, g: 255, b: 255 }
+    { x: @x, y: @y, w: WIDTH, h: HEIGHT, r: 0, g: 255, b: 255, path: :pixel }
   end
 
   def rect

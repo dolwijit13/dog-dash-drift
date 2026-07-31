@@ -36,7 +36,8 @@ class BoneSnack
       h: @h,
       r: 241,
       g: 196,
-      b: 15
+      b: 15,
+      path: :pixel
     }
   end
 end

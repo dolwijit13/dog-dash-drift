@@ -16,7 +16,7 @@ class MockKeyboard
   attr_accessor :a, :d, :w, :s, :left, :right, :up, :down, :key_down
 
   def initialize
-    @key_down = Struct.new(:escape).new(false)
+    @key_down = Struct.new(:escape, :r).new(false, false)
   end
 end
 
@@ -49,7 +49,7 @@ class MockGrid
 end
 
 class MockState
-  attr_accessor :player, :camera, :soundwaves, :enemies, :collectibles, :obstacles, :obstacle_timer, :spawner, :score, :coins
+  attr_accessor :game_state, :player, :camera, :soundwaves, :enemies, :collectibles, :obstacles, :obstacle_timer, :spawner, :score, :coins
 end
 
 class MockArgs

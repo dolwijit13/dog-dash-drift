@@ -41,7 +41,7 @@ class Broccoli
       r: COLOR[:r],
       g: COLOR[:g],
       b: COLOR[:b],
-      primitive_marker: :solid
+      path: :pixel
     }
   end
 end

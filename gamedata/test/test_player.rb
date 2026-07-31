@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require 'minitest/autorun'
-require_relative '../lib/player'
-require_relative '../lib/input_handler'
-require_relative '../lib/soundwave'
+require_relative '../app/player'
+require_relative '../app/input_handler'
+require_relative '../app/soundwave'
 
 class TestPlayer < Minitest::Test
   def setup
@@ -57,8 +57,10 @@ class TestPlayer < Minitest::Test
   def test_auto_attack_spawning_and_cooldown
     assert @player.can_shoot?
 
-    projectile = @player.update(nil, 800, 600, 0.01)
-    refute_nil projectile
+    projectiles = @player.update(nil, 800, 600, 0.01)
+    refute_nil projectiles
+    refute_empty projectiles
+    projectile = projectiles.first
     assert_kind_of Soundwave, projectile
 
     expected_spawn_x = @player.x + Player::WIDTH
@@ -69,13 +71,33 @@ class TestPlayer < Minitest::Test
     assert_equal 0.5, @player.cooldown
     refute @player.can_shoot?
 
-    second_projectile = @player.update(nil, 800, 600, 0.2)
-    assert_nil second_projectile
+    second_projectiles = @player.update(nil, 800, 600, 0.2)
+    assert_nil second_projectiles
     assert_in_delta 0.3, @player.cooldown, 0.0001
 
-    third_projectile = @player.update(nil, 800, 600, 0.3)
-    refute_nil third_projectile
-    assert_kind_of Soundwave, third_projectile
+    third_projectiles = @player.update(nil, 800, 600, 0.3)
+    refute_nil third_projectiles
+    refute_empty third_projectiles
+    assert_kind_of Soundwave, third_projectiles.first
     assert_equal 0.5, @player.cooldown
+  end
+
+  def test_reset_for_stage_preserves_weapon_upgrades
+    @player.boomerang_weapon.upgrade!
+    assert_equal 1, @player.boomerang_weapon.level
+    assert @player.boomerang_weapon.unlocked
+
+    @player.x = 500
+    @player.y = 500
+    @player.reset_for_stage!
+
+    assert_equal 100.0, @player.x
+    assert_equal 344.0, @player.y
+    assert_equal 1, @player.boomerang_weapon.level
+    assert @player.boomerang_weapon.unlocked
+
+    projectiles = @player.update(nil, 800, 600, 0.01)
+    refute_nil projectiles
+    assert projectiles.any? { |p| p.is_a?(BoomerangProjectile) }
   end
 end

@@ -9,6 +9,10 @@ class Camera
     @scroll_speed = scroll_speed.to_f
   end
 
+  def speed
+    @scroll_speed
+  end
+
   def update
     @x += @scroll_speed
   end

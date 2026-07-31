@@ -21,25 +21,109 @@ class CollisionSystem
     soundwaves.each do |sw|
       next unless sw.active?
 
+      # Mortar bomb collision logic (direct hit detonation + AoE splash)
+      if sw.respond_to?(:exploded)
+        if !sw.exploded
+          enemies.each do |enemy|
+            next unless enemy.active?
+
+            if check_intersect(sw.rect, enemy.rect)
+              sw.explode!
+              break
+            end
+          end
+        end
+
+        if sw.exploded && !sw.aoe_applied
+          sw.aoe_applied = true
+          enemies.each do |enemy|
+            next unless enemy.active?
+
+            if check_intersect(sw.rect, enemy.rect)
+              damage_amount = sw.damage
+              enemy.take_damage(damage_amount)
+
+              if enemy.hp <= 0
+                results[:kills] += 1
+                results[:score] += enemy.respond_to?(:score_reward) ? enemy.score_reward : 10
+                results[:coins] += enemy.respond_to?(:coins_reward) ? enemy.coins_reward : 5
+
+                if rand < 0.3
+                  results[:dropped_collectibles] << BoneSnack.new(enemy.x, enemy.y)
+                end
+              end
+            end
+          end
+        end
+
+        next
+      end
+
       enemies.each do |enemy|
         next unless enemy.active?
 
         if check_intersect(sw.rect, enemy.rect)
-          sw.deactivate!
-          enemy.take_damage(1)
+          if sw.respond_to?(:piercing) && sw.piercing
+            next if sw.hit_enemies.include?(enemy.object_id)
+            sw.hit_enemies << enemy.object_id
+          else
+            sw.deactivate!
+          end
+          damage_amount = sw.respond_to?(:damage) ? sw.damage : 10
+          enemy.take_damage(damage_amount)
 
           if enemy.hp <= 0
             results[:kills] += 1
-            results[:score] += 10
-            results[:coins] += 5
+            score_gain = enemy.respond_to?(:score_reward) ? enemy.score_reward : 10
+            coins_gain = enemy.respond_to?(:coins_reward) ? enemy.coins_reward : 5
+            results[:score] += score_gain
+            results[:coins] += coins_gain
 
-            # 30% drop chance for BoneSnack collectible
             if rand < 0.3
               results[:dropped_collectibles] << BoneSnack.new(enemy.x, enemy.y)
             end
           end
 
-          break
+          break unless sw.respond_to?(:piercing) && sw.piercing
+        end
+      end
+    end
+
+    results
+  end
+
+  def self.handle_player_enemy_collisions(player, enemies)
+    results = { hits: 0, damage_taken: 0 }
+    return results unless player && enemies
+
+    enemies.each do |enemy|
+      next unless enemy.active?
+
+      if check_intersect(player.rect, enemy.rect)
+        dmg = enemy.respond_to?(:touch_damage) ? enemy.touch_damage : 15
+        if player.respond_to?(:take_damage) && player.take_damage(dmg)
+          results[:hits] += 1
+          results[:damage_taken] += dmg
+        end
+      end
+    end
+
+    results
+  end
+
+  def self.handle_player_enemy_projectile_collisions(player, enemy_projectiles)
+    results = { hits: 0, damage_taken: 0 }
+    return results unless player && enemy_projectiles
+
+    enemy_projectiles.each do |proj|
+      next unless proj.active?
+
+      if check_intersect(player.rect, proj.rect)
+        dmg = proj.respond_to?(:damage) ? proj.damage : 15
+        if player.respond_to?(:take_damage) && player.take_damage(dmg)
+          results[:hits] += 1
+          results[:damage_taken] += dmg
+          proj.deactivate!
         end
       end
     end
@@ -66,7 +150,7 @@ class CollisionSystem
   end
 
   def self.handle_player_obstacle_collisions(player, obstacles)
-    results = { hits: 0, coins_lost: 0 }
+    results = { hits: 0, coins_lost: 0, damage_taken: 0 }
     return results unless player && obstacles
 
     obstacles.each do |obstacle|
@@ -77,6 +161,9 @@ class CollisionSystem
         results[:hits] += 1
         results[:coins_lost] += 5
         player.apply_slowdown(1.0) if player.respond_to?(:apply_slowdown)
+        if player.respond_to?(:take_damage) && player.take_damage(10)
+          results[:damage_taken] += 10
+        end
       end
     end
 

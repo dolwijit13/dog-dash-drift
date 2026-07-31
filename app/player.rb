@@ -2,24 +2,22 @@
 
 require_relative 'input_handler'
 require_relative 'soundwave'
+require_relative 'weapon'
 
 class Player
   WIDTH = 32
   HEIGHT = 32
-  FIRE_RATE = 0.5
   DEFAULT_MAX_HP = 100
   DEFAULT_BASE_DAMAGE = 10
 
-  attr_accessor :x, :y, :speed, :base_speed, :cooldown, :fire_rate, :slowdown_timer,
-                :hp, :max_hp, :hp_level, :move_speed_level, :damage_level, :base_damage, :invulnerable_timer
+  attr_accessor :x, :y, :speed, :base_speed, :cooldown, :slowdown_timer,
+                :hp, :max_hp, :hp_level, :move_speed_level, :damage_level, :base_damage, :invulnerable_timer, :weapon
 
-  def initialize(x = 100, y = 344, speed = 4.0, fire_rate = FIRE_RATE, max_hp = DEFAULT_MAX_HP, base_damage = DEFAULT_BASE_DAMAGE)
+  def initialize(x = 100, y = 344, speed = 4.0, fire_rate = nil, max_hp = DEFAULT_MAX_HP, base_damage = DEFAULT_BASE_DAMAGE)
     @x = x.to_f
     @y = y.to_f
     @base_speed = speed.to_f
     @speed = speed.to_f
-    @fire_rate = fire_rate.to_f
-    @cooldown = 0.0
     @slowdown_timer = 0.0
 
     @max_hp = max_hp
@@ -29,6 +27,17 @@ class Player
     @move_speed_level = 1
     @damage_level = 1
     @invulnerable_timer = 0.0
+
+    @weapon = SoundwaveWeapon.new(1)
+    @cooldown = 0.0
+  end
+
+  def fire_rate
+    @weapon ? @weapon.cooldown : 0.5
+  end
+
+  def fire_rate=(val)
+    @weapon.cooldown = val.to_f if @weapon
   end
 
   def move_by(dx, dy)
@@ -107,10 +116,17 @@ class Player
   def shoot
     return nil unless can_shoot?
 
-    @cooldown = @fire_rate
+    @cooldown = fire_rate
     spawn_x = @x + WIDTH
-    spawn_y = @y + (HEIGHT / 2.0) - (Soundwave::HEIGHT / 2.0)
-    Soundwave.new(spawn_x, spawn_y, Soundwave::SPEED, @base_damage)
+    spawn_y = @y + (HEIGHT / 2.0) - ((@weapon ? @weapon.h : 8) / 2.0)
+
+    if @weapon
+      bullets = @weapon.fire(spawn_x, spawn_y)
+      bullets.each { |b| b.damage += (@base_damage - 10) } if @base_damage > 10
+      bullets
+    else
+      [Soundwave.new(spawn_x, spawn_y, Soundwave::SPEED, 0.0, @base_damage)]
+    end
   end
 
   def clamp_position(boundary_width = 1280, boundary_height = 720)

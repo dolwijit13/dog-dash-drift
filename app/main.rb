@@ -66,8 +66,8 @@ def tick(args)
   # Update State
   args.state.camera.update
 
-  new_bullet = args.state.player.update(args.inputs, grid_w, grid_h, 1.0 / 60.0)
-  args.state.soundwaves << new_bullet if new_bullet
+  new_bullets = args.state.player.update(args.inputs, grid_w, grid_h, 1.0 / 60.0)
+  args.state.soundwaves.concat(Array(new_bullets)) if new_bullets
 
   new_enemy = args.state.spawner.update(1.0 / 60.0, grid_w, grid_h)
   args.state.enemies << new_enemy if new_enemy

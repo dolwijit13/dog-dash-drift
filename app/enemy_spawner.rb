@@ -5,7 +5,7 @@ require_relative 'enemy'
 class EnemySpawner
   attr_accessor :spawn_timer, :min_interval, :max_interval, :allowed_types
 
-  def initialize(min_interval = 2.0, max_interval = 3.0, allowed_types = [:evil_cat])
+  def initialize(min_interval = 2.0, max_interval = 3.0, allowed_types = [:evil_cat, :ninja_cat])
     @min_interval = min_interval.to_f
     @max_interval = max_interval.to_f
     @allowed_types = allowed_types

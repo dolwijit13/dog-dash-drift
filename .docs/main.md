@@ -51,7 +51,7 @@
   - พัฒนาสถานะตัวละคร (Max HP, Speed, Base Damage) และระบบ Game Over
 - **Modular Weapon Upgrade System (Soundwave Pilot)**: [Soundwave Weapon Upgrade Requirement](file://.docs/soundwave-weapon-upgrade/requirement.md) | [Technical Doc](file://.docs/soundwave-weapon-upgrade/technical.md)
   - ระบบเลเวลอาวุธ Soundwave (ยิงแรงขึ้น ใหญ่ขึ้น ยิงคู่ และยิงกระจาย 3 ทิศทาง)
-- **In-Game Shop & Upgrade Overlay Interface**: [Upgrade Shop UI Requirement](file://.docs/upgrade-shop-ui/requirement.md)
+- **In-Game Shop & Upgrade Overlay Interface**: [Upgrade Shop UI Requirement](file://.docs/upgrade-shop-ui/requirement.md) | [Technical Doc](file://.docs/upgrade-shop-ui/technical.md)
   - หน้าจออินเทอร์เฟซร้านค้าเพื่อนำ Coins มาอัปเกรดตัวละครและอาวุธ
 
 ### 6. Deployment & CI/CD Pipeline
@@ -93,5 +93,6 @@
 │   ├── requirement.md
 │   └── technical.md
 └── upgrade-shop-ui/                          # Phase 2: หน้าจออินเทอร์เฟซร้านค้าระหว่างเล่น
-    └── requirement.md
+    ├── requirement.md
+    └── technical.md
 ```

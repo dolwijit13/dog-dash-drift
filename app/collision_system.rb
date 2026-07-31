@@ -31,8 +31,10 @@ class CollisionSystem
 
           if enemy.hp <= 0
             results[:kills] += 1
-            results[:score] += 10
-            results[:coins] += 5
+            score_gain = enemy.respond_to?(:score_reward) ? enemy.score_reward : 10
+            coins_gain = enemy.respond_to?(:coins_reward) ? enemy.coins_reward : 5
+            results[:score] += score_gain
+            results[:coins] += coins_gain
 
             # 30% drop chance for BoneSnack collectible
             if rand < 0.3
@@ -56,9 +58,10 @@ class CollisionSystem
       next unless enemy.active?
 
       if check_intersect(player.rect, enemy.rect)
-        if player.respond_to?(:take_damage) && player.take_damage(15)
+        dmg = enemy.respond_to?(:touch_damage) ? enemy.touch_damage : 15
+        if player.respond_to?(:take_damage) && player.take_damage(dmg)
           results[:hits] += 1
-          results[:damage_taken] += 15
+          results[:damage_taken] += dmg
         end
       end
     end

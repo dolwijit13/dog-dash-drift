@@ -4,9 +4,9 @@ class Stage
   attr_reader :id, :name, :target_distance, :allowed_enemies
 
   STAGES = {
-    1 => { name: 'Candy Meadow', target_distance: 1000.0, allowed_enemies: [:evil_cat] },
-    2 => { name: 'Chocolate Boulevard', target_distance: 1500.0, allowed_enemies: [:evil_cat, :sniper_cat] },
-    3 => { name: 'Castle Peak', target_distance: 2000.0, allowed_enemies: [:evil_cat, :sniper_cat, :ninja_cat] }
+    1 => { name: 'Candy Meadow', target_distance: 6000.0, allowed_enemies: [:evil_cat] },
+    2 => { name: 'Chocolate Boulevard', target_distance: 9000.0, allowed_enemies: [:evil_cat, :sniper_cat] },
+    3 => { name: 'Castle Peak', target_distance: 12000.0, allowed_enemies: [:evil_cat, :sniper_cat, :ninja_cat] }
   }.freeze
 
   def initialize(id)

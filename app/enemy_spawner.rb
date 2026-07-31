@@ -29,8 +29,10 @@ class EnemySpawner
     spawn_y = rand_range(0.0, max_y)
 
     case type
+    when :sniper_cat
+      defined?(SniperCat) ? SniperCat.new(boundary_width, spawn_y) : EvilCat.new(boundary_width, spawn_y)
     when :ninja_cat
-      NinjaCat.new(boundary_width, spawn_y)
+      defined?(NinjaCat) ? NinjaCat.new(boundary_width, spawn_y) : EvilCat.new(boundary_width, spawn_y)
     else
       EvilCat.new(boundary_width, spawn_y)
     end

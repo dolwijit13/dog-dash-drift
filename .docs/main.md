@@ -55,7 +55,7 @@
   - หน้าจออินเทอร์เฟซร้านค้าเพื่อนำ Coins มาอัปเกรดตัวละครและอาวุธ
 
 ### 6. Stage Progression, Granular Enemies & Detailed Arsenal (Phase 3)
-- **Stage Selection & Progression System**: [Stage Progression Requirement](file://.docs/stage-progression-system/requirement.md)
+- **Stage Selection & Progression System**: [Stage Progression Requirement](file://.docs/stage-progression-system/requirement.md) | [Technical Doc](file://.docs/stage-progression-system/technical.md)
   - ระบบเลือกเล่นด่าน 1-3, การนับระยะทางผ่านด่าน, และการปลดล็อกด่านถัดไป
 - **Enemy Type: Sniper Cat (Ranged Attacker)**: [Sniper Cat Requirement](file://.docs/enemy-sniper-cat/requirement.md) | [Technical Doc](file://.docs/enemy-sniper-cat/technical.md)
   - มอนสเตอร์แมวสไนเปอร์หยุดยืนยิงกระสุนระยะไกล (30 HP / +15 Coins)
@@ -110,7 +110,8 @@
 │   ├── requirement.md
 │   └── technical.md
 ├── stage-progression-system/                 # Phase 3: ระบบด่าน Stage 1-3 & Stage Clear
-│   └── requirement.md
+│   ├── requirement.md
+│   └── technical.md
 ├── enemy-sniper-cat/                         # Phase 3: มอนสเตอร์ Sniper Cat (ยิงระยะไกล)
 │   ├── requirement.md
 │   └── technical.md
@@ -121,6 +122,6 @@
 │   └── requirement.md
 ├── weapon-kibble-mortar/                     # Phase 3: อาวุธ Kibble Mortar L1-L5 (AoE)
 │   └── requirement.md
-└── stage-select-shop-ui/                     # Phase 3: หน้าเลือกด่าน Hub \u0026 ร้านค้า
+└── stage-select-shop-ui/                     # Phase 3: หน้าจอ Stage Select & Hub Shop
     └── requirement.md
 ```

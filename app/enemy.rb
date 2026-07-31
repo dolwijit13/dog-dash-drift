@@ -17,8 +17,9 @@ class EvilCat
     @active = true
   end
 
-  def update(delta_time = 1.0 / 60.0, player_y = nil)
+  def update(delta_time = 1.0 / 60.0, target_y = nil)
     @x -= @speed
+    nil
   end
 
   def out_of_bounds?

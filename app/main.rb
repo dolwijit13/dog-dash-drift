@@ -61,7 +61,7 @@ def tick(args)
   key_toggle_shop = kb && ((kb.tab rescue false) || (kb.p rescue false) || (kb.respond_to?(:tab) && kb.tab) || (kb.respond_to?(:p) && kb.p))
   key_add_coins = kb && ((kb.c rescue false) || (kb.m rescue false) || (kb.respond_to?(:c) && kb.c) || (kb.respond_to?(:m) && kb.m))
 
-  if (clicked_coin_btn || key_add_coins) && args.state.game_state != :game_over
+  if (clicked_coin_btn || key_add_coins) && (args.state.game_state == :stage_select || args.state.game_state == :shop)
     args.state.coins += 500
   end
 
@@ -228,10 +228,6 @@ def tick(args)
   args.outputs.sprites << { x: bar_x, y: bar_y, w: bar_w, h: bar_h, r: 100, g: 30, b: 30, path: :pixel }
   args.outputs.sprites << { x: bar_x, y: bar_y, w: (bar_w * hp_ratio).to_i, h: bar_h, r: 46, g: 204, b: 113, path: :pixel }
   args.outputs.labels << { x: bar_x + 5, y: bar_y + 14, text: "HP: #{args.state.player.hp}/#{args.state.player.max_hp}", size_enum: -1, r: 255, g: 255, b: 255 }
-
-  # HUD Test Add Coins Button (during gameplay)
-  args.outputs.sprites << { x: coin_btn_x, y: coin_btn_y, w: coin_btn_w, h: coin_btn_h, r: 46, g: 204, b: 113, path: :pixel }
-  args.outputs.labels << { x: coin_btn_x + (coin_btn_w / 2), y: coin_btn_y + 22, text: "+$500 BONES (C)", size_enum: 0, alignment_enum: 1, r: 255, g: 255, b: 255 }
 
   # Render Shop Overlay if state is :shop
   if args.state.game_state == :shop

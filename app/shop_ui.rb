@@ -2,7 +2,7 @@
 
 class ShopUI
   WIDTH = 660
-  HEIGHT = 460
+  HEIGHT = 520
 
   def self.upgrade_costs(player)
     hp_cost = 50 * player.hp_level
@@ -10,27 +10,30 @@ class ShopUI
     damage_cost = 60 * player.damage_level
     weapon_cost = player.soundwave_weapon ? player.soundwave_weapon.upgrade_cost : nil
     boomerang_cost = player.boomerang_weapon ? player.boomerang_weapon.upgrade_cost : nil
+    mortar_cost = player.mortar_weapon ? player.mortar_weapon.upgrade_cost : nil
 
     {
       hp: hp_cost,
       speed: speed_cost,
       damage: damage_cost,
       weapon: weapon_cost,
-      boomerang: boomerang_cost
+      boomerang: boomerang_cost,
+      mortar: mortar_cost
     }
   end
 
   def self.button_rects(origin_x, origin_y)
     btn_w = 580
-    btn_h = 52
-    start_y = origin_y + 320
+    btn_h = 50
+    start_y = origin_y + 360
 
     [
       { id: :hp, x: origin_x + 40, y: start_y, w: btn_w, h: btn_h, key: '1' },
-      { id: :speed, x: origin_x + 40, y: start_y - 60, w: btn_w, h: btn_h, key: '2' },
-      { id: :damage, x: origin_x + 40, y: start_y - 120, w: btn_w, h: btn_h, key: '3' },
-      { id: :weapon, x: origin_x + 40, y: start_y - 180, w: btn_w, h: btn_h, key: '4' },
-      { id: :boomerang, x: origin_x + 40, y: start_y - 240, w: btn_w, h: btn_h, key: '5' }
+      { id: :speed, x: origin_x + 40, y: start_y - 55, w: btn_w, h: btn_h, key: '2' },
+      { id: :damage, x: origin_x + 40, y: start_y - 110, w: btn_w, h: btn_h, key: '3' },
+      { id: :weapon, x: origin_x + 40, y: start_y - 165, w: btn_w, h: btn_h, key: '4' },
+      { id: :boomerang, x: origin_x + 40, y: start_y - 220, w: btn_w, h: btn_h, key: '5' },
+      { id: :mortar, x: origin_x + 40, y: start_y - 275, w: btn_w, h: btn_h, key: '6' }
     ]
   end
 
@@ -64,6 +67,13 @@ class ShopUI
       else
         { success: false, reason: :max_level }
       end
+    when :mortar
+      if player.mortar_weapon && player.mortar_weapon.can_upgrade?
+        player.mortar_weapon.upgrade!
+        { success: true, coins_spent: cost }
+      else
+        { success: false, reason: :max_level }
+      end
     else
       { success: false, reason: :invalid_type }
     end
@@ -86,6 +96,8 @@ class ShopUI
         target_type = :weapon
       elsif (kb.five rescue false) || (kb.respond_to?(:five) && kb.five) || (kb.raw_key == 53 rescue false)
         target_type = :boomerang
+      elsif (kb.six rescue false) || (kb.respond_to?(:six) && kb.six) || (kb.raw_key == 54 rescue false)
+        target_type = :mortar
       end
     end
 
@@ -134,12 +146,16 @@ class ShopUI
     b_lvl = player.boomerang_weapon ? player.boomerang_weapon.level : 0
     b_desc = b_lvl == 0 ? "Status: LOCKED (Buy to Unlock)" : "Current: Lv #{b_lvl}/5"
 
+    m_lvl = player.mortar_weapon ? player.mortar_weapon.level : 0
+    m_desc = m_lvl == 0 ? "Status: LOCKED (Buy to Unlock)" : "Current: Lv #{m_lvl}/5"
+
     items = [
       { type: :hp, title: "[1] Max HP (+25)", desc: "Current: #{player.max_hp} HP (Lv #{player.hp_level})", cost: costs[:hp] },
       { type: :speed, title: "[2] Move Speed (+0.5)", desc: "Current: #{player.speed} (Lv #{player.move_speed_level})", cost: costs[:speed] },
       { type: :damage, title: "[3] Base Damage (+5)", desc: "Current: #{player.base_damage} Dmg (Lv #{player.damage_level})", cost: costs[:damage] },
       { type: :weapon, title: "[4] Soundwave Weapon", desc: player.soundwave_weapon ? "Current: Lv #{player.soundwave_weapon.level}/#{player.soundwave_weapon.max_level}" : "N/A", cost: costs[:weapon] },
-      { type: :boomerang, title: "[5] Bone Boomerang", desc: b_desc, cost: costs[:boomerang] }
+      { type: :boomerang, title: "[5] Bone Boomerang", desc: b_desc, cost: costs[:boomerang] },
+      { type: :mortar, title: "[6] Kibble Mortar", desc: m_desc, cost: costs[:mortar] }
     ]
 
     rects.each_with_index do |btn, idx|
@@ -159,6 +175,6 @@ class ShopUI
     end
 
     # Footer instructions
-    args.outputs.labels << { x: origin_x + (WIDTH / 2), y: origin_y + 20, text: "Press 1-5 or Click Button to Buy | Press TAB / P / ESC to Close", size_enum: -1, alignment_enum: 1, r: 189, g: 195, b: 199 }
+    args.outputs.labels << { x: origin_x + (WIDTH / 2), y: origin_y + 20, text: "Press 1-6 or Click Button to Buy | Press TAB / P / ESC to Close", size_enum: -1, alignment_enum: 1, r: 189, g: 195, b: 199 }
   end
 end

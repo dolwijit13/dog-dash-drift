@@ -30,7 +30,8 @@ class Player
 
     @weapon = SoundwaveWeapon.new(1)
     @boomerang_weapon = BoomerangWeapon.new(0)
-    @weapons = [@weapon, @boomerang_weapon]
+    @mortar_weapon = MortarWeapon.new(0)
+    @weapons = [@weapon, @boomerang_weapon, @mortar_weapon]
     @cooldown = 0.0
   end
 
@@ -51,6 +52,10 @@ class Player
 
   def boomerang_weapon
     @weapons.find { |w| w.is_a?(BoomerangWeapon) } || @boomerang_weapon
+  end
+
+  def mortar_weapon
+    @weapons.find { |w| w.is_a?(MortarWeapon) } || @mortar_weapon
   end
 
   def fire_rate

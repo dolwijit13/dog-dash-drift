@@ -55,13 +55,14 @@ class Soundwave
 end
 
 class BoomerangProjectile
-  attr_accessor :x, :y, :vx, :vy, :w, :h, :decel, :active, :out_damage, :return_damage, :hit_enemies, :piercing
+  attr_accessor :x, :y, :vx, :vy, :w, :h, :decel, :active, :out_damage, :return_damage, :hit_enemies, :piercing, :initial_vy
 
   def initialize(x, y, vx = 10.0, vy = 0.0, out_damage = 12, return_damage = 12, w = 16, h = 16, decel = 0.35)
     @x = x.to_f
     @y = y.to_f
     @vx = vx.to_f
     @vy = vy.to_f
+    @initial_vy = vy.to_f
     @w = w
     @h = h
     @out_damage = out_damage
@@ -71,11 +72,13 @@ class BoomerangProjectile
     @piercing = true
     @hit_enemies = []
     @was_returning = false
+    @tick = 0
   end
 
   def update
+    @tick += 1
     @x += @vx
-    @y += @vy
+    @y += @vy + Math.sin(@tick * 0.18) * 3.0
     @vx -= @decel
 
     if @vx < 0 && !@was_returning
@@ -110,81 +113,5 @@ class BoomerangProjectile
 
   def rect
     [@x, @y, @w, @h]
-  end
-end
-
-class MortarProjectile
-  attr_accessor :x, :y, :vx, :vy, :w, :h, :gravity, :active, :direct_damage, :aoe_damage, :radius, :exploded, :cluster_count, :cluster_damage, :ground_y, :aoe_applied
-
-  def initialize(x, y, vx = 8.0, vy = 6.0, direct_damage = 15, aoe_damage = 10, radius = 40, cluster_count = 0, cluster_damage = 10, ground_y = 100)
-    @x = x.to_f
-    @y = y.to_f
-    @vx = vx.to_f
-    @vy = vy.to_f
-    @w = 16
-    @h = 16
-    @gravity = 0.35
-    @direct_damage = direct_damage
-    @aoe_damage = aoe_damage
-    @radius = radius
-    @cluster_count = cluster_count
-    @cluster_damage = cluster_damage
-    @ground_y = ground_y
-    @active = true
-    @exploded = false
-    @aoe_applied = false
-  end
-
-  def update
-    if @exploded
-      @explosion_timer ||= 10
-      @explosion_timer -= 1
-      deactivate! if @explosion_timer <= 0
-      return
-    end
-
-    @x += @vx
-    @y += @vy
-    @vy -= @gravity
-
-    if @vy < 0 && @y <= @ground_y
-      explode!
-    end
-  end
-
-  def explode!
-    @exploded = true
-  end
-
-  def damage
-    @exploded ? @aoe_damage : @direct_damage
-  end
-
-  def out_of_bounds?(boundary_width = 1280, boundary_height = 720)
-    @x > boundary_width || @y < -@h
-  end
-
-  def active?(boundary_width = 1280)
-    @active && !out_of_bounds?(boundary_width)
-  end
-
-  def deactivate!
-    @active = false
-  end
-
-  def primitive
-    if @exploded
-      { x: @x - @radius, y: @y - @radius, w: @radius * 2, h: @radius * 2, r: 230, g: 126, b: 34, a: 160, path: :pixel }
-    else
-      { x: @x, y: @y, w: @w, h: @h, r: 139, g: 69, b: 19, path: :pixel }
-    end
-  end
-
-  def rect
-    if @exploded
-      [@x - @radius, @y - @radius, @radius * 2, @radius * 2]
-    else
-      [@x, @y, @w, @h]
-    end
   end
 end

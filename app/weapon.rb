@@ -108,3 +108,120 @@ class SoundwaveWeapon < Weapon
     projectiles
   end
 end
+
+class BoomerangWeapon < Weapon
+  attr_accessor :cooldown, :out_damage, :return_damage, :w, :h, :projectile_count, :speed, :decel, :unlocked
+
+  BOOMERANG_UPGRADE_COSTS = [100, 150, 250, 400, 600].freeze
+
+  def initialize(level = 0)
+    super('Bone Boomerang', [level, 1].max, 5)
+    @level = level.clamp(0, @max_level)
+    @unlocked = (@level > 0)
+    update_stats_for_level
+  end
+
+  def can_upgrade?
+    @level < @max_level
+  end
+
+  def upgrade_cost
+    return nil unless can_upgrade?
+
+    BOOMERANG_UPGRADE_COSTS[@level]
+  end
+
+  def upgrade!
+    return false unless can_upgrade?
+
+    @level += 1
+    @unlocked = true
+    update_stats_for_level
+    true
+  end
+
+  def update_stats_for_level
+    case @level
+    when 0
+      @unlocked = false
+      @cooldown = 1.2
+      @out_damage = 0
+      @return_damage = 0
+      @w = 16
+      @h = 16
+      @speed = 10.0
+      @decel = 0.35
+      @projectile_count = 0
+    when 1
+      @unlocked = true
+      @cooldown = 1.2
+      @out_damage = 12
+      @return_damage = 12
+      @w = 16
+      @h = 16
+      @speed = 10.0
+      @decel = 0.35
+      @projectile_count = 1
+    when 2
+      @unlocked = true
+      @cooldown = 0.9
+      @out_damage = 16
+      @return_damage = 16
+      @w = 16
+      @h = 16
+      @speed = 12.0
+      @decel = 0.4
+      @projectile_count = 1
+    when 3
+      @unlocked = true
+      @cooldown = 0.8
+      @out_damage = 20
+      @return_damage = 20
+      @w = 16
+      @h = 16
+      @speed = 12.0
+      @decel = 0.4
+      @projectile_count = 2
+    when 4
+      @unlocked = true
+      @cooldown = 0.7
+      @out_damage = 24
+      @return_damage = 36
+      @w = 24
+      @h = 24
+      @speed = 14.0
+      @decel = 0.45
+      @projectile_count = 2
+    when 5
+      @unlocked = true
+      @cooldown = 0.5
+      @out_damage = 35
+      @return_damage = 50
+      @w = 48
+      @h = 48
+      @speed = 15.0
+      @decel = 0.5
+      @projectile_count = 3
+    end
+  end
+
+  def fire(spawn_x, spawn_y)
+    return [] unless @unlocked && @level > 0
+
+    projectiles = []
+
+    case @level
+    when 1, 2
+      projectiles << BoomerangProjectile.new(spawn_x, spawn_y, @speed, 0.0, @out_damage, @return_damage, @w, @h, @decel)
+    when 3, 4
+      projectiles << BoomerangProjectile.new(spawn_x, spawn_y + 8.0, @speed, 2.0, @out_damage, @return_damage, @w, @h, @decel)
+      projectiles << BoomerangProjectile.new(spawn_x, spawn_y - 8.0, @speed, -2.0, @out_damage, @return_damage, @w, @h, @decel)
+    when 5
+      projectiles << BoomerangProjectile.new(spawn_x, spawn_y, @speed, 0.0, @out_damage, @return_damage, @w, @h, @decel)
+      projectiles << BoomerangProjectile.new(spawn_x, spawn_y + 12.0, @speed, 3.0, @out_damage, @return_damage, @w, @h, @decel)
+      projectiles << BoomerangProjectile.new(spawn_x, spawn_y - 12.0, @speed, -3.0, @out_damage, @return_damage, @w, @h, @decel)
+    end
+
+    projectiles
+  end
+end

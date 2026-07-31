@@ -89,7 +89,7 @@ def tick(args)
     args.outputs.labels << { x: coin_btn_x + (coin_btn_w / 2), y: coin_btn_y + 22, text: "+$500 BONES (C)", size_enum: 0, alignment_enum: 1, r: 255, g: 255, b: 255 }
 
     if StageSelectUI.handle_inputs(args, args.state.stage_manager)
-      args.state.player = Player.new(100, 344)
+      args.state.player.reset_for_stage!
       args.state.soundwaves = []
       args.state.enemies = []
       args.state.enemy_projectiles = []
@@ -120,7 +120,7 @@ def tick(args)
   if args.state.game_state == :stage_clear
     StageClearUI.render(args, args.state.stage_manager.current_stage, args.state.score, args.state.coins, grid_w, grid_h)
     if StageClearUI.handle_inputs(args)
-      args.state.player = Player.new(100, 344)
+      args.state.player.reset_for_stage!
       args.state.soundwaves = []
       args.state.enemies = []
       args.state.enemy_projectiles = []

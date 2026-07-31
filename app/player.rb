@@ -29,7 +29,28 @@ class Player
     @invulnerable_timer = 0.0
 
     @weapon = SoundwaveWeapon.new(1)
+    @boomerang_weapon = BoomerangWeapon.new(0)
+    @weapons = [@weapon, @boomerang_weapon]
     @cooldown = 0.0
+  end
+
+  def reset_for_stage!
+    @x = 100.0
+    @y = 344.0
+    @hp = @max_hp
+    @slowdown_timer = 0.0
+    @invulnerable_timer = 0.0
+    @speed = @base_speed
+    @cooldown = 0.0
+    @weapon_cooldowns = {}
+  end
+
+  def soundwave_weapon
+    @weapons.find { |w| w.is_a?(SoundwaveWeapon) } || @weapon
+  end
+
+  def boomerang_weapon
+    @weapons.find { |w| w.is_a?(BoomerangWeapon) } || @boomerang_weapon
   end
 
   def fire_rate
@@ -100,13 +121,35 @@ class Player
   end
 
   def update_auto_attack(delta_time = 1.0 / 60.0)
-    @cooldown -= delta_time if @cooldown > 0
+    @weapon_cooldowns ||= {}
+    @cooldown -= delta_time if @cooldown && @cooldown > 0
+    bullets = []
 
-    if can_shoot?
-      shoot
-    else
-      nil
+    @weapons.each do |w|
+      next if w.respond_to?(:unlocked) && !w.unlocked
+
+      @weapon_cooldowns[w] ||= 0.0
+      @weapon_cooldowns[w] -= delta_time if @weapon_cooldowns[w] > 0
+
+      if @weapon_cooldowns[w] <= 0
+        @weapon_cooldowns[w] = w.cooldown
+        @cooldown = w.cooldown if w == @weapon || w == soundwave_weapon
+        spawn_x = @x + WIDTH
+        spawn_y = @y + (HEIGHT / 2.0) - (w.respond_to?(:h) ? (w.h / 2.0) : 4.0)
+
+        w_bullets = w.fire(spawn_x, spawn_y)
+        if w_bullets && !w_bullets.empty?
+          if @base_damage > 10
+            w_bullets.each do |b|
+              b.damage += (@base_damage - 10) if b.respond_to?(:damage=)
+            end
+          end
+          bullets.concat(w_bullets)
+        end
+      end
     end
+
+    bullets.empty? ? nil : bullets
   end
 
   def can_shoot?

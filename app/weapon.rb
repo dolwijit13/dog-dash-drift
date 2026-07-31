@@ -323,14 +323,14 @@ class MortarWeapon < Weapon
 
     case @level
     when 1, 2
-      projectiles << MortarProjectile.new(spawn_x, spawn_y, 8.0, 6.0, @direct_damage, @aoe_damage, @radius, @cluster_count, @cluster_damage)
+      projectiles << MortarProjectile.new(spawn_x, spawn_y, 8.0, 6.0, @direct_damage, @aoe_damage, @radius, @cluster_count, @cluster_damage, spawn_y)
     when 3, 4
-      projectiles << MortarProjectile.new(spawn_x, spawn_y + 4.0, 7.5, 7.0, @direct_damage, @aoe_damage, @radius, @cluster_count, @cluster_damage)
-      projectiles << MortarProjectile.new(spawn_x, spawn_y - 4.0, 9.0, 5.0, @direct_damage, @aoe_damage, @radius, @cluster_count, @cluster_damage)
+      projectiles << MortarProjectile.new(spawn_x, spawn_y + 4.0, 7.5, 7.0, @direct_damage, @aoe_damage, @radius, @cluster_count, @cluster_damage, spawn_y)
+      projectiles << MortarProjectile.new(spawn_x, spawn_y - 4.0, 9.0, 5.0, @direct_damage, @aoe_damage, @radius, @cluster_count, @cluster_damage, spawn_y)
     when 5
-      projectiles << MortarProjectile.new(spawn_x, spawn_y, 8.5, 6.5, @direct_damage, @aoe_damage, @radius, @cluster_count, @cluster_damage)
-      projectiles << MortarProjectile.new(spawn_x, spawn_y + 8.0, 7.0, 8.0, @direct_damage, @aoe_damage, @radius, @cluster_count, @cluster_damage)
-      projectiles << MortarProjectile.new(spawn_x, spawn_y - 8.0, 10.0, 5.0, @direct_damage, @aoe_damage, @radius, @cluster_count, @cluster_damage)
+      projectiles << MortarProjectile.new(spawn_x, spawn_y, 8.5, 6.5, @direct_damage, @aoe_damage, @radius, @cluster_count, @cluster_damage, spawn_y)
+      projectiles << MortarProjectile.new(spawn_x, spawn_y + 8.0, 7.0, 8.0, @direct_damage, @aoe_damage, @radius, @cluster_count, @cluster_damage, spawn_y)
+      projectiles << MortarProjectile.new(spawn_x, spawn_y - 8.0, 10.0, 5.0, @direct_damage, @aoe_damage, @radius, @cluster_count, @cluster_damage, spawn_y)
     end
 
     projectiles

@@ -21,26 +21,63 @@ class CollisionSystem
     soundwaves.each do |sw|
       next unless sw.active?
 
+      # Mortar bomb collision logic (direct hit detonation + AoE splash)
+      if sw.respond_to?(:exploded)
+        if !sw.exploded
+          enemies.each do |enemy|
+            next unless enemy.active?
+
+            if check_intersect(sw.rect, enemy.rect)
+              sw.explode!
+              break
+            end
+          end
+        end
+
+        if sw.exploded && !sw.aoe_applied
+          sw.aoe_applied = true
+          enemies.each do |enemy|
+            next unless enemy.active?
+
+            if check_intersect(sw.rect, enemy.rect)
+              damage_amount = sw.damage
+              enemy.take_damage(damage_amount)
+
+              if enemy.hp <= 0
+                results[:kills] += 1
+                results[:score] += enemy.respond_to?(:score_reward) ? enemy.score_reward : 10
+                results[:coins] += enemy.respond_to?(:coins_reward) ? enemy.coins_reward : 5
+
+                if rand < 0.3
+                  results[:dropped_collectibles] << BoneSnack.new(enemy.x, enemy.y)
+                end
+              end
+            end
+          end
+        end
+
+        next
+      end
+
       enemies.each do |enemy|
         next unless enemy.active?
 
         if check_intersect(sw.rect, enemy.rect)
-          sw.deactivate!
+          sw.deactivate! unless sw.respond_to?(:piercing) && sw.piercing
           damage_amount = sw.respond_to?(:damage) ? sw.damage : 10
           enemy.take_damage(damage_amount)
 
           if enemy.hp <= 0
             results[:kills] += 1
-            results[:score] += 10
-            results[:coins] += 5
+            results[:score] += enemy.respond_to?(:score_reward) ? enemy.score_reward : 10
+            results[:coins] += enemy.respond_to?(:coins_reward) ? enemy.coins_reward : 5
 
-            # 30% drop chance for BoneSnack collectible
             if rand < 0.3
               results[:dropped_collectibles] << BoneSnack.new(enemy.x, enemy.y)
             end
           end
 
-          break
+          break unless sw.respond_to?(:piercing) && sw.piercing
         end
       end
     end

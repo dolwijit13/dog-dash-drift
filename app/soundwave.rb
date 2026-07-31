@@ -114,9 +114,9 @@ class BoomerangProjectile
 end
 
 class MortarProjectile
-  attr_accessor :x, :y, :vx, :vy, :w, :h, :gravity, :active, :direct_damage, :aoe_damage, :radius, :exploded, :cluster_count, :cluster_damage, :ground_y, :aoe_applied
+  attr_accessor :x, :y, :vx, :vy, :w, :h, :gravity, :active, :direct_damage, :aoe_damage, :radius, :exploded, :cluster_count, :cluster_damage, :ground_y, :target_y, :aoe_applied
 
-  def initialize(x, y, vx = 8.0, vy = 6.0, direct_damage = 15, aoe_damage = 10, radius = 40, cluster_count = 0, cluster_damage = 10, ground_y = 100)
+  def initialize(x, y, vx = 8.0, vy = 6.0, direct_damage = 15, aoe_damage = 10, radius = 40, cluster_count = 0, cluster_damage = 10, target_y = nil)
     @x = x.to_f
     @y = y.to_f
     @vx = vx.to_f
@@ -129,7 +129,8 @@ class MortarProjectile
     @radius = radius
     @cluster_count = cluster_count
     @cluster_damage = cluster_damage
-    @ground_y = ground_y
+    @target_y = target_y ? target_y.to_f : y.to_f
+    @ground_y = @target_y
     @active = true
     @exploded = false
     @aoe_applied = false
@@ -148,7 +149,7 @@ class MortarProjectile
     @y += @vy
     @vy -= @gravity
 
-    if @vy < 0 && @y <= @ground_y
+    if @vy < 0 && @y <= @target_y
       explode!
     end
   end

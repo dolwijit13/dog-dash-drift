@@ -30,9 +30,9 @@ class EnemySpawner
 
     case type
     when :sniper_cat
-      defined?(SniperCat) ? SniperCat.new(boundary_width, spawn_y) : EvilCat.new(boundary_width, spawn_y)
+      Object.const_defined?(:SniperCat) ? SniperCat.new(boundary_width, spawn_y) : EvilCat.new(boundary_width, spawn_y)
     when :ninja_cat
-      defined?(NinjaCat) ? NinjaCat.new(boundary_width, spawn_y) : EvilCat.new(boundary_width, spawn_y)
+      Object.const_defined?(:NinjaCat) ? NinjaCat.new(boundary_width, spawn_y) : EvilCat.new(boundary_width, spawn_y)
     else
       EvilCat.new(boundary_width, spawn_y)
     end

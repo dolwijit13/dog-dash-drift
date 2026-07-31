@@ -53,3 +53,62 @@ class Soundwave
     [ @x, @y, @w, @h ]
   end
 end
+
+class BoomerangProjectile
+  attr_accessor :x, :y, :vx, :vy, :w, :h, :decel, :active, :out_damage, :return_damage, :hit_enemies, :piercing
+
+  def initialize(x, y, vx = 10.0, vy = 0.0, out_damage = 12, return_damage = 12, w = 16, h = 16, decel = 0.35)
+    @x = x.to_f
+    @y = y.to_f
+    @vx = vx.to_f
+    @vy = vy.to_f
+    @w = w
+    @h = h
+    @out_damage = out_damage
+    @return_damage = return_damage
+    @decel = decel.to_f
+    @active = true
+    @piercing = true
+    @hit_enemies = []
+    @was_returning = false
+  end
+
+  def update
+    @x += @vx
+    @y += @vy
+    @vx -= @decel
+
+    if @vx < 0 && !@was_returning
+      @was_returning = true
+      @hit_enemies.clear
+    end
+  end
+
+  def damage
+    @vx >= 0 ? @out_damage : @return_damage
+  end
+
+  def returning?
+    @vx < 0
+  end
+
+  def out_of_bounds?(boundary_width = 1280, boundary_height = 720)
+    (@vx < 0 && @x + @w < 0) || @y < -@h || @y > boundary_height + @h
+  end
+
+  def active?(boundary_width = 1280)
+    @active && !out_of_bounds?(boundary_width)
+  end
+
+  def deactivate!
+    @active = false
+  end
+
+  def primitive
+    { x: @x, y: @y, w: @w, h: @h, r: 241, g: 224, b: 176, path: :pixel }
+  end
+
+  def rect
+    [@x, @y, @w, @h]
+  end
+end

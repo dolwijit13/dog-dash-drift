@@ -127,7 +127,7 @@ def tick(args)
     end
 
     args.state.soundwaves.each(&:update)
-    args.state.enemies.each(&:update)
+    args.state.enemies.each { |e| e.update(1.0 / 60.0, args.state.player ? args.state.player.y : nil) }
     args.state.collectibles.each(&:update)
     args.state.obstacles.each(&:update)
 

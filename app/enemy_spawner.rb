@@ -3,11 +3,12 @@
 require_relative 'enemy'
 
 class EnemySpawner
-  attr_accessor :spawn_timer, :min_interval, :max_interval
+  attr_accessor :spawn_timer, :min_interval, :max_interval, :allowed_types
 
-  def initialize(min_interval = 2.0, max_interval = 3.0)
+  def initialize(min_interval = 2.0, max_interval = 3.0, allowed_types = [:evil_cat, :ninja_cat])
     @min_interval = min_interval.to_f
     @max_interval = max_interval.to_f
+    @allowed_types = allowed_types
     reset_timer
   end
 
@@ -16,11 +17,22 @@ class EnemySpawner
 
     if @spawn_timer <= 0
       reset_timer
-      max_y = (boundary_height - EvilCat::HEIGHT).to_f
-      spawn_y = rand_range(0.0, max_y)
-      EvilCat.new(boundary_width, spawn_y)
+      spawn_enemy(boundary_width, boundary_height)
     else
       nil
+    end
+  end
+
+  def spawn_enemy(boundary_width = 1280, boundary_height = 720)
+    type = @allowed_types.sample || :evil_cat
+    max_y = (boundary_height - 32).to_f
+    spawn_y = rand_range(0.0, max_y)
+
+    case type
+    when :ninja_cat
+      NinjaCat.new(boundary_width, spawn_y)
+    else
+      EvilCat.new(boundary_width, spawn_y)
     end
   end
 

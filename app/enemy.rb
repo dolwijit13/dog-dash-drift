@@ -40,7 +40,7 @@ class EvilCat
   end
 
   def primitive
-    { x: @x, y: @y, w: WIDTH, h: HEIGHT, r: 255, g: 42, b: 42 }
+    { x: @x, y: @y, w: WIDTH, h: HEIGHT, r: 255, g: 42, b: 42, path: :pixel }
   end
 
   def hp_bar_primitives
@@ -55,8 +55,8 @@ class EvilCat
     current_w = (bar_w * ratio).to_i
 
     [
-      { x: bar_x, y: bar_y, w: bar_w, h: bar_h, r: 180, g: 40, b: 40, primitive_marker: :solid },
-      { x: bar_x, y: bar_y, w: current_w, h: bar_h, r: 40, g: 220, b: 40, primitive_marker: :solid }
+      { x: bar_x, y: bar_y, w: bar_w, h: bar_h, r: 180, g: 40, b: 40, path: :pixel },
+      { x: bar_x, y: bar_y, w: current_w, h: bar_h, r: 40, g: 220, b: 40, path: :pixel }
     ]
   end
 end

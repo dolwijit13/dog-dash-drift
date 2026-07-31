@@ -123,9 +123,9 @@ class Player
 
   def primitive
     if invulnerable? && (@invulnerable_timer * 10).to_i % 2 == 0
-      { x: @x, y: @y, w: WIDTH, h: HEIGHT, r: 255, g: 255, b: 255, primitive_marker: :solid }
+      { x: @x, y: @y, w: WIDTH, h: HEIGHT, r: 255, g: 255, b: 255, path: :pixel }
     else
-      { x: @x, y: @y, w: WIDTH, h: HEIGHT, r: 46, g: 204, b: 113, primitive_marker: :solid }
+      { x: @x, y: @y, w: WIDTH, h: HEIGHT, r: 46, g: 204, b: 113, path: :pixel }
     end
   end
 

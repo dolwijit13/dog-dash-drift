@@ -54,7 +54,7 @@ def tick(args)
 
   # Render & Handle Game Over Screen
   if args.state.game_state == :game_over
-    args.outputs.solids << { x: 0, y: 0, w: grid_w, h: grid_h, r: 20, g: 20, b: 30, a: 220, primitive_marker: :solid }
+    args.outputs.sprites << { x: 0, y: 0, w: grid_w, h: grid_h, r: 20, g: 20, b: 30, a: 220, path: :pixel }
     center_x = grid_w / 2
     center_y = grid_h / 2
     args.outputs.labels << { x: center_x, y: center_y + 80, text: "GAME OVER", size_enum: 10, alignment_enum: 1, r: 231, g: 76, b: 60 }
@@ -117,7 +117,7 @@ def tick(args)
   args.state.obstacles.reject! { |o| o.out_of_bounds? || !o.active? }
 
   # Render Background & Grid Lines
-  args.outputs.sprites << { x: 0, y: 0, w: grid_w, h: grid_h, r: 30, g: 30, b: 46, primitive_marker: :solid }
+  args.outputs.sprites << { x: 0, y: 0, w: grid_w, h: grid_h, r: 30, g: 30, b: 46, path: :pixel }
 
   grid_spacing = 40
   offset_x = (args.state.camera.x % grid_spacing).to_i
@@ -135,7 +135,7 @@ def tick(args)
   args.state.enemies.each do |e|
     args.outputs.sprites << e.primitive
     if e.respond_to?(:hp_bar_primitives)
-      e.hp_bar_primitives.each { |bar_prim| args.outputs.solids << bar_prim }
+      e.hp_bar_primitives.each { |bar_prim| args.outputs.sprites << bar_prim }
     end
   end
 
@@ -153,7 +153,7 @@ def tick(args)
   bar_x = 30
   bar_y = hud_y_top - 65
 
-  args.outputs.solids << { x: bar_x, y: bar_y, w: bar_w, h: bar_h, r: 100, g: 30, b: 30, primitive_marker: :solid }
-  args.outputs.solids << { x: bar_x, y: bar_y, w: (bar_w * hp_ratio).to_i, h: bar_h, r: 46, g: 204, b: 113, primitive_marker: :solid }
+  args.outputs.sprites << { x: bar_x, y: bar_y, w: bar_w, h: bar_h, r: 100, g: 30, b: 30, path: :pixel }
+  args.outputs.sprites << { x: bar_x, y: bar_y, w: (bar_w * hp_ratio).to_i, h: bar_h, r: 46, g: 204, b: 113, path: :pixel }
   args.outputs.labels << { x: bar_x + 5, y: bar_y + 14, text: "HP: #{args.state.player.hp}/#{args.state.player.max_hp}", size_enum: -1, r: 255, g: 255, b: 255 }
 end

@@ -26,7 +26,8 @@ class CollisionSystem
 
         if check_intersect(sw.rect, enemy.rect)
           sw.deactivate!
-          enemy.take_damage(1)
+          damage_amount = sw.respond_to?(:damage) ? sw.damage : 10
+          enemy.take_damage(damage_amount)
 
           if enemy.hp <= 0
             results[:kills] += 1

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require 'minitest/autorun'
-require_relative '../lib/enemy_spawner'
-require_relative '../lib/enemy'
+require_relative '../app/enemy_spawner'
+require_relative '../app/enemy'
 
 class TestEnemySpawner < Minitest::Test
   def setup

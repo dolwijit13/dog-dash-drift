@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'minitest/autorun'
-require_relative '../lib/soundwave'
+require_relative '../app/soundwave'
 
 class TestSoundwave < Minitest::Test
   def setup
@@ -30,7 +30,7 @@ class TestSoundwave < Minitest::Test
 
     @soundwave.x = 801.0
     assert @soundwave.out_of_bounds?(800)
-    refute @soundwave.active?
+    refute @soundwave.active?(800)
   end
 
   def test_deactivate

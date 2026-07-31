@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require 'minitest/autorun'
-require_relative '../lib/player'
-require_relative '../lib/input_handler'
-require_relative '../lib/soundwave'
+require_relative '../app/player'
+require_relative '../app/input_handler'
+require_relative '../app/soundwave'
 
 class TestPlayer < Minitest::Test
   def setup

@@ -41,7 +41,7 @@ class MockGrid
 end
 
 class MockState
-  attr_accessor :player, :camera, :soundwaves, :enemies, :collectibles, :obstacles, :spawner, :obstacle_timer, :score, :coins, :game_state
+  attr_accessor :player, :camera, :soundwaves, :enemies, :enemy_projectiles, :collectibles, :obstacles, :spawner, :obstacle_timer, :score, :coins, :game_state, :stage_manager, :distance_covered
 
   def initialize
     @game_state = :playing

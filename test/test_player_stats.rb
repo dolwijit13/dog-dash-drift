@@ -67,9 +67,10 @@ class TestPlayerStats < Minitest::Test
     assert_equal 2, @player.damage_level
     assert_equal 15, @player.base_damage
 
-    bullet = @player.shoot
-    refute_nil bullet
-    assert_equal 15, bullet.damage
+    bullets = @player.shoot
+    refute_nil bullets
+    refute_empty bullets
+    assert_equal 15, bullets.first.damage
   end
 
   def test_player_enemy_collision_damage

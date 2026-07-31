@@ -10,10 +10,15 @@ require_relative 'collectible'
 require_relative 'obstacle'
 require_relative 'collision_system'
 require_relative 'shop_ui'
+require_relative 'stage'
+require_relative 'stage_clear_ui'
+require_relative 'stage_select_ui'
 
 def tick(args)
-  # Initialize Game State
-  args.state.game_state ||= :playing
+  # Initialize Game State (Default to :stage_select Hub)
+  args.state.game_state ||= :stage_select
+  args.state.previous_state ||= :stage_select
+  args.state.stage_manager ||= StageManager.new
   args.state.player ||= Player.new(100, 344)
   args.state.camera ||= Camera.new(1.5)
   args.state.soundwaves ||= []
@@ -21,10 +26,11 @@ def tick(args)
   args.state.enemy_projectiles ||= []
   args.state.collectibles ||= []
   args.state.obstacles ||= []
-  args.state.spawner ||= EnemySpawner.new(2.0, 3.0)
+  args.state.spawner ||= EnemySpawner.new(2.0, 3.0, args.state.stage_manager.current_stage.allowed_enemies)
   args.state.obstacle_timer ||= 3.5
   args.state.score ||= 0
   args.state.coins ||= 0
+  args.state.distance_covered ||= 0.0
 
   grid_w = (args.grid && args.grid.w) ? args.grid.w : 1280
   grid_h = (args.grid && args.grid.h) ? args.grid.h : 720
@@ -52,46 +58,79 @@ def tick(args)
                      mouse_click.x >= coin_btn_x && mouse_click.x <= (coin_btn_x + coin_btn_w) &&
                      mouse_click.y >= coin_btn_y && mouse_click.y <= (coin_btn_y + coin_btn_h)
 
-  key_toggle_shop = kb && ((kb.respond_to?(:tab) && kb.tab) || (kb.respond_to?(:p) && kb.p))
-  key_add_coins = kb && ((kb.respond_to?(:c) && kb.c) || (kb.respond_to?(:m) && kb.m))
+  key_toggle_shop = kb && ((kb.tab rescue false) || (kb.p rescue false) || (kb.respond_to?(:tab) && kb.tab) || (kb.respond_to?(:p) && kb.p))
+  key_add_coins = kb && ((kb.c rescue false) || (kb.m rescue false) || (kb.respond_to?(:c) && kb.c) || (kb.respond_to?(:m) && kb.m))
 
-  if (clicked_coin_btn || key_add_coins) && args.state.game_state != :game_over
+  if (clicked_coin_btn || key_add_coins) && (args.state.game_state == :stage_select || args.state.game_state == :shop)
     args.state.coins += 500
   end
 
-  # Toggle Shop State
-  if (key_toggle_shop || clicked_shop_btn) && args.state.game_state != :game_over
-    args.state.game_state = (args.state.game_state == :shop) ? :playing : :shop
+  # Toggle Shop State — RESTRICTED TO HUB (:stage_select or :shop) ONLY
+  if (key_toggle_shop || (clicked_shop_btn && (args.state.game_state == :stage_select || args.state.game_state == :shop))) &&
+     (args.state.game_state == :stage_select || args.state.game_state == :shop)
+    if args.state.game_state == :shop
+      args.state.game_state = :stage_select
+    else
+      args.state.previous_state = :stage_select
+      args.state.game_state = :shop
+    end
     return if clicked_shop_btn
   end
 
+  # Render & Handle Stage Select (Hub) Screen
+  if args.state.game_state == :stage_select
+    StageSelectUI.render(args, args.state.stage_manager, args.state.coins, grid_w, grid_h)
+
+    # Render HUD Shop Button & Add Coins Button on Hub
+    args.outputs.sprites << { x: shop_btn_x, y: shop_btn_y, w: shop_btn_w, h: shop_btn_h, r: 155, g: 89, b: 182, path: :pixel }
+    args.outputs.labels << { x: shop_btn_x + (shop_btn_w / 2), y: shop_btn_y + 24, text: "SHOP (TAB/P)", size_enum: 1, alignment_enum: 1, r: 255, g: 255, b: 255 }
+
+    args.outputs.sprites << { x: coin_btn_x, y: coin_btn_y, w: coin_btn_w, h: coin_btn_h, r: 46, g: 204, b: 113, path: :pixel }
+    args.outputs.labels << { x: coin_btn_x + (coin_btn_w / 2), y: coin_btn_y + 22, text: "+$500 BONES (C)", size_enum: 0, alignment_enum: 1, r: 255, g: 255, b: 255 }
+
+    if StageSelectUI.handle_inputs(args, args.state.stage_manager)
+      args.state.player = Player.new(100, 344)
+      args.state.soundwaves = []
+      args.state.enemies = []
+      args.state.enemy_projectiles = []
+      args.state.collectibles = []
+      args.state.obstacles = []
+      args.state.distance_covered = 0.0
+      args.state.spawner = EnemySpawner.new(2.0, 3.0, args.state.stage_manager.current_stage.allowed_enemies)
+      args.state.game_state = :playing
+    end
+    return
+  end
+
   # Restart Handler (Game Over or ESC key when not in Shop)
-  key_restart = kb && (kb.escape || (kb.respond_to?(:r) && kb.r))
+  key_restart = kb && ((kb.escape rescue false) || (kb.r rescue false) || (kb.respond_to?(:r) && kb.r))
 
   if key_restart && args.state.game_state == :game_over
-    args.state.player = Player.new(100, 344)
-    args.state.soundwaves = []
-    args.state.enemies = []
-    args.state.enemy_projectiles = []
-    args.state.collectibles = []
-    args.state.obstacles = []
-    args.state.score = 0
-    args.state.coins = 0
-    args.state.game_state = :playing
+    args.state.game_state = :stage_select
     return
-  elsif kb && kb.escape && args.state.game_state == :shop
-    args.state.game_state = :playing
+  elsif kb && (kb.escape rescue false || (kb.respond_to?(:escape) && kb.escape)) && args.state.game_state == :shop
+    args.state.game_state = :stage_select
     return
-  elsif kb && kb.escape
-    args.state.player = Player.new(100, 344)
-    args.state.soundwaves = []
-    args.state.enemies = []
-    args.state.enemy_projectiles = []
-    args.state.collectibles = []
-    args.state.obstacles = []
-    args.state.score = 0
-    args.state.coins = 0
-    args.state.game_state = :playing
+  elsif kb && (kb.escape rescue false || (kb.respond_to?(:escape) && kb.escape)) && args.state.game_state == :playing
+    args.state.game_state = :stage_select
+    return
+  end
+
+  # Render & Handle Stage Clear Screen
+  if args.state.game_state == :stage_clear
+    StageClearUI.render(args, args.state.stage_manager.current_stage, args.state.score, args.state.coins, grid_w, grid_h)
+    if StageClearUI.handle_inputs(args)
+      args.state.player = Player.new(100, 344)
+      args.state.soundwaves = []
+      args.state.enemies = []
+      args.state.enemy_projectiles = []
+      args.state.collectibles = []
+      args.state.obstacles = []
+      args.state.distance_covered = 0.0
+      args.state.spawner = EnemySpawner.new(2.0, 3.0, args.state.stage_manager.current_stage.allowed_enemies)
+      args.state.game_state = :playing
+    end
+    return
   end
 
   # Render & Handle Game Over Screen
@@ -101,7 +140,7 @@ def tick(args)
     center_y = grid_h / 2
     args.outputs.labels << { x: center_x, y: center_y + 80, text: "GAME OVER", size_enum: 10, alignment_enum: 1, r: 231, g: 76, b: 60 }
     args.outputs.labels << { x: center_x, y: center_y + 10, text: "Final Score: #{args.state.score}  |  Bones: $#{args.state.coins}", size_enum: 3, alignment_enum: 1, r: 241, g: 196, b: 15 }
-    args.outputs.labels << { x: center_x, y: center_y - 50, text: "Press R or ESC to Restart", size_enum: 3, alignment_enum: 1, r: 255, g: 255, b: 255 }
+    args.outputs.labels << { x: center_x, y: center_y - 50, text: "Press R or ESC to Return to Hub", size_enum: 3, alignment_enum: 1, r: 255, g: 255, b: 255 }
     return
   end
 
@@ -112,8 +151,18 @@ def tick(args)
       args.state.coins -= shop_result[:coins_spent]
     end
   else
-    # Update State (Playing)
+    # Update State (Playing stage)
     args.state.camera.update
+    args.state.distance_covered += (args.state.camera.speed * (1.0 / 60.0) * 100.0)
+
+    # Victory / Stage Clear Condition Check
+    target_dist = args.state.stage_manager.current_stage.target_distance
+    if args.state.distance_covered >= target_dist
+      args.state.distance_covered = target_dist
+      args.state.stage_manager.unlock_next_stage!
+      args.state.game_state = :stage_clear
+      return
+    end
 
     new_bullets = args.state.player.update(args.inputs, grid_w, grid_h, 1.0 / 60.0)
     args.state.soundwaves.concat(Array(new_bullets)) if new_bullets
@@ -198,7 +247,7 @@ def tick(args)
     end
   end
 
-  # Render HUD
+  # Render Gameplay HUD
   hud_y_top = grid_h - 20
   args.outputs.labels << { x: 30, y: hud_y_top, text: "Bones: $#{args.state.coins}", size_enum: 2, r: 241, g: 196, b: 15 }
   args.outputs.labels << { x: 30, y: hud_y_top - 30, text: "Score: #{args.state.score}", size_enum: 2, r: 255, g: 255, b: 255 }
@@ -216,13 +265,17 @@ def tick(args)
   args.outputs.sprites << { x: bar_x, y: bar_y, w: (bar_w * hp_ratio).to_i, h: bar_h, r: 46, g: 204, b: 113, path: :pixel }
   args.outputs.labels << { x: bar_x + 5, y: bar_y + 14, text: "HP: #{args.state.player.hp}/#{args.state.player.max_hp}", size_enum: -1, r: 255, g: 255, b: 255 }
 
-  # HUD Shop Button
-  args.outputs.sprites << { x: shop_btn_x, y: shop_btn_y, w: shop_btn_w, h: shop_btn_h, r: 155, g: 89, b: 182, path: :pixel }
-  args.outputs.labels << { x: shop_btn_x + (shop_btn_w / 2), y: shop_btn_y + 24, text: "SHOP (TAB/P)", size_enum: 1, alignment_enum: 1, r: 255, g: 255, b: 255 }
+  # Distance Progress Bar HUD
+  target_dist = args.state.stage_manager.current_stage.target_distance
+  dist_ratio = (args.state.distance_covered / target_dist).clamp(0.0, 1.0)
+  dist_bar_w = 200
+  dist_bar_h = 14
+  dist_bar_x = 30
+  dist_bar_y = hud_y_top - 95
 
-  # HUD Test Add Coins Button
-  args.outputs.sprites << { x: coin_btn_x, y: coin_btn_y, w: coin_btn_w, h: coin_btn_h, r: 46, g: 204, b: 113, path: :pixel }
-  args.outputs.labels << { x: coin_btn_x + (coin_btn_w / 2), y: coin_btn_y + 22, text: "+$500 BONES (C)", size_enum: 0, alignment_enum: 1, r: 255, g: 255, b: 255 }
+  args.outputs.sprites << { x: dist_bar_x, y: dist_bar_y, w: dist_bar_w, h: dist_bar_h, r: 40, g: 40, b: 60, path: :pixel }
+  args.outputs.sprites << { x: dist_bar_x, y: dist_bar_y, w: (dist_bar_w * dist_ratio).to_i, h: dist_bar_h, r: 52, g: 152, b: 219, path: :pixel }
+  args.outputs.labels << { x: dist_bar_x + 5, y: dist_bar_y + 12, text: "Stage #{args.state.stage_manager.current_stage.id}: #{args.state.distance_covered.to_i}m / #{target_dist.to_i}m", size_enum: -2, r: 255, g: 255, b: 255 }
 
   # Render Shop Overlay if state is :shop
   if args.state.game_state == :shop

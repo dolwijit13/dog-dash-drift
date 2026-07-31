@@ -55,21 +55,17 @@
   - หน้าจออินเทอร์เฟซร้านค้าเพื่อนำ Coins มาอัปเกรดตัวละครและอาวุธ
 
 ### 6. Stage Progression, Granular Enemies & Detailed Arsenal (Phase 3)
-- **Stage Selection & Progression System**: [Stage Progression Requirement](file://.docs/stage-progression-system/requirement.md)
+- **Stage Selection & Progression System**: [Stage Progression Requirement](file://.docs/stage-progression-system/requirement.md) | [Technical Doc](file://.docs/stage-progression-system/technical.md)
   - ระบบเลือกเล่นด่าน 1-3, การนับระยะทางผ่านด่าน, และการปลดล็อกด่านถัดไป
 - **Enemy Type: Sniper Cat (Ranged Attacker)**: [Sniper Cat Requirement](file://.docs/enemy-sniper-cat/requirement.md) | [Technical Doc](file://.docs/enemy-sniper-cat/technical.md)
   - มอนสเตอร์แมวสไนเปอร์หยุดยืนยิงกระสุนระยะไกล (30 HP / +15 Coins)
-<<<<<<< HEAD
-- **Enemy Type: Ninja Cat (Homing Tracker)**: [Ninja Cat Requirement](file://.docs/enemy-ninja-cat/requirement.md)
-=======
 - **Enemy Type: Ninja Cat (Homing Tracker)**: [Ninja Cat Requirement](file://.docs/enemy-ninja-cat/requirement.md) | [Technical Doc](file://.docs/enemy-ninja-cat/technical.md)
->>>>>>> 7c6f1ce
   - มอนสเตอร์แมวนินจาวิ่งเร็วและพุ่งติดตามแนว Y ของผู้เล่น (45 HP / +25 Coins)
 - **Weapon: Bone Boomerang (Levels 1-5 Detailed Design)**: [Bone Boomerang Requirement](file://.docs/weapon-bone-boomerang/requirement.md)
   - อาวุธกระดูกร่อนกลับทะลุมอนสเตอร์ ยิง 1-3 ชิ้น ทำความเสียหายขาไปและขากลับ
 - **Weapon: Kibble Mortar (Levels 1-5 Detailed Design)**: [Kibble Mortar Requirement](file://.docs/weapon-kibble-mortar/requirement.md)
   - อาวุธระเบิดอาหารเม็ด AoE ย้อยโค้ง แตกตัวเป็น Cluster Kibbles และ Burning Zone
-- **Stage Select & Hub Shop UI Interface**: [Stage Select & Shop UI Requirement](file://.docs/stage-select-shop-ui/requirement.md)
+- **Stage Select & Hub Shop UI Interface**: [Stage Select & Shop UI Requirement](file://.docs/stage-select-shop-ui/requirement.md) | [Technical Doc](file://.docs/stage-select-shop-ui/technical.md)
   - ปรับเมนูหลัก Hub/Stage Select ย้ายระบบร้านค้ามาอยู่นอกเกมก่อนเริ่มเล่นด่าน
 
 ### 7. Deployment & CI/CD Pipeline
@@ -114,25 +110,19 @@
 │   ├── requirement.md
 │   └── technical.md
 ├── stage-progression-system/                 # Phase 3: ระบบด่าน Stage 1-3 & Stage Clear
-│   └── requirement.md
+│   ├── requirement.md
+│   └── technical.md
 ├── enemy-sniper-cat/                         # Phase 3: มอนสเตอร์ Sniper Cat (ยิงระยะไกล)
 │   ├── requirement.md
 │   └── technical.md
 ├── enemy-ninja-cat/                          # Phase 3: มอนสเตอร์ Ninja Cat (พุ่งตาม Y)
-<<<<<<< HEAD
-│   └── requirement.md
-=======
 │   ├── requirement.md
 │   └── technical.md
->>>>>>> 7c6f1ce
 ├── weapon-bone-boomerang/                    # Phase 3: อาวุธ Bone Boomerang L1-L5
 │   └── requirement.md
 ├── weapon-kibble-mortar/                     # Phase 3: อาวุธ Kibble Mortar L1-L5 (AoE)
 │   └── requirement.md
-<<<<<<< HEAD
 └── stage-select-shop-ui/                     # Phase 3: หน้าจอ Stage Select & Hub Shop
-=======
-└── stage-select-shop-ui/                     # Phase 3: หน้าเลือกด่าน Hub \u0026 ร้านค้า
->>>>>>> 7c6f1ce
-    └── requirement.md
+    ├── requirement.md
+    └── technical.md
 ```

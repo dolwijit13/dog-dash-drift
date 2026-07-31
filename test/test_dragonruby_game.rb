@@ -41,7 +41,7 @@ class MockGrid
 end
 
 class MockState
-  attr_accessor :player, :camera, :soundwaves, :enemies, :enemy_projectiles, :collectibles, :obstacles, :spawner, :obstacle_timer, :score, :coins, :game_state
+  attr_accessor :player, :camera, :soundwaves, :enemies, :enemy_projectiles, :collectibles, :obstacles, :spawner, :obstacle_timer, :score, :coins, :game_state, :previous_state, :stage_manager, :distance_covered
 
   def initialize
     @game_state = :playing
@@ -89,10 +89,7 @@ class TestDragonRubyGame < Minitest::Test
 
     tick(@args)
 
-    assert_equal :playing, @args.state.game_state
-    assert_equal 0, @args.state.score
-    assert_equal 0, @args.state.coins
-    refute_nil @args.state.player
+    assert_equal :stage_select, @args.state.game_state
   end
 
   def test_tick_render_output

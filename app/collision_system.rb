@@ -75,6 +75,26 @@ class CollisionSystem
     results
   end
 
+  def self.handle_player_enemy_projectile_collisions(player, enemy_projectiles)
+    results = { hits: 0, damage_taken: 0 }
+    return results unless player && enemy_projectiles
+
+    enemy_projectiles.each do |proj|
+      next unless proj.active?
+
+      if check_intersect(player.rect, proj.rect)
+        dmg = proj.respond_to?(:damage) ? proj.damage : 15
+        if player.respond_to?(:take_damage) && player.take_damage(dmg)
+          results[:hits] += 1
+          results[:damage_taken] += dmg
+          proj.deactivate!
+        end
+      end
+    end
+
+    results
+  end
+
   def self.handle_player_collectible_collisions(player, collectibles)
     results = { score: 0, coins: 0, picked_up: 0 }
     return results unless player && collectibles

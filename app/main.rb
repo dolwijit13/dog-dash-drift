@@ -51,8 +51,8 @@ def tick(args)
                      mouse_click.x >= coin_btn_x && mouse_click.x <= (coin_btn_x + coin_btn_w) &&
                      mouse_click.y >= coin_btn_y && mouse_click.y <= (coin_btn_y + coin_btn_h)
 
-  key_toggle_shop = kb && ((kb.respond_to?(:tab) && kb.tab) || (kb.respond_to?(:p) && kb.p))
-  key_add_coins = kb && ((kb.respond_to?(:c) && kb.c) || (kb.respond_to?(:m) && kb.m))
+  key_toggle_shop = kb && ((kb.tab rescue false) || (kb.p rescue false) || (kb.respond_to?(:tab) && kb.tab) || (kb.respond_to?(:p) && kb.p))
+  key_add_coins = kb && ((kb.c rescue false) || (kb.m rescue false) || (kb.respond_to?(:c) && kb.c) || (kb.respond_to?(:m) && kb.m))
 
   if (clicked_coin_btn || key_add_coins) && args.state.game_state != :game_over
     args.state.coins += 500

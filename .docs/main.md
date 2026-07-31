@@ -44,7 +44,17 @@
 - **Economy & Real-Time HUD**: [Economy & HUD Requirement](file://.docs/economy-hud-system/requirement.md)
   - ระบบนับคะแนน (Score) และเงินสะสม (Coins/Bones) พร้อมหน้าจอ HUD แสดงผลบริเวณมุมซ้ายบน
 
-### 5. Deployment & CI/CD Pipeline
+### 5. Progression, Upgrades & Combat Mechanics (Phase 2)
+- **Monster Health Pool & Scaled Damage**: [Enemy HP System Requirement](file://.docs/enemy-hp-system/requirement.md)
+  - ระบบ HP ของ Evil Cat และการลดทอนตามพลังโจมตีของ Soundwave
+- **Player Stat Upgrade & Health System**: [Player Stats Upgrade Requirement](file://.docs/player-stats-upgrade/requirement.md)
+  - พัฒนาสถานะตัวละคร (Max HP, Speed, Base Damage) และระบบ Game Over
+- **Modular Weapon Upgrade System (Soundwave Pilot)**: [Soundwave Weapon Upgrade Requirement](file://.docs/soundwave-weapon-upgrade/requirement.md)
+  - ระบบเลเวลอาวุธ Soundwave (ยิงแรงขึ้น ใหญ่ขึ้น ยิงคู่ และยิงกระจาย 3 ทิศทาง)
+- **In-Game Shop & Upgrade Overlay Interface**: [Upgrade Shop UI Requirement](file://.docs/upgrade-shop-ui/requirement.md)
+  - หน้าจออินเทอร์เฟซร้านค้าเพื่อนำ Coins มาอัปเกรดตัวละครและอาวุธ
+
+### 6. Deployment & CI/CD Pipeline
 - **DragonRuby GitHub Pages Deployment**: [DragonRuby Deployment Requirement](file://.docs/dragonruby-github-pages-deployment/requirement.md) | [Technical Doc](file://.docs/dragonruby-github-pages-deployment/technical.md)
   - ระบบ Build อัตโนมัติด้วย GitHub Actions เพื่อแปลงเกม DragonRuby GTK เป็น Web (WASM/Canvas) และ Deploy ขึ้น GitHub Pages
 
@@ -71,6 +81,14 @@
 │   └── requirement.md
 ├── obstacles-broccoli/                       # Feature: สิ่งกีดขวางบร็อกโคลี
 │   └── requirement.md
-└── economy-hud-system/                       # Feature: ระบบการเงินและหน้าจอ UI HUD
+├── economy-hud-system/                       # Feature: ระบบการเงินและหน้าจอ UI HUD
+│   └── requirement.md
+├── enemy-hp-system/                          # Phase 2: ระบบ HP มอนสเตอร์ Evil Cat
+│   └── requirement.md
+├── player-stats-upgrade/                     # Phase 2: ระบบอัปเกรดสถานะตัวละคร & HP/Game Over
+│   └── requirement.md
+├── soundwave-weapon-upgrade/                 # Phase 2: ระบบอัปเกรดเลเวลอาวุธ Soundwave
+│   └── requirement.md
+└── upgrade-shop-ui/                          # Phase 2: หน้าจออินเทอร์เฟซร้านค้าระหว่างเล่น
     └── requirement.md
 ```

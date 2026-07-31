@@ -55,13 +55,14 @@ class Soundwave
 end
 
 class BoomerangProjectile
-  attr_accessor :x, :y, :vx, :vy, :w, :h, :decel, :active, :out_damage, :return_damage, :hit_enemies, :piercing
+  attr_accessor :x, :y, :vx, :vy, :w, :h, :decel, :active, :out_damage, :return_damage, :hit_enemies, :piercing, :initial_vy
 
   def initialize(x, y, vx = 10.0, vy = 0.0, out_damage = 12, return_damage = 12, w = 16, h = 16, decel = 0.35)
     @x = x.to_f
     @y = y.to_f
     @vx = vx.to_f
     @vy = vy.to_f
+    @initial_vy = vy.to_f
     @w = w
     @h = h
     @out_damage = out_damage
@@ -71,11 +72,13 @@ class BoomerangProjectile
     @piercing = true
     @hit_enemies = []
     @was_returning = false
+    @tick = 0
   end
 
   def update
+    @tick += 1
     @x += @vx
-    @y += @vy
+    @y += @vy + Math.sin(@tick * 0.18) * 3.0
     @vx -= @decel
 
     if @vx < 0 && !@was_returning

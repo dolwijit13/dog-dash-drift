@@ -61,7 +61,7 @@
   - มอนสเตอร์แมวสไนเปอร์หยุดยืนยิงกระสุนระยะไกล (30 HP / +15 Coins)
 - **Enemy Type: Ninja Cat (Homing Tracker)**: [Ninja Cat Requirement](file://.docs/enemy-ninja-cat/requirement.md) | [Technical Doc](file://.docs/enemy-ninja-cat/technical.md)
   - มอนสเตอร์แมวนินจาวิ่งเร็วและพุ่งติดตามแนว Y ของผู้เล่น (45 HP / +25 Coins)
-- **Weapon: Bone Boomerang (Levels 1-5 Detailed Design)**: [Bone Boomerang Requirement](file://.docs/weapon-bone-boomerang/requirement.md)
+- **Weapon: Bone Boomerang (Levels 1-5 Detailed Design)**: [Bone Boomerang Requirement](file://.docs/weapon-bone-boomerang/requirement.md) | [Technical Doc](file://.docs/weapon-bone-boomerang/technical.md)
   - อาวุธกระดูกร่อนกลับทะลุมอนสเตอร์ ยิง 1-3 ชิ้น ทำความเสียหายขาไปและขากลับ
 - **Weapon: Kibble Mortar (Levels 1-5 Detailed Design)**: [Kibble Mortar Requirement](file://.docs/weapon-kibble-mortar/requirement.md) | [Technical Doc](file://.docs/weapon-kibble-mortar/technical.md)
   - อาวุธระเบิดอาหารเม็ด AoE ย้อยโค้ง แตกตัวเป็น Cluster Kibbles และ Burning Zone
@@ -119,7 +119,8 @@
 │   ├── requirement.md
 │   └── technical.md
 ├── weapon-bone-boomerang/                    # Phase 3: อาวุธ Bone Boomerang L1-L5
-│   └── requirement.md
+│   ├── requirement.md
+│   └── technical.md
 ├── weapon-kibble-mortar/                     # Phase 3: อาวุธ Kibble Mortar L1-L5 (AoE)
 │   ├── requirement.md
 │   └── technical.md

@@ -81,4 +81,23 @@ class TestPlayer < Minitest::Test
     assert_kind_of Soundwave, third_projectiles.first
     assert_equal 0.5, @player.cooldown
   end
+
+  def test_reset_for_stage_preserves_weapon_upgrades
+    @player.boomerang_weapon.upgrade!
+    assert_equal 1, @player.boomerang_weapon.level
+    assert @player.boomerang_weapon.unlocked
+
+    @player.x = 500
+    @player.y = 500
+    @player.reset_for_stage!
+
+    assert_equal 100.0, @player.x
+    assert_equal 344.0, @player.y
+    assert_equal 1, @player.boomerang_weapon.level
+    assert @player.boomerang_weapon.unlocked
+
+    projectiles = @player.update(nil, 800, 600, 0.01)
+    refute_nil projectiles
+    assert projectiles.any? { |p| p.is_a?(BoomerangProjectile) }
+  end
 end
